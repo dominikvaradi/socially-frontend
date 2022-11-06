@@ -1,4 +1,4 @@
-import { Button, FormErrorMessage, useColorMode } from "@chakra-ui/react";
+import { Button, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import FloatingLabelFormControl from "../FloatingLabelFormControl";
 import AutoResizeTextarea from "../AutoResizeTextarea";
@@ -26,9 +26,9 @@ const CreateCommentComponent = ({ className, inputRef, validationSchema, onSubmi
             {(props: FormikState<CreateCommentFormValues>) => (
                 <Form
                     noValidate
-                    className={`flex w-full flex-col space-y-2 p-3 ${
-                        colorMode === "dark" ? "bg-slate-600" : "bg-white"
-                    } ${className || ""}`}
+                    className={`flex w-full flex-col p-3 ${colorMode === "dark" ? "bg-slate-600" : "bg-white"} ${
+                        className || ""
+                    }`}
                 >
                     <Field name="content">
                         {({ field, form }: FieldProps<string, CreateCommentFormValues>) => (
@@ -38,9 +38,9 @@ const CreateCommentComponent = ({ className, inputRef, validationSchema, onSubmi
                                 darkBgColor="slate-600"
                                 isRequired
                                 isInvalid={form.touched.content && !!form.errors.content}
+                                errorMessage={form.errors.content}
                             >
                                 <AutoResizeTextarea ref={inputRef} placeholder=" " {...field} />
-                                <FormErrorMessage>{form.errors.content}</FormErrorMessage>
                             </FloatingLabelFormControl>
                         )}
                     </Field>
