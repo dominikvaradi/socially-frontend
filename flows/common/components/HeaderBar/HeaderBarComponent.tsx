@@ -9,7 +9,6 @@ import {
     MenuButton,
     MenuItem,
     MenuList,
-    Portal,
     useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
@@ -37,7 +36,7 @@ const HeaderBarComponent = ({
 
     return (
         <div
-            className={`bg-brand flex h-[80px] w-full items-center justify-between space-x-2 px-3 py-2 drop-shadow-lg ${
+            className={`bg-brand z-[2] flex h-[80px] w-full items-center justify-between space-x-2 px-3 py-2 drop-shadow-lg ${
                 colorMode === "dark" ? "bg-brand-200" : "bg-brand-500"
             }`}
         >
@@ -74,38 +73,36 @@ const HeaderBarComponent = ({
                             <span className="hidden sm:block">{userName}</span>
                         </div>
                     </MenuButton>
-                    <Portal>
-                        <MenuList>
-                            <MenuItem
-                                icon={<Icon as={FiUser} />}
-                                onClick={onProfileButtonClick}
-                                className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
-                            >
-                                Profil
-                            </MenuItem>
-                            <MenuItem
-                                icon={<Icon as={FiSettings} />}
-                                onClick={onSettingsButtonClick}
-                                className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
-                            >
-                                Beállítások
-                            </MenuItem>
-                            <MenuItem
-                                icon={<Icon as={colorMode === "dark" ? FiSun : FiMoon} />}
-                                onClick={toggleColorMode}
-                                className={`lg:!hidden ${colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}`}
-                            >
-                                {colorMode === "dark" ? "Nappali mód" : "Éjszakai mód"}
-                            </MenuItem>
-                            <MenuItem
-                                icon={<Icon as={FiLogOut} />}
-                                onClick={onSignOutButtonClick}
-                                className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
-                            >
-                                Kijelentkezés
-                            </MenuItem>
-                        </MenuList>
-                    </Portal>
+                    <MenuList className="z-[2]">
+                        <MenuItem
+                            icon={<Icon as={FiUser} />}
+                            onClick={onProfileButtonClick}
+                            className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
+                        >
+                            Profil
+                        </MenuItem>
+                        <MenuItem
+                            icon={<Icon as={FiSettings} />}
+                            onClick={onSettingsButtonClick}
+                            className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
+                        >
+                            Beállítások
+                        </MenuItem>
+                        <MenuItem
+                            icon={<Icon as={colorMode === "dark" ? FiSun : FiMoon} />}
+                            onClick={toggleColorMode}
+                            className={`lg:!hidden ${colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}`}
+                        >
+                            {colorMode === "dark" ? "Nappali mód" : "Éjszakai mód"}
+                        </MenuItem>
+                        <MenuItem
+                            icon={<Icon as={FiLogOut} />}
+                            onClick={onSignOutButtonClick}
+                            className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
+                        >
+                            Kijelentkezés
+                        </MenuItem>
+                    </MenuList>
                 </Menu>
             </div>
         </div>

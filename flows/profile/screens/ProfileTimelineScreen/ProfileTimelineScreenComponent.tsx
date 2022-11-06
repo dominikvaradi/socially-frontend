@@ -1,14 +1,16 @@
+import { useColorMode } from "@chakra-ui/react";
 import React from "react";
-import MainLayoutComponent from "../../../common/components/MainLayout";
+import CreatePost from "../../../common/components/CreatePost";
+import MainLayout from "../../../common/components/MainLayout";
+import ProfileLayout from "../../components/ProfileLayout";
 import { CreatePostFormValues, IPost, IReactionListItem, TReaction } from "../../../common/services/commonTypes";
-import CreatePostComponent from "../../../common/components/CreatePost";
-import { FormikHelpers } from "formik";
+import PostList from "../../../common/components/PostList";
 import ReactionListModal from "../../../common/components/ReactionListModal";
 import DeletePostAlertDialog from "../../../common/components/DeletePostAlertDialog";
 import DeleteCommentAlertDialog from "../../../common/components/DeleteCommentAlertDialog";
-import PostList from "../../../common/components/PostList";
+import { FormikHelpers } from "formik";
 
-export type TProps = {
+type TProps = {
     posts: IPost[];
     onCreatePostSubmit: (values: CreatePostFormValues, actions: FormikHelpers<CreatePostFormValues>) => void;
     onPostEditClick: (postId: string) => void;
@@ -36,7 +38,7 @@ export type TProps = {
     onLoadMorePostsButtonClick: () => void;
 };
 
-const HomeFeedScreenComponent = ({
+const ProfileTimelineScreenComponent = ({
     posts,
     onCreatePostSubmit,
     onPostEditClick,
@@ -63,29 +65,46 @@ const HomeFeedScreenComponent = ({
     loadMorePostsButtonVisible,
     onLoadMorePostsButtonClick,
 }: TProps) => {
+    const { colorMode } = useColorMode();
+
     return (
-        <MainLayoutComponent>
-            <div className="flex w-full justify-center px-8 sm:px-0 sm:pl-16 md:pl-0">
-                <div className="flex w-full flex-col items-center sm:w-3/4 md:w-1/2 xl:w-[40%]">
-                    <CreatePostComponent
-                        placeholder="Mi jár a fejedben, Naruto?"
-                        onSubmit={onCreatePostSubmit}
-                        className="mt-4"
-                    />
-                    <PostList
-                        posts={posts}
-                        onPostEditButtonClick={onPostEditClick}
-                        onPostDeleteButtonClick={onPostDeleteClick}
-                        onPostReactionCountButtonClick={onPostReactionCountButtonClick}
-                        onCommentEditButtonClick={onCommentEditButtonClick}
-                        onCommentDeleteButtonClick={onCommentDeleteButtonClick}
-                        onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
-                        postsLoading={postsLoading}
-                        loadMorePostsButtonVisible={loadMorePostsButtonVisible}
-                        onLoadMorePostsButtonClick={onLoadMorePostsButtonClick}
-                    />
+        <MainLayout>
+            <ProfileLayout userName="Naruto Uzumaki" activeTab="timeline">
+                <div className="flex justify-center sm:pl-16">
+                    <div className="flex w-full flex-wrap items-start justify-start py-8 px-4 sm:w-[80%] sm:max-w-[1000px] sm:px-0 md:flex-nowrap">
+                        <div
+                            className={`mb-6 flex w-full flex-shrink-0 flex-col space-y-2 rounded-md bg-white p-4 drop-shadow-md md:mr-6 md:w-[150px] lg:w-[250px] ${
+                                colorMode === "dark" ? "bg-slate-600" : "bg-white"
+                            }`}
+                        >
+                            <span className="text-xl font-semibold">Névjegy</span>
+                            <div className="">Született: 2000. szeptember 15.</div>
+                            <div className="">Születési hely: Japan, Leaf Village</div>
+                            <div className="">Jelenlegi hely: Japán, Leaf Village modern version</div>
+                        </div>
+                        <div className="flex-grow">
+                            <div className="flex w-full flex-col">
+                                <CreatePost
+                                    placeholder="Írj valamit Naruto idővonalára"
+                                    onSubmit={onCreatePostSubmit}
+                                />
+                                <PostList
+                                    posts={posts}
+                                    onPostEditButtonClick={onPostEditClick}
+                                    onPostDeleteButtonClick={onPostDeleteClick}
+                                    onPostReactionCountButtonClick={onPostReactionCountButtonClick}
+                                    onCommentEditButtonClick={onCommentEditButtonClick}
+                                    onCommentDeleteButtonClick={onCommentDeleteButtonClick}
+                                    onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
+                                    postsLoading={postsLoading}
+                                    loadMorePostsButtonVisible={loadMorePostsButtonVisible}
+                                    onLoadMorePostsButtonClick={onLoadMorePostsButtonClick}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </ProfileLayout>
             <ReactionListModal
                 visible={reactionListModalVisible}
                 onClose={onReactionListModalClose}
@@ -106,8 +125,8 @@ const HomeFeedScreenComponent = ({
                 onClose={onDeleteCommentAlertDialogClose}
                 onConfirmButtonClick={onDeleteCommentAlertDialogConfirmButtonClick}
             />
-        </MainLayoutComponent>
+        </MainLayout>
     );
 };
 
-export default HomeFeedScreenComponent;
+export default ProfileTimelineScreenComponent;
