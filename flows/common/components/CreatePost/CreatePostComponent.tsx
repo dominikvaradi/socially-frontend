@@ -1,4 +1,4 @@
-import { Button, FormErrorMessage, Input, useColorMode } from "@chakra-ui/react";
+import { Button, Input, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import FloatingLabelFormControl from "../FloatingLabelFormControl";
 import AutoResizeTextarea from "../AutoResizeTextarea";
@@ -27,12 +27,11 @@ const CreatePostComponent = ({ className, placeholder, validationSchema, onSubmi
             {(props: FormikState<CreatePostFormValues>) => (
                 <Form
                     noValidate
-                    className={`flex w-full flex-col space-y-4 rounded-md p-8 shadow-md ${
+                    className={`flex w-full flex-col rounded-md p-8 shadow-md ${
                         colorMode === "dark" ? "bg-slate-600" : "bg-white"
                     } ${className || ""}`}
                 >
-                    <p className="text-2xl">{placeholder}</p>
-
+                    <p className="mb-2 text-2xl">{placeholder}</p>
                     <Field name="header">
                         {({ field, form }: FieldProps<string, CreatePostFormValues>) => (
                             <FloatingLabelFormControl
@@ -40,9 +39,9 @@ const CreatePostComponent = ({ className, placeholder, validationSchema, onSubmi
                                 lightBgColor="white"
                                 darkBgColor="slate-600"
                                 isInvalid={form.touched.header && !!form.errors.header}
+                                errorMessage={form.errors.header}
                             >
                                 <Input placeholder=" " {...field} />
-                                <FormErrorMessage>{form.errors.header}</FormErrorMessage>
                             </FloatingLabelFormControl>
                         )}
                     </Field>
@@ -54,9 +53,9 @@ const CreatePostComponent = ({ className, placeholder, validationSchema, onSubmi
                                 darkBgColor="slate-600"
                                 isRequired
                                 isInvalid={form.touched.content && !!form.errors.content}
+                                errorMessage={form.errors.content}
                             >
                                 <AutoResizeTextarea placeholder=" " {...field} />
-                                <FormErrorMessage>{form.errors.content}</FormErrorMessage>
                             </FloatingLabelFormControl>
                         )}
                     </Field>

@@ -1,7 +1,7 @@
 import React from "react";
 import MainLayoutComponent from "../../../common/components/MainLayout";
 import { CreatePostFormValues, IPost, IReactionListItem, TReaction } from "../../../common/services/commonTypes";
-import CreatePostComponent from "../../../common/components/CreatePost";
+import CreatePost from "../../../common/components/CreatePost";
 import { FormikHelpers } from "formik";
 import ReactionListModal from "../../../common/components/ReactionListModal";
 import DeletePostAlertDialog from "../../../common/components/DeletePostAlertDialog";
@@ -67,7 +67,7 @@ const HomeFeedScreenComponent = ({
         <MainLayoutComponent>
             <div className="flex w-full justify-center px-8 sm:px-0 sm:pl-16 md:pl-0">
                 <div className="flex w-full flex-col items-center sm:w-3/4 md:w-1/2 xl:w-[40%]">
-                    <CreatePostComponent
+                    <CreatePost
                         placeholder="Mi jár a fejedben, Naruto?"
                         onSubmit={onCreatePostSubmit}
                         className="mt-4"
