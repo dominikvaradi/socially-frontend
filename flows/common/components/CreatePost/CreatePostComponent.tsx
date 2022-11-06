@@ -27,7 +27,7 @@ const CreatePostComponent = ({ className, placeholder, validationSchema, onSubmi
             {(props: FormikState<CreatePostFormValues>) => (
                 <Form
                     noValidate
-                    className={`flex w-full flex-col rounded-md p-8 shadow-md ${
+                    className={`flex w-full flex-col space-y-1 rounded-md p-8 shadow-md ${
                         colorMode === "dark" ? "bg-slate-600" : "bg-white"
                     } ${className || ""}`}
                 >

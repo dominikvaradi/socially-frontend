@@ -9,6 +9,7 @@ type TProps = {
 } & FormControlProps;
 
 const FloatingLabelFormControl = ({
+    className,
     label,
     lightBgColor,
     darkBgColor,
@@ -21,7 +22,7 @@ const FloatingLabelFormControl = ({
     return (
         <FormControl
             className={
-                `relative pb-6 [&>label]:focus-within:-translate-y-[20px] ${
+                `relative pb-4 [&>label]:focus-within:-translate-y-[20px] ${
                     colorMode === "dark" ? "[&>label]:focus-within:text-white" : "[&>label]:focus-within:text-black"
                 } [&>label]:focus-within:scale-[0.85] ` +
                 `[&>input:not(:placeholder-shown)~label]:-translate-y-[20px] ${
@@ -33,13 +34,13 @@ const FloatingLabelFormControl = ({
                     colorMode === "dark"
                         ? "[&>textarea:not(:placeholder-shown)~label]:text-white"
                         : "[&>textarea:not(:placeholder-shown)~label]:text-black"
-                } [&>textarea:not(:placeholder-shown)~label]:scale-[0.85]`
+                } [&>textarea:not(:placeholder-shown)~label]:scale-[0.85] ${className || ""}`
             }
             {...props}
         >
             {children}
             <span
-                className={`duration-400 absolute bottom-0 left-0 transition-all ease-in-out ${
+                className={`duration-400 absolute bottom-0 left-0 text-xs transition-all ease-in-out ${
                     errorMessage && props.isInvalid ? "opacity-100" : "opacity-0"
                 } ${colorMode === "dark" ? "text-red-200" : "text-red-500"}`}
             >

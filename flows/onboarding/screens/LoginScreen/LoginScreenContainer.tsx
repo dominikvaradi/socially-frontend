@@ -5,8 +5,8 @@ import LoginScreenComponent from "./LoginScreenComponent";
 import * as Yup from "yup";
 
 const LoginValidationSchema = Yup.object().shape({
-    email: Yup.string().trim().required("Az E-Mail cím mező kitöltése kötelező"),
-    password: Yup.string().trim().required("A Jelszó mező kitöltése kötelező"),
+    email: Yup.string().trim().required("Az mező kitöltése kötelező"),
+    password: Yup.string().trim().required("A mező kitöltése kötelező"),
 });
 
 const LoginScreenContainer = () => {
@@ -20,7 +20,17 @@ const LoginScreenContainer = () => {
         }, 500);
     };
 
-    return <LoginScreenComponent validationSchema={LoginValidationSchema} onSubmit={handleSubmit} />;
+    const handleRegisterButtonClick = () => {
+        console.log("handleRegisterButtonClick");
+    };
+
+    return (
+        <LoginScreenComponent
+            validationSchema={LoginValidationSchema}
+            onSubmit={handleSubmit}
+            onRegisterButtonClick={handleRegisterButtonClick}
+        />
+    );
 };
 
 export default LoginScreenContainer;

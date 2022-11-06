@@ -26,9 +26,9 @@ const CreateCommentComponent = ({ className, inputRef, validationSchema, onSubmi
             {(props: FormikState<CreateCommentFormValues>) => (
                 <Form
                     noValidate
-                    className={`flex w-full flex-col p-3 ${colorMode === "dark" ? "bg-slate-600" : "bg-white"} ${
-                        className || ""
-                    }`}
+                    className={`flex w-full flex-col space-y-1 p-3 ${
+                        colorMode === "dark" ? "bg-slate-600" : "bg-white"
+                    } ${className || ""}`}
                 >
                     <Field name="content">
                         {({ field, form }: FieldProps<string, CreateCommentFormValues>) => (
