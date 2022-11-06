@@ -21,7 +21,7 @@ const Last10ConversationsSidebar = ({
 
     return (
         <div
-            className={`absolute top-0 left-0 hidden h-full ${
+            className={`absolute top-0 left-0 z-[2] hidden h-full ${
                 colorMode === "dark" ? "bg-slate-700" : "bg-white"
             } drop-shadow-lg transition-all duration-500 ease-in-out sm:block ${
                 drawerExpanded ? "-translate-x-28" : ""

@@ -1,49 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import PostComponent from "./PostComponent";
-import { TReaction, IReactionCount, IComment, CreateCommentFormValues } from "../../services/commonTypes";
+import { TReaction, IComment, CreateCommentFormValues, IPost } from "../../services/commonTypes";
 import { FormikHelpers } from "formik";
 
 type TProps = {
-    header?: string;
-    content: string;
-    authorName: string;
-    commentCount: number;
-    createdTimeString: string;
+    post: IPost;
     editable: boolean;
     deletable: boolean;
-    onEditClick: () => void;
-    onDeleteClick: () => void;
-    reactionCount: IReactionCount;
-    activeReaction?: TReaction;
-    onReactionCountButtonClick: () => void;
-    onToggleReactionButtonClick: (reaction: TReaction) => void;
-    onAuthorProfileClick: () => void;
-    onCommentToggleReactionButtonClick: (commentId: string, reaction: TReaction) => void;
-    onCreateCommentSubmit: (values: CreateCommentFormValues, actions: FormikHelpers<CreateCommentFormValues>) => void;
-    onCommentAuthorProfileClick: (authorId: string) => void;
+    onEditButtonClick: (postId: string) => void;
+    onDeleteButtonClick: (postId: string) => void;
+    onReactionCountButtonClick: (postId: string) => void;
     onCommentEditButtonClick: (commentId: string) => void;
     onCommentDeleteButtonClick: (commentId: string) => void;
     onCommentReactionCountButtonClick: (commentId: string) => void;
 };
 
 const PostContainer = ({
-    header,
-    content,
-    authorName,
-    commentCount,
-    createdTimeString,
+    post,
     editable,
     deletable,
-    onEditClick,
-    onDeleteClick,
-    reactionCount,
-    activeReaction,
+    onEditButtonClick,
+    onDeleteButtonClick,
     onReactionCountButtonClick,
-    onToggleReactionButtonClick,
-    onAuthorProfileClick,
-    onCommentToggleReactionButtonClick,
-    onCreateCommentSubmit,
-    onCommentAuthorProfileClick,
     onCommentEditButtonClick,
     onCommentDeleteButtonClick,
     onCommentReactionCountButtonClick,
@@ -61,10 +39,18 @@ const PostContainer = ({
         setContentNeedExpand(contentRef.current ? contentRef.current.scrollHeight > 200 : false);
     }, [contentRef, setContentNeedExpand]);
 
-    const reactionCountSum: number = Object.values(reactionCount).reduce(
+    const reactionCountSum: number = Object.values(post.reactionCount).reduce(
         (acc: number, count: number) => acc + count,
         0
     );
+
+    const handleEditClick = () => {
+        onEditButtonClick(post.id);
+    };
+
+    const handleDeleteClick = () => {
+        onDeleteButtonClick(post.id);
+    };
 
     const handleContentExpandClick = () => {
         setContentExpanded((currentlyExpanded) => !currentlyExpanded);
@@ -78,13 +64,19 @@ const PostContainer = ({
         }, 50);
     };
 
+    const handleAuthorProfileClick = () => {};
+
+    const handleReactionCountButtonClick = () => {
+        onReactionCountButtonClick(post.id);
+    };
+
     const handleCommentCountButtonClick = () => {
         setCommentsVisible((visible) => !visible);
     };
 
     const handleReactionPopoverToggleButtonClick = (reaction: TReaction) => {
         setReactionPopoverVisible(false);
-        onToggleReactionButtonClick(reaction);
+        console.log("handleReactionPopoverToggleButtonClick: " + reaction);
     };
 
     const handleReactionButtonClick = () => {
@@ -95,32 +87,47 @@ const PostContainer = ({
         setReactionPopoverVisible(false);
     };
 
+    const handleCommentToggleReactionButtonClick = (commentId: string, reaction: TReaction) => {
+        console.log(`handleCommentToggleReactionButtonClick:\ncommentId: ${commentId}\nreaction: ${reaction}`);
+    };
+
+    const handleCreateCommentSubmit = (
+        values: CreateCommentFormValues,
+        actions: FormikHelpers<CreateCommentFormValues>
+    ) => {
+        console.log(`handleCreateCommentSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
+    };
+
+    const handleCommentAuthorProfileClick = (authorId: string) => {
+        console.log("handleCommentAuthorProfileClick: " + authorId);
+    };
+
     const handleLoadMoreCommentsButtonClick = () => {
         console.log("handleLoadMoreCommentsButtonClick");
     };
 
     return (
         <PostComponent
-            header={header}
-            content={content}
-            authorName={authorName}
-            commentCount={commentCount}
-            createdTimeString={createdTimeString}
+            header={post.header}
+            content={post.content}
+            authorName={post.authorName}
+            commentCount={post.commentCount}
+            createdTimeString={post.createdTimeString}
             editable={editable}
             deletable={deletable}
-            onEditClick={onEditClick}
-            onDeleteClick={onDeleteClick}
-            reactionCount={reactionCount}
+            onEditClick={handleEditClick}
+            onDeleteClick={handleDeleteClick}
+            reactionCount={post.reactionCount}
             reactionCountSum={reactionCountSum}
             contentRef={contentRef}
             contentNeedExpand={contentNeedExpand}
             contentExpanded={contentExpanded}
             onContentExpandClick={handleContentExpandClick}
             onCommentButtonClick={handleCommentButtonClick}
-            onAuthorProfileClick={onAuthorProfileClick}
-            onReactionCountButtonClick={onReactionCountButtonClick}
+            onAuthorProfileClick={handleAuthorProfileClick}
+            onReactionCountButtonClick={handleReactionCountButtonClick}
             onCommentCountButtonClick={handleCommentCountButtonClick}
-            activeReaction={activeReaction}
+            activeReaction={post.activeReactionOfUser}
             reactionPopoverVisible={reactionPopoverVisible}
             onReactionButtonClick={handleReactionButtonClick}
             onReactionPopoverToggleButtonClick={handleReactionPopoverToggleButtonClick}
@@ -128,9 +135,9 @@ const PostContainer = ({
             comments={mockComments}
             commentsVisible={commentsVisible}
             createCommentInputRef={createCommentInputRef}
-            onCommentToggleReactionButtonClick={onCommentToggleReactionButtonClick}
-            onCreateCommentSubmit={onCreateCommentSubmit}
-            onCommentAuthorProfileClick={onCommentAuthorProfileClick}
+            onCommentToggleReactionButtonClick={handleCommentToggleReactionButtonClick}
+            onCreateCommentSubmit={handleCreateCommentSubmit}
+            onCommentAuthorProfileClick={handleCommentAuthorProfileClick}
             onCommentEditButtonClick={onCommentEditButtonClick}
             onCommentDeleteButtonClick={onCommentDeleteButtonClick}
             onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}

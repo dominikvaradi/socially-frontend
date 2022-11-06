@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import HomeFeedScreenComponent from "./HomeFeedScreenComponent";
+import ProfileTimelineScreenComponent from "./ProfileTimelineScreenComponent";
 import { CreatePostFormValues, IPost, IReactionListItem, TReaction } from "../../../common/services/commonTypes";
 import { FormikHelpers } from "formik";
 
-const HomeFeedScreenContainer = () => {
+const ProfileTimelineScreenContainer = () => {
     const [reactionListModalVisible, setReactionListModalVisible] = useState<boolean>(false);
     const [reactionListReactionItems, setReactionListReactionItems] =
         useState<IReactionListItem[]>(mockReactionListReactionItems);
@@ -92,7 +92,7 @@ const HomeFeedScreenContainer = () => {
     };
 
     return (
-        <HomeFeedScreenComponent
+        <ProfileTimelineScreenComponent
             posts={mockPosts}
             onCreatePostSubmit={handleCreatePostSubmit}
             onPostEditClick={handlePostEditClick}
@@ -122,7 +122,7 @@ const HomeFeedScreenContainer = () => {
     );
 };
 
-export default HomeFeedScreenContainer;
+export default ProfileTimelineScreenContainer;
 
 const mockPosts: IPost[] = [
     {
