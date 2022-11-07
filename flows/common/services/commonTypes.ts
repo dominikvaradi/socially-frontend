@@ -49,3 +49,5 @@ export interface IReactionListItem {
     userName: string;
     reaction: TReaction;
 }
+
+export type TIconPosition = "left" | "right";

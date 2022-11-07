@@ -1,10 +1,9 @@
-import { Button, Icon, Input, useColorMode } from "@chakra-ui/react";
+import { Button, Icon, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { LoginFormValues } from "../../services/onboardingTypes";
 import { TbSocial } from "react-icons/tb";
 import { Field, FieldProps, Form, Formik, FormikHelpers, FormikState } from "formik";
-import FloatingLabelFormControl from "../../../common/components/FloatingLabelFormControl";
-import AutoResizeTextarea from "../../../common/components/AutoResizeTextarea";
+import FloatingLabelInput from "../../../common/components/FloatingLabelInput";
 
 type TProps = {
     validationSchema: any;
@@ -57,30 +56,29 @@ const LoginScreenComponent = ({ validationSchema, onSubmit, onRegisterButtonClic
                             <p className="!mb-4 text-center text-xl">Kérjük jelentkezz be!</p>
                             <Field name="email">
                                 {({ field, form }: FieldProps<string, LoginFormValues>) => (
-                                    <FloatingLabelFormControl
+                                    <FloatingLabelInput
                                         label="E-Mail cím"
-                                        lightBgColor="white"
-                                        darkBgColor="slate-600"
-                                        isRequired
-                                        isInvalid={form.touched.email && !!form.errors.email}
+                                        bgColorLight="white"
+                                        bgColorDark="slate-600"
+                                        required
+                                        invalid={form.touched.email && !!form.errors.email}
                                         errorMessage={form.errors.email}
-                                    >
-                                        <Input placeholder=" " {...field} />
-                                    </FloatingLabelFormControl>
+                                        fieldInputProps={field}
+                                    />
                                 )}
                             </Field>
                             <Field name="password">
                                 {({ field, form }: FieldProps<string, LoginFormValues>) => (
-                                    <FloatingLabelFormControl
+                                    <FloatingLabelInput
+                                        type="password"
                                         label="Jelszó"
-                                        lightBgColor="white"
-                                        darkBgColor="slate-600"
-                                        isRequired
-                                        isInvalid={form.touched.password && !!form.errors.password}
+                                        bgColorLight="white"
+                                        bgColorDark="slate-600"
+                                        required
+                                        invalid={form.touched.password && !!form.errors.password}
                                         errorMessage={form.errors.password}
-                                    >
-                                        <AutoResizeTextarea placeholder=" " {...field} />
-                                    </FloatingLabelFormControl>
+                                        fieldInputProps={field}
+                                    />
                                 )}
                             </Field>
                             <Button colorScheme="brand" isLoading={props.isSubmitting} type="submit">

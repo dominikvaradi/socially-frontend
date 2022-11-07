@@ -7,7 +7,7 @@ export interface RegisterFormValues {
     firstName: string;
     lastName: string;
     email: string;
-    birthDate: string;
+    birthDate: Date;
     password: string;
     passwordConfirm: string;
     birthCountry: string;

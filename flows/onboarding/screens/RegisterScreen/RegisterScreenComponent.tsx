@@ -1,9 +1,10 @@
-import { Button, Icon, Input, useColorMode } from "@chakra-ui/react";
+import { Button, Icon, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { TbSocial } from "react-icons/tb";
 import { Field, FieldProps, Form, Formik, FormikHelpers, FormikState } from "formik";
-import FloatingLabelFormControl from "../../../common/components/FloatingLabelFormControl";
 import { RegisterFormValues } from "../../services/onboardingTypes";
+import FloatingLabelInput from "../../../common/components/FloatingLabelInput";
+import FloatingLabelDatePicker from "../../../common/components/FloatingLabelDatePicker";
 
 type TProps = {
     validationSchema: any;
@@ -25,7 +26,7 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                         firstName: "",
                         lastName: "",
                         email: "",
-                        birthDate: "",
+                        birthDate: new Date(),
                         password: "",
                         passwordConfirm: "",
                         birthCountry: "",
@@ -65,148 +66,140 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                             <div className="flex w-full flex-wrap gap-4">
                                 <Field name="lastName">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Vezetéknév"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isRequired
-                                            isInvalid={form.touched.lastName && !!form.errors.lastName}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            required
+                                            invalid={form.touched.lastName && !!form.errors.lastName}
                                             errorMessage={form.errors.lastName}
-                                        >
-                                            <Input placeholder=" " {...field} />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="firstName">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Keresztnév"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isRequired
-                                            isInvalid={form.touched.firstName && !!form.errors.firstName}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            required
+                                            invalid={form.touched.firstName && !!form.errors.firstName}
                                             errorMessage={form.errors.firstName}
-                                        >
-                                            <Input placeholder=" " {...field} />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="email">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="E-Mail cím"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isRequired
-                                            isInvalid={form.touched.email && !!form.errors.email}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            required
+                                            invalid={form.touched.email && !!form.errors.email}
                                             errorMessage={form.errors.email}
-                                        >
-                                            <Input placeholder=" " {...field} />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="birthDate">
-                                    {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                    {({ field, form }: FieldProps<Date, RegisterFormValues>) => (
+                                        <FloatingLabelDatePicker
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Születési dátum"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isRequired
-                                            isInvalid={form.touched.birthDate && !!form.errors.birthDate}
-                                            errorMessage={form.errors.birthDate}
-                                        >
-                                            <Input placeholder=" " {...field} />
-                                        </FloatingLabelFormControl>
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            required
+                                            invalid={form.touched.birthDate && !!form.errors.birthDate}
+                                            errorMessage={form.errors.birthDate as string}
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="password">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
+                                            type="password"
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Jelszó"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isRequired
-                                            isInvalid={form.touched.password && !!form.errors.password}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            required
+                                            invalid={form.touched.password && !!form.errors.password}
                                             errorMessage={form.errors.password}
-                                        >
-                                            <Input placeholder=" " {...field} type="password" />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="passwordConfirm">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
+                                            type="password"
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Jelszó megerősítése"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isRequired
-                                            isInvalid={form.touched.passwordConfirm && !!form.errors.passwordConfirm}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            required
+                                            invalid={form.touched.passwordConfirm && !!form.errors.passwordConfirm}
                                             errorMessage={form.errors.passwordConfirm}
-                                        >
-                                            <Input placeholder=" " {...field} type="password" />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="birthCountry">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Születési ország"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isInvalid={form.touched.birthCountry && !!form.errors.birthCountry}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            invalid={form.touched.birthCountry && !!form.errors.birthCountry}
                                             errorMessage={form.errors.birthCountry}
-                                        >
-                                            <Input placeholder=" " {...field} />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="birthCity">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Születési város"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isInvalid={form.touched.birthCity && !!form.errors.birthCity}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            invalid={form.touched.birthCity && !!form.errors.birthCity}
                                             errorMessage={form.errors.birthCity}
-                                        >
-                                            <Input placeholder=" " {...field} />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="currentCountry">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Jelenlegi ország"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isInvalid={form.touched.currentCountry && !!form.errors.currentCountry}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            invalid={form.touched.currentCountry && !!form.errors.currentCountry}
                                             errorMessage={form.errors.currentCountry}
-                                        >
-                                            <Input placeholder=" " {...field} />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                                 <Field name="currentCity">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
-                                        <FloatingLabelFormControl
+                                        <FloatingLabelInput
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Jelenlegi város"
-                                            lightBgColor="white"
-                                            darkBgColor="slate-600"
-                                            isInvalid={form.touched.currentCity && !!form.errors.currentCity}
+                                            bgColorLight="white"
+                                            bgColorDark="slate-600"
+                                            invalid={form.touched.currentCity && !!form.errors.currentCity}
                                             errorMessage={form.errors.currentCity}
-                                        >
-                                            <Input placeholder=" " {...field} />
-                                        </FloatingLabelFormControl>
+                                            fieldInputProps={field}
+                                        />
                                     )}
                                 </Field>
                             </div>

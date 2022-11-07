@@ -28,6 +28,7 @@
     "@types/debounce": "^1.2.1",
     "@types/node": "18.11.6",
     "@types/react": "18.0.23",
+    "@types/react-datepicker": "^4.8.0",
     "@types/react-dom": "18.0.7",
     "autoprefixer": "^10.4.12",
     "eslint": "8.22.0",

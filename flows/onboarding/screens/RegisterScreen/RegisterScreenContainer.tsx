@@ -8,7 +8,7 @@ const LoginValidationSchema = Yup.object().shape({
     firstName: Yup.string().trim().required("Az mező kitöltése kötelező"),
     lastName: Yup.string().trim().required("Az mező kitöltése kötelező"),
     email: Yup.string().trim().required("Az mező kitöltése kötelező"),
-    birthDate: Yup.string().trim().required("A mező kitöltése kötelező"),
+    birthDate: Yup.date().nullable().required("Az mező kitöltése kötelező"),
     password: Yup.string().trim().required("A mező kitöltése kötelező"),
     passwordConfirm: Yup.string().trim().required("A mező kitöltése kötelező"),
     birthCountry: Yup.string(),
@@ -20,10 +20,7 @@ const LoginValidationSchema = Yup.object().shape({
 const RegisterScreenContainer = () => {
     const handleSubmit = (values: RegisterFormValues, actions: FormikHelpers<RegisterFormValues>) => {
         setTimeout(() => {
-            const email = values.email.trim();
-            const password = values.password.trim();
-
-            console.log("login\nEmail: " + email + "\nPassword: " + password);
+            console.log("register\n" + JSON.stringify(values, null, 2));
             actions.resetForm();
         }, 500);
     };
