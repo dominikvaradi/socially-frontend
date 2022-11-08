@@ -38,7 +38,7 @@ type TProps = {
     onLoadMorePostsButtonClick: () => void;
 };
 
-const ProfileTimelineScreenComponent = ({
+const UserTimelineScreenComponent = ({
     posts,
     onCreatePostSubmit,
     onPostEditClick,
@@ -129,4 +129,4 @@ const ProfileTimelineScreenComponent = ({
     );
 };
 
-export default ProfileTimelineScreenComponent;
+export default UserTimelineScreenComponent;

@@ -1,7 +1,7 @@
 import { Button, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import UserNameAvatar from "../../common/components/UserNameAvatar";
-import { TProfileLayoutTab } from "../services/profileTypes";
+import { TProfileLayoutTab } from "../services/userTypes";
 
 type TProps = {
     userName: string;

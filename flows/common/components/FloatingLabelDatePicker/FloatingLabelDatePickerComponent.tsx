@@ -80,6 +80,7 @@ const FloatingLabelDatePickerComponent = ({
                     dateFormat="yyyy. MM. dd."
                     popperPlacement="bottom"
                     renderCustomHeader={(props) => CustomReactDatePickerHeader(colorMode, props)}
+                    disabledKeyboardNavigation
                 />
                 {icon && iconPosition === "right" && (
                     <InputRightElement pointerEvents="none">

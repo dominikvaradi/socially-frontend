@@ -1,8 +1,8 @@
 import React from "react";
-import ProfileFriendsScreenComponent from "./ProfileFriendsScreenComponent";
-import { IFriendItem } from "../../services/profileTypes";
+import UserFriendsScreenComponent from "./UserFriendsScreenComponent";
+import { IFriendItem } from "../../services/userTypes";
 
-const ProfileFriendsScreenContainer = () => {
+const UserFriendsScreenContainer = () => {
     const handleLoadMoreFriendsButtonClick = () => {};
 
     const handleUserProfileClick = (userId: string) => {
@@ -10,7 +10,7 @@ const ProfileFriendsScreenContainer = () => {
     };
 
     return (
-        <ProfileFriendsScreenComponent
+        <UserFriendsScreenComponent
             friends={mockFriends}
             friendsLoading={false}
             loadMoreFriendsButtonVisible={true}
@@ -78,4 +78,4 @@ const mockFriends: IFriendItem[] = [
     },
 ];
 
-export default ProfileFriendsScreenContainer;
+export default UserFriendsScreenContainer;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import ProfileTimelineScreenComponent from "./ProfileTimelineScreenComponent";
+import UserTimelineScreenComponent from "./UserTimelineScreenComponent";
 import { CreatePostFormValues, IPost, IReactionListItem, TReaction } from "../../../common/services/commonTypes";
 import { FormikHelpers } from "formik";
 
-const ProfileTimelineScreenContainer = () => {
+const UserTimelineScreenContainer = () => {
     const [reactionListModalVisible, setReactionListModalVisible] = useState<boolean>(false);
     const [reactionListReactionItems, setReactionListReactionItems] =
         useState<IReactionListItem[]>(mockReactionListReactionItems);
@@ -92,7 +92,7 @@ const ProfileTimelineScreenContainer = () => {
     };
 
     return (
-        <ProfileTimelineScreenComponent
+        <UserTimelineScreenComponent
             posts={mockPosts}
             onCreatePostSubmit={handleCreatePostSubmit}
             onPostEditClick={handlePostEditClick}
@@ -122,7 +122,7 @@ const ProfileTimelineScreenContainer = () => {
     );
 };
 
-export default ProfileTimelineScreenContainer;
+export default UserTimelineScreenContainer;
 
 const mockPosts: IPost[] = [
     {
