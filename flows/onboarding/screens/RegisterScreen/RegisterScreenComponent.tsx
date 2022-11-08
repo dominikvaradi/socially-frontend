@@ -1,6 +1,9 @@
 import { Button, Icon, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { TbSocial } from "react-icons/tb";
+import { FaRegAddressCard, FaRegCalendarAlt, FaRegEnvelope } from "react-icons/fa";
+import { IoEarthOutline, IoBusinessOutline } from "react-icons/io5";
+import { FiLock } from "react-icons/fi";
 import { Field, FieldProps, Form, Formik, FormikHelpers, FormikState } from "formik";
 import { RegisterFormValues } from "../../services/onboardingTypes";
 import FloatingLabelInput from "../../../common/components/FloatingLabelInput";
@@ -63,7 +66,7 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                 </p>
                             </div>
                             <p className="!mb-4 text-center text-xl">Add meg az adataid a regisztrációhoz!</p>
-                            <div className="flex w-full flex-wrap gap-4">
+                            <div className="flex w-full flex-wrap gap-y-2 gap-x-4">
                                 <Field name="lastName">
                                     {({ field, form }: FieldProps<string, RegisterFormValues>) => (
                                         <FloatingLabelInput
@@ -75,6 +78,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.lastName && !!form.errors.lastName}
                                             errorMessage={form.errors.lastName}
                                             fieldInputProps={field}
+                                            icon={FaRegAddressCard}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>
@@ -89,6 +94,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.firstName && !!form.errors.firstName}
                                             errorMessage={form.errors.firstName}
                                             fieldInputProps={field}
+                                            icon={FaRegAddressCard}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>
@@ -103,6 +110,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.email && !!form.errors.email}
                                             errorMessage={form.errors.email}
                                             fieldInputProps={field}
+                                            icon={FaRegEnvelope}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>
@@ -117,6 +126,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.birthDate && !!form.errors.birthDate}
                                             errorMessage={form.errors.birthDate as string}
                                             fieldInputProps={field}
+                                            icon={FaRegCalendarAlt}
+                                            iconPosition={"right"}
                                         />
                                     )}
                                 </Field>
@@ -132,6 +143,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.password && !!form.errors.password}
                                             errorMessage={form.errors.password}
                                             fieldInputProps={field}
+                                            icon={FiLock}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>
@@ -147,6 +160,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.passwordConfirm && !!form.errors.passwordConfirm}
                                             errorMessage={form.errors.passwordConfirm}
                                             fieldInputProps={field}
+                                            icon={FiLock}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>
@@ -160,6 +175,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.birthCountry && !!form.errors.birthCountry}
                                             errorMessage={form.errors.birthCountry}
                                             fieldInputProps={field}
+                                            icon={IoEarthOutline}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>
@@ -173,6 +190,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.birthCity && !!form.errors.birthCity}
                                             errorMessage={form.errors.birthCity}
                                             fieldInputProps={field}
+                                            icon={IoBusinessOutline}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>
@@ -186,6 +205,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.currentCountry && !!form.errors.currentCountry}
                                             errorMessage={form.errors.currentCountry}
                                             fieldInputProps={field}
+                                            icon={IoEarthOutline}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>
@@ -199,6 +220,8 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                             invalid={form.touched.currentCity && !!form.errors.currentCity}
                                             errorMessage={form.errors.currentCity}
                                             fieldInputProps={field}
+                                            icon={IoBusinessOutline}
+                                            iconPosition="right"
                                         />
                                     )}
                                 </Field>

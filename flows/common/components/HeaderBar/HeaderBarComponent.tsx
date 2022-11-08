@@ -12,7 +12,7 @@ import {
     useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
-import { FiUser, FiMenu, FiSettings, FiLogOut, FiSun, FiMoon, FiSearch } from "react-icons/fi";
+import { FiUser, FiMenu, FiEdit, FiLogOut, FiSun, FiMoon, FiSearch } from "react-icons/fi";
 import UserNameAvatar from "../UserNameAvatar";
 
 type TProps = {
@@ -82,11 +82,11 @@ const HeaderBarComponent = ({
                             Profil
                         </MenuItem>
                         <MenuItem
-                            icon={<Icon as={FiSettings} />}
+                            icon={<Icon as={FiEdit} />}
                             onClick={onSettingsButtonClick}
                             className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
                         >
-                            Beállítások
+                            Profil szerkesztése
                         </MenuItem>
                         <MenuItem
                             icon={<Icon as={colorMode === "dark" ? FiSun : FiMoon} />}

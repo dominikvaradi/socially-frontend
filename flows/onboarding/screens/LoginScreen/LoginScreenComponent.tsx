@@ -2,6 +2,8 @@ import { Button, Icon, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { LoginFormValues } from "../../services/onboardingTypes";
 import { TbSocial } from "react-icons/tb";
+import { FaRegEnvelope } from "react-icons/fa";
+import { FiLock } from "react-icons/fi";
 import { Field, FieldProps, Form, Formik, FormikHelpers, FormikState } from "formik";
 import FloatingLabelInput from "../../../common/components/FloatingLabelInput";
 
@@ -64,6 +66,8 @@ const LoginScreenComponent = ({ validationSchema, onSubmit, onRegisterButtonClic
                                         invalid={form.touched.email && !!form.errors.email}
                                         errorMessage={form.errors.email}
                                         fieldInputProps={field}
+                                        icon={FaRegEnvelope}
+                                        iconPosition="right"
                                     />
                                 )}
                             </Field>
@@ -78,6 +82,8 @@ const LoginScreenComponent = ({ validationSchema, onSubmit, onRegisterButtonClic
                                         invalid={form.touched.password && !!form.errors.password}
                                         errorMessage={form.errors.password}
                                         fieldInputProps={field}
+                                        icon={FiLock}
+                                        iconPosition="right"
                                     />
                                 )}
                             </Field>

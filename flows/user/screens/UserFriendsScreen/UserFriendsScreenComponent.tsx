@@ -2,7 +2,7 @@ import React from "react";
 import MainLayout from "../../../common/components/MainLayout";
 import UserNameAvatar from "../../../common/components/UserNameAvatar";
 import ProfileLayout from "../../components/ProfileLayout";
-import { IFriendItem } from "../../services/profileTypes";
+import { IFriendItem } from "../../services/userTypes";
 import ColorModeSpinner from "../../../common/components/ColorModeSpinner";
 import { Button, useColorMode } from "@chakra-ui/react";
 
@@ -14,7 +14,7 @@ type TProps = {
     onUserProfileClick: (userId: string) => void;
 };
 
-const ProfileFriendsScreenComponent = ({
+const UserFriendsScreenComponent = ({
     friends,
     friendsLoading,
     loadMoreFriendsButtonVisible,
@@ -74,4 +74,4 @@ const ProfileFriendsScreenComponent = ({
     );
 };
 
-export default ProfileFriendsScreenComponent;
+export default UserFriendsScreenComponent;
