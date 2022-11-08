@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.react-datepicker-popper {
+    z-index: 3 !important;
+}
+
+.floating-label-date-picker-light {
+    .react-datepicker__month {
+        .react-datepicker__week {
+            .react-datepicker__day {
+                &.react-datepicker__day--keyboard-selected, &.react-datepicker__day--selected {
+                    @apply bg-brand-500 text-white hover:bg-brand-600 #{"!important"};
+                }
+
+                &.react-datepicker__day--today {
+                    @apply bg-red-500 text-white rounded-md hover:bg-red-600;
+                }
+            }
+        }
+    }
+}
+
+.floating-label-date-picker-dark {
+    .react-datepicker {
+        @apply bg-slate-700 border-slate-500;
+
+        .react-datepicker__triangle {
+            @apply before:border-b-slate-500 after:border-b-slate-800 #{"!important"};
+        }
+
+        .react-datepicker__header {
+            @apply bg-slate-800 text-white border-slate-500;
+
+            .react-datepicker__day-names {
+                @apply bg-slate-800;
+
+                .react-datepicker__day-name {
+                    @apply text-white;
+                }
+            }
+        }
+
+        .react-datepicker__month {
+            .react-datepicker__week {
+                .react-datepicker__day {
+                    @apply text-white hover:bg-slate-600;
+
+                    &.react-datepicker__day--keyboard-selected, &.react-datepicker__day--selected {
+                        @apply bg-brand-200 text-black hover:bg-brand-300 #{"!important"};
+                    }
+
+                    &.react-datepicker__day--today {
+                        @apply bg-red-300 text-slate-900 rounded-md hover:bg-red-400;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -4,7 +4,7 @@ import { TbSocial } from "react-icons/tb";
 import { Field, FieldProps, Form, Formik, FormikHelpers, FormikState } from "formik";
 import { RegisterFormValues } from "../../services/onboardingTypes";
 import FloatingLabelInput from "../../../common/components/FloatingLabelInput";
-import FloatingLabelDatePicker from "../../../common/components/FloatingLabelDatePicker";
+import FloatingLabelDatePickerComponent from "../../../common/components/FloatingLabelDatePicker";
 
 type TProps = {
     validationSchema: any;
@@ -108,7 +108,7 @@ const RegisterScreenComponent = ({ validationSchema, onSubmit, onLoginButtonClic
                                 </Field>
                                 <Field name="birthDate">
                                     {({ field, form }: FieldProps<Date, RegisterFormValues>) => (
-                                        <FloatingLabelDatePicker
+                                        <FloatingLabelDatePickerComponent
                                             className="!w-full sm:!w-[calc(50%-0.5rem)]"
                                             label="Születési dátum"
                                             bgColorLight="white"

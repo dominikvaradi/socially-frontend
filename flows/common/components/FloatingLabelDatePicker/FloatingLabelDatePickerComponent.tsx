@@ -9,12 +9,12 @@ import {
     InputRightElement,
     useColorMode,
 } from "@chakra-ui/react";
-import { FieldInputProps, useFormikContext } from "formik";
 import React from "react";
 import ReactDatePicker from "react-datepicker";
 import { IconType } from "react-icons";
-import { TIconPosition } from "../services/commonTypes";
 import "react-datepicker/dist/react-datepicker.css";
+import { TIconPosition } from "../../services/commonTypes";
+import CustomReactDatePickerHeader from "./components/CustomReactDatePickerHeader";
 
 type TProps = {
     className?: string;
@@ -26,10 +26,12 @@ type TProps = {
     required?: boolean;
     invalid?: boolean;
     errorMessage?: string;
-    fieldInputProps: FieldInputProps<Date>;
+    calendarValue: Date | null;
+    onReactDatePickerChange: (value: Date | null) => void;
+    onReactDatePickerCalendarClose: () => void;
 } & InputProps;
 
-const FloatingLabelDatePicker = ({
+const FloatingLabelDatePickerComponent = ({
     className,
     label,
     bgColorLight,
@@ -39,48 +41,45 @@ const FloatingLabelDatePicker = ({
     required,
     invalid,
     errorMessage,
-    fieldInputProps,
+    calendarValue,
+    onReactDatePickerChange,
+    onReactDatePickerCalendarClose,
 }: TProps) => {
     const { colorMode } = useColorMode();
-    const { setFieldValue, setFieldTouched, validateField } = useFormikContext();
+
+    const hasIconOnLeft = icon && (!iconPosition || iconPosition === "left");
 
     const inputGroupFocusWithinStyle = `[&>label]:focus-within:-translate-y-[20px] [&>label]:focus-within:scale-[0.85] ${
-        icon && (!iconPosition || iconPosition === "left") ? "[&>label]:focus-within:-translate-x-6" : ""
+        hasIconOnLeft ? "[&>label]:focus-within:-translate-x-6" : ""
     }`;
 
-    const inputGroupHasValueStyle = fieldInputProps.value
-        ? `[&>label]:-translate-y-[20px] [&>label]:scale-[0.85] ${
-              icon && (!iconPosition || iconPosition === "left") ? "[&>label]:-translate-x-6" : ""
-          }`
-        : "";
+    const inputGroupLabelStyle = `[&>label]:-translate-y-[20px] [&>label]:scale-[0.85] ${
+        hasIconOnLeft ? "[&>label]:-translate-x-6" : ""
+    }`;
 
     const labelBgColorStyle = `bg-${colorMode === "dark" ? bgColorDark : bgColorLight}`;
     const labelTextColorStyle = colorMode === "dark" ? "text-gray-300" : "text-gray-400";
 
-    const handleReactDatePickerChange = (value: Date | null) => {
-        setFieldValue(fieldInputProps.name, value);
-        validateField(fieldInputProps.name);
-    };
-
-    const handleReactDatePickerCalendarClose = () => {
-        setFieldTouched(fieldInputProps.name, true, false);
-    };
-
     return (
         <FormControl className={`relative pb-4 ${className || ""}`} isRequired={required} isInvalid={invalid}>
-            <InputGroup className={`relative ${inputGroupFocusWithinStyle} ${inputGroupHasValueStyle}`}>
-                {icon && (!iconPosition || iconPosition === "left") && (
+            <InputGroup
+                className={`relative ${inputGroupFocusWithinStyle} ${
+                    colorMode === "dark" ? "floating-label-date-picker-dark" : "floating-label-date-picker-light"
+                } ${calendarValue ? inputGroupLabelStyle : ""}`}
+            >
+                {hasIconOnLeft && (
                     <InputLeftElement pointerEvents="none">
                         <Icon as={icon} />
                     </InputLeftElement>
                 )}
                 <ReactDatePicker
-                    selected={(fieldInputProps.value && new Date(fieldInputProps.value)) || null}
-                    onChange={handleReactDatePickerChange}
-                    onCalendarClose={handleReactDatePickerCalendarClose}
+                    selected={calendarValue}
+                    onChange={onReactDatePickerChange}
+                    onCalendarClose={onReactDatePickerCalendarClose}
                     customInput={<Input />}
-                    showYearDropdown
                     dateFormat="yyyy. MM. dd."
+                    popperPlacement="bottom"
+                    renderCustomHeader={(props) => CustomReactDatePickerHeader(colorMode, props)}
                 />
                 {icon && iconPosition === "right" && (
                     <InputRightElement pointerEvents="none">
@@ -89,7 +88,7 @@ const FloatingLabelDatePicker = ({
                 )}
                 <FormLabel
                     className={`absolute top-0 z-[1] my-2 h-min cursor-text px-1 ${labelBgColorStyle} ${labelTextColorStyle} ${
-                        icon && (!iconPosition || iconPosition === "left") ? "left-10" : "left-4"
+                        hasIconOnLeft ? "left-10" : "left-4"
                     }`}
                 >
                     {label}
@@ -106,4 +105,4 @@ const FloatingLabelDatePicker = ({
     );
 };
 
-export default FloatingLabelDatePicker;
+export default FloatingLabelDatePickerComponent;
