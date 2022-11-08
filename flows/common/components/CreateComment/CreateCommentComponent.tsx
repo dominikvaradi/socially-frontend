@@ -1,9 +1,8 @@
 import { Button, useColorMode } from "@chakra-ui/react";
 import React from "react";
-import FloatingLabelFormControl from "../FloatingLabelFormControl";
-import AutoResizeTextarea from "../AutoResizeTextarea";
 import { Formik, Form, Field, FormikHelpers, FormikState, FieldProps } from "formik";
 import { CreateCommentFormValues } from "../../services/commonTypes";
+import FloatingLabelAutoResizeTextarea from "../FloatingLabelAutoResizeTextarea";
 
 type TProps = {
     className?: string;
@@ -26,22 +25,22 @@ const CreateCommentComponent = ({ className, inputRef, validationSchema, onSubmi
             {(props: FormikState<CreateCommentFormValues>) => (
                 <Form
                     noValidate
-                    className={`flex w-full flex-col p-3 ${colorMode === "dark" ? "bg-slate-600" : "bg-white"} ${
-                        className || ""
-                    }`}
+                    className={`flex w-full flex-col space-y-1 p-3 ${
+                        colorMode === "dark" ? "bg-slate-600" : "bg-white"
+                    } ${className || ""}`}
                 >
                     <Field name="content">
                         {({ field, form }: FieldProps<string, CreateCommentFormValues>) => (
-                            <FloatingLabelFormControl
+                            <FloatingLabelAutoResizeTextarea
+                                inputRef={inputRef}
                                 label="Komment"
-                                lightBgColor="white"
-                                darkBgColor="slate-600"
-                                isRequired
-                                isInvalid={form.touched.content && !!form.errors.content}
+                                bgColorLight="white"
+                                bgColorDark="slate-600"
+                                required
+                                invalid={form.touched.content && !!form.errors.content}
                                 errorMessage={form.errors.content}
-                            >
-                                <AutoResizeTextarea ref={inputRef} placeholder=" " {...field} />
-                            </FloatingLabelFormControl>
+                                fieldInputProps={field}
+                            />
                         )}
                     </Field>
                     <div>

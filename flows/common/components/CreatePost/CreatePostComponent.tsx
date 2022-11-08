@@ -1,9 +1,9 @@
-import { Button, Input, useColorMode } from "@chakra-ui/react";
+import { Button, useColorMode } from "@chakra-ui/react";
 import React from "react";
-import FloatingLabelFormControl from "../FloatingLabelFormControl";
-import AutoResizeTextarea from "../AutoResizeTextarea";
 import { Formik, Form, Field, FormikHelpers, FormikState, FieldProps } from "formik";
 import { CreatePostFormValues } from "../../services/commonTypes";
+import FloatingLabelInput from "../FloatingLabelInput";
+import FloatingLabelAutoResizeTextarea from "../FloatingLabelAutoResizeTextarea";
 
 type TProps = {
     className?: string;
@@ -27,36 +27,34 @@ const CreatePostComponent = ({ className, placeholder, validationSchema, onSubmi
             {(props: FormikState<CreatePostFormValues>) => (
                 <Form
                     noValidate
-                    className={`flex w-full flex-col rounded-md p-8 shadow-md ${
+                    className={`flex w-full flex-col space-y-1 rounded-md p-8 shadow-md ${
                         colorMode === "dark" ? "bg-slate-600" : "bg-white"
                     } ${className || ""}`}
                 >
                     <p className="mb-2 text-2xl">{placeholder}</p>
                     <Field name="header">
                         {({ field, form }: FieldProps<string, CreatePostFormValues>) => (
-                            <FloatingLabelFormControl
+                            <FloatingLabelInput
                                 label="Cím"
-                                lightBgColor="white"
-                                darkBgColor="slate-600"
-                                isInvalid={form.touched.header && !!form.errors.header}
+                                bgColorLight="white"
+                                bgColorDark="slate-600"
+                                invalid={form.touched.header && !!form.errors.header}
                                 errorMessage={form.errors.header}
-                            >
-                                <Input placeholder=" " {...field} />
-                            </FloatingLabelFormControl>
+                                fieldInputProps={field}
+                            />
                         )}
                     </Field>
                     <Field name="content">
                         {({ field, form }: FieldProps<string, CreatePostFormValues>) => (
-                            <FloatingLabelFormControl
+                            <FloatingLabelAutoResizeTextarea
                                 label="Tartalom"
-                                lightBgColor="white"
-                                darkBgColor="slate-600"
-                                isRequired
-                                isInvalid={form.touched.content && !!form.errors.content}
+                                bgColorLight="white"
+                                bgColorDark="slate-600"
+                                required
+                                invalid={form.touched.content && !!form.errors.content}
                                 errorMessage={form.errors.content}
-                            >
-                                <AutoResizeTextarea placeholder=" " {...field} />
-                            </FloatingLabelFormControl>
+                                fieldInputProps={field}
+                            />
                         )}
                     </Field>
                     <div>
