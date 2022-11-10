@@ -9,7 +9,6 @@ type TProps = {
     deletable: boolean;
     onDeleteButtonClick: (postId: string) => void;
     onReactionCountButtonClick: (postId: string) => void;
-    onCommentEditButtonClick: (commentId: string) => void;
     onCommentDeleteButtonClick: (commentId: string) => void;
     onCommentReactionCountButtonClick: (commentId: string) => void;
 };
@@ -20,7 +19,6 @@ const PostContainer = ({
     deletable,
     onDeleteButtonClick,
     onReactionCountButtonClick,
-    onCommentEditButtonClick,
     onCommentDeleteButtonClick,
     onCommentReactionCountButtonClick,
 }: TProps) => {
@@ -44,7 +42,7 @@ const PostContainer = ({
     );
 
     const handleEditClick = () => {
-        setEditing((value) => !value);
+        setEditing(true);
     };
 
     const handleDeleteClick = () => {
@@ -56,7 +54,7 @@ const PostContainer = ({
     };
 
     const handleCommentButtonClick = () => {
-        setCommentsVisible((visible) => !visible);
+        setCommentsVisible(true);
 
         setTimeout(() => {
             createCommentInputRef.current?.focus();
@@ -86,10 +84,6 @@ const PostContainer = ({
         setReactionPopoverVisible(false);
     };
 
-    const handleCommentToggleReactionButtonClick = (commentId: string, reaction: TReaction) => {
-        console.log(`handleCommentToggleReactionButtonClick:\ncommentId: ${commentId}\nreaction: ${reaction}`);
-    };
-
     const handleCreateCommentSubmit = (
         values: CreateCommentFormValues,
         actions: FormikHelpers<CreateCommentFormValues>
@@ -98,10 +92,6 @@ const PostContainer = ({
             console.log(`handleCreateCommentSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
             actions.resetForm();
         }, 1000);
-    };
-
-    const handleCommentAuthorProfileClick = (authorId: string) => {
-        console.log("handleCommentAuthorProfileClick: " + authorId);
     };
 
     const handleLoadMoreCommentsButtonClick = () => {
@@ -149,10 +139,7 @@ const PostContainer = ({
             comments={mockComments}
             commentsVisible={commentsVisible}
             createCommentInputRef={createCommentInputRef}
-            onCommentToggleReactionButtonClick={handleCommentToggleReactionButtonClick}
             onCreateCommentSubmit={handleCreateCommentSubmit}
-            onCommentAuthorProfileClick={handleCommentAuthorProfileClick}
-            onCommentEditButtonClick={onCommentEditButtonClick}
             onCommentDeleteButtonClick={onCommentDeleteButtonClick}
             onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
             commentsLoading={false}

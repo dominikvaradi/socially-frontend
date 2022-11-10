@@ -1,50 +1,45 @@
 import { Icon, IconButton, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { Formik, Form, Field, FormikHelpers, FormikState, FieldProps } from "formik";
-import { EditPostFormValues } from "../../services/commonTypes";
-import FloatingLabelInput from "../FloatingLabelInput";
 import FloatingLabelAutoResizeTextarea from "../FloatingLabelAutoResizeTextarea";
+import { EditCommentFormValues } from "../../services/commonTypes";
 import { FiCheck, FiX } from "react-icons/fi";
 
 type TProps = {
     className?: string;
     validationSchema: any;
-    onSubmit: (values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => void;
-    initialValues: EditPostFormValues;
+    onSubmit: (values: EditCommentFormValues, actions: FormikHelpers<EditCommentFormValues>) => void;
+    initialValues: EditCommentFormValues;
     onCancelButtonClick: () => void;
 };
 
-const EditPostComponent = ({ className, validationSchema, onSubmit, initialValues, onCancelButtonClick }: TProps) => {
+const EditCommentComponent = ({
+    className,
+    validationSchema,
+    onSubmit,
+    initialValues,
+    onCancelButtonClick,
+}: TProps) => {
     const { colorMode } = useColorMode();
 
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-            {(props: FormikState<EditPostFormValues>) => (
+            {(props: FormikState<EditCommentFormValues>) => (
                 <Form
                     noValidate
-                    className={`flex w-full flex-col gap-1 border-b px-3 pb-3 pt-2 sm:px-8 ${
-                        colorMode === "dark" ? "bg-slate-600" : "bg-white"
+                    className={`flex w-full flex-col gap-1 rounded-md px-3 pb-3 pt-2 drop-shadow-md sm:px-8 ${
+                        colorMode === "dark" ? "bg-slate-700" : "bg-blue-100"
                     } ${className || ""}`}
                 >
-                    <p className="mb-4 text-xl">Poszt szerkesztése</p>
-                    <Field name="header">
-                        {({ field, form }: FieldProps<string, EditPostFormValues>) => (
-                            <FloatingLabelInput
-                                label="Cím"
-                                bgColorLight="white"
-                                bgColorDark="slate-600"
-                                invalid={form.touched.header && !!form.errors.header}
-                                errorMessage={form.errors.header}
-                                fieldInputProps={field}
-                            />
-                        )}
-                    </Field>
+                    <div className="mb-1">
+                        <span className="text-xl">Komment szerkesztése</span>
+                    </div>
                     <Field name="content">
-                        {({ field, form }: FieldProps<string, EditPostFormValues>) => (
+                        {({ field, form }: FieldProps<string, EditCommentFormValues>) => (
                             <FloatingLabelAutoResizeTextarea
-                                label="Tartalom"
-                                bgColorLight="white"
-                                bgColorDark="slate-600"
+                                label="Komment"
+                                bgColorLight="blue-100"
+                                bgColorDark="slate-700"
                                 required
                                 invalid={form.touched.content && !!form.errors.content}
                                 errorMessage={form.errors.content}
@@ -73,4 +68,4 @@ const EditPostComponent = ({ className, validationSchema, onSubmit, initialValue
     );
 };
 
-export default EditPostComponent;
+export default EditCommentComponent;

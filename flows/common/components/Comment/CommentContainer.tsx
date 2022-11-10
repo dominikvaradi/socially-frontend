@@ -1,46 +1,34 @@
 import React, { useState } from "react";
 import CommentComponent from "./CommentComponent";
-import { IReactionCount, TReaction } from "../../services/commonTypes";
+import { EditCommentFormValues, IComment, TReaction } from "../../services/commonTypes";
+import { FormikHelpers } from "formik/dist/types";
 
 type TProps = {
-    authorName: string;
-    content: string;
-    createdTimeString: string;
+    comment: IComment;
     editable: boolean;
     deletable: boolean;
-    reactionCount: IReactionCount;
-    activeReaction?: TReaction;
-    onToggleReactionButtonClick: (reaction: TReaction) => void;
-    onAuthorProfileClick: () => void;
-    onEditButtonClick: () => void;
-    onDeleteButtonClick: () => void;
-    onReactionCountButtonClick: () => void;
+    onDeleteButtonClick: (commentId: string) => void;
+    onReactionCountButtonClick: (commentId: string) => void;
 };
 
 const CommentContainer = ({
-    authorName,
-    content,
-    createdTimeString,
+    comment,
     editable,
     deletable,
-    reactionCount,
-    activeReaction,
-    onToggleReactionButtonClick,
-    onAuthorProfileClick,
-    onEditButtonClick,
     onDeleteButtonClick,
     onReactionCountButtonClick,
 }: TProps) => {
     const [reactionPopoverVisible, setReactionPopoverVisible] = useState<boolean>(false);
+    const [editing, setEditing] = useState<boolean>(false);
 
-    const reactionCountSum: number = Object.values(reactionCount).reduce(
+    const reactionCountSum: number = Object.values(comment.reactionCount).reduce(
         (acc: number, count: number) => acc + count,
         0
     );
 
     const handleReactionPopoverToggleButtonClick = (reaction: TReaction) => {
         setReactionPopoverVisible(false);
-        onToggleReactionButtonClick(reaction);
+        console.log("handleReactionPopoverToggleButtonClick: " + reaction);
     };
 
     const handleReactionButtonClick = () => {
@@ -51,24 +39,55 @@ const CommentContainer = ({
         setReactionPopoverVisible(false);
     };
 
+    const handleAuthorProfileClick = () => {
+        console.log("handleAuthorProfileClick: " + comment.authorId);
+    };
+
+    const handleEditButtonClick = () => {
+        setEditing(true);
+    };
+
+    const handleDeleteButtonClick = () => {
+        onDeleteButtonClick(comment.id);
+    };
+
+    const handleReactionCountButtonClick = () => {
+        onReactionCountButtonClick(comment.id);
+    };
+
+    const handleEditCommentSubmit = (values: EditCommentFormValues, actions: FormikHelpers<EditCommentFormValues>) => {
+        setTimeout(() => {
+            console.log(`handleEditCommentSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
+            setEditing(false);
+            actions.resetForm();
+        }, 1000);
+    };
+
+    const handleEditCommentCancelButtonClick = () => {
+        setEditing(false);
+    };
+
     return (
         <CommentComponent
-            authorName={authorName}
-            content={content}
-            createdTimeString={createdTimeString}
+            authorName={comment.authorName}
+            content={comment.content}
+            createdTimeString={comment.createdTimeString}
             editable={editable}
             deletable={deletable}
-            reactionCount={reactionCount}
+            reactionCount={comment.reactionCount}
             reactionCountSum={reactionCountSum}
-            activeReaction={activeReaction}
+            activeReaction={comment.activeReactionOfUser}
             reactionPopoverVisible={reactionPopoverVisible}
             onReactionButtonClick={handleReactionButtonClick}
             onReactionPopoverToggleButtonClick={handleReactionPopoverToggleButtonClick}
             onReactionPopoverClose={handleReactionPopoverClose}
-            onAuthorProfileClick={onAuthorProfileClick}
-            onEditButtonClick={onEditButtonClick}
-            onDeleteButtonClick={onDeleteButtonClick}
-            onReactionCountButtonClick={onReactionCountButtonClick}
+            onAuthorProfileClick={handleAuthorProfileClick}
+            onEditButtonClick={handleEditButtonClick}
+            onDeleteButtonClick={handleDeleteButtonClick}
+            onReactionCountButtonClick={handleReactionCountButtonClick}
+            editing={editing}
+            onEditCommentSubmit={handleEditCommentSubmit}
+            onEditCommentCancelButtonClick={handleEditCommentCancelButtonClick}
         />
     );
 };

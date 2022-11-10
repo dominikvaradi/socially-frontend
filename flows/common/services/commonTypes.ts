@@ -48,6 +48,10 @@ export interface CreateCommentFormValues {
     content: string;
 }
 
+export interface EditCommentFormValues {
+    content: string;
+}
+
 export interface IReactionListItem {
     id: string;
     userId: string;

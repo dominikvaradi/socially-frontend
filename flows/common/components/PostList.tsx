@@ -6,10 +6,8 @@ import ColorModeSpinner from "./ColorModeSpinner";
 
 type TProps = {
     posts: IPost[];
-    onPostEditButtonClick: (postId: string) => void;
     onPostDeleteButtonClick: (postId: string) => void;
     onPostReactionCountButtonClick: (postId: string) => void;
-    onCommentEditButtonClick: (commentId: string) => void;
     onCommentDeleteButtonClick: (commentId: string) => void;
     onCommentReactionCountButtonClick: (commentId: string) => void;
     postsLoading: boolean;
@@ -19,10 +17,8 @@ type TProps = {
 
 const PostList = ({
     posts,
-    onPostEditButtonClick,
     onPostDeleteButtonClick,
     onPostReactionCountButtonClick,
-    onCommentEditButtonClick,
     onCommentDeleteButtonClick,
     onCommentReactionCountButtonClick,
     postsLoading,
@@ -37,10 +33,8 @@ const PostList = ({
                     post={post}
                     editable={true}
                     deletable={true}
-                    onEditButtonClick={onPostEditButtonClick}
                     onDeleteButtonClick={onPostDeleteButtonClick}
                     onReactionCountButtonClick={onPostReactionCountButtonClick}
-                    onCommentEditButtonClick={onCommentEditButtonClick}
                     onCommentDeleteButtonClick={onCommentDeleteButtonClick}
                     onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
                 />

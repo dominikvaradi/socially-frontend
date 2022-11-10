@@ -47,10 +47,7 @@ type TProps = {
     comments: IComment[];
     commentsVisible: boolean;
     createCommentInputRef: React.RefObject<HTMLTextAreaElement>;
-    onCommentToggleReactionButtonClick: (commentId: string, reaction: TReaction) => void;
     onCreateCommentSubmit: (values: CreateCommentFormValues, actions: FormikHelpers<CreateCommentFormValues>) => void;
-    onCommentAuthorProfileClick: (authorId: string) => void;
-    onCommentEditButtonClick: (commentId: string) => void;
     onCommentDeleteButtonClick: (commentId: string) => void;
     onCommentReactionCountButtonClick: (commentId: string) => void;
     commentsLoading: boolean;
@@ -89,10 +86,7 @@ const PostComponent = ({
     comments,
     commentsVisible,
     createCommentInputRef,
-    onCommentToggleReactionButtonClick,
     onCreateCommentSubmit,
-    onCommentAuthorProfileClick,
-    onCommentEditButtonClick,
     onCommentDeleteButtonClick,
     onCommentReactionCountButtonClick,
     commentsLoading,
@@ -251,23 +245,14 @@ const PostComponent = ({
                     }`}
                 >
                     <CreateComment inputRef={createCommentInputRef} onSubmit={onCreateCommentSubmit} />
-                    {comments.map((c) => (
+                    {comments.map((comment) => (
                         <Comment
-                            key={c.id}
-                            authorName={c.authorName}
-                            content={c.content}
-                            createdTimeString={c.createdTimeString}
+                            key={comment.id}
+                            comment={comment}
                             editable={true}
                             deletable={true}
-                            reactionCount={c.reactionCount}
-                            activeReaction={c.activeReactionOfUser}
-                            onToggleReactionButtonClick={(reaction) =>
-                                onCommentToggleReactionButtonClick(c.id, reaction)
-                            }
-                            onAuthorProfileClick={() => onCommentAuthorProfileClick(c.authorId)}
-                            onEditButtonClick={() => onCommentEditButtonClick(c.id)}
-                            onDeleteButtonClick={() => onCommentDeleteButtonClick(c.id)}
-                            onReactionCountButtonClick={() => onCommentReactionCountButtonClick(c.id)}
+                            onDeleteButtonClick={onCommentDeleteButtonClick}
+                            onReactionCountButtonClick={onCommentReactionCountButtonClick}
                         />
                     ))}
                     {comments.length === 0 && commentsLoading && (

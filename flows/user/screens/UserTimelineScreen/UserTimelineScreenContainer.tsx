@@ -24,10 +24,6 @@ const UserTimelineScreenContainer = () => {
         }, 500);
     };
 
-    const handlePostEditClick = (postId: string) => {
-        console.log("handlePostEditClick: " + postId);
-    };
-
     const handlePostDeleteClick = (postId: string) => {
         setDeletePostAlertDialogPostId(postId);
     };
@@ -39,10 +35,6 @@ const UserTimelineScreenContainer = () => {
 
     const handleUserProfileClick = (userId: string) => {
         console.log("handleUserProfileClick: " + userId);
-    };
-
-    const handleCommentEditButtonClick = (commentId: string) => {
-        console.log("handleCommentEditButtonClick: " + commentId);
     };
 
     const handleCommentDeleteButtonClick = (commentId: string) => {
@@ -95,11 +87,9 @@ const UserTimelineScreenContainer = () => {
         <UserTimelineScreenComponent
             posts={mockPosts}
             onCreatePostSubmit={handleCreatePostSubmit}
-            onPostEditClick={handlePostEditClick}
             onPostDeleteClick={handlePostDeleteClick}
             onPostReactionCountButtonClick={handlePostReactionCountButtonClick}
             onUserProfileClick={handleUserProfileClick}
-            onCommentEditButtonClick={handleCommentEditButtonClick}
             onCommentDeleteButtonClick={handleCommentDeleteButtonClick}
             onCommentReactionCountButtonClick={handleCommentReactionCountButtonClick}
             reactionListModalVisible={reactionListModalVisible}
