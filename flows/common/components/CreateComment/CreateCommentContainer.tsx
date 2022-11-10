@@ -10,7 +10,7 @@ type TProps = {
     onSubmit: (values: CreateCommentFormValues, actions: FormikHelpers<CreateCommentFormValues>) => void;
 };
 
-const CreatePostValidationSchema = Yup.object().shape({
+const CreateCommentValidationSchema = Yup.object().shape({
     content: Yup.string().trim().required("A mező kitöltése kötelező"),
 });
 
@@ -19,7 +19,7 @@ const CreateCommentContainer = ({ className, inputRef, onSubmit }: TProps) => {
         <CreateCommentComponent
             className={className}
             inputRef={inputRef}
-            validationSchema={CreatePostValidationSchema}
+            validationSchema={CreateCommentValidationSchema}
             onSubmit={onSubmit}
         />
     );

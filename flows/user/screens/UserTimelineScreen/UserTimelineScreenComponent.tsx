@@ -13,11 +13,9 @@ import { FormikHelpers } from "formik";
 type TProps = {
     posts: IPost[];
     onCreatePostSubmit: (values: CreatePostFormValues, actions: FormikHelpers<CreatePostFormValues>) => void;
-    onPostEditClick: (postId: string) => void;
     onPostDeleteClick: (postId: string) => void;
     onPostReactionCountButtonClick: (postId: string) => void;
     onUserProfileClick: (userId: string) => void;
-    onCommentEditButtonClick: (commentId: string) => void;
     onCommentDeleteButtonClick: (commentId: string) => void;
     onCommentReactionCountButtonClick: (commentId: string) => void;
     reactionListModalVisible: boolean;
@@ -41,11 +39,9 @@ type TProps = {
 const UserTimelineScreenComponent = ({
     posts,
     onCreatePostSubmit,
-    onPostEditClick,
     onPostDeleteClick,
     onPostReactionCountButtonClick,
     onUserProfileClick,
-    onCommentEditButtonClick,
     onCommentDeleteButtonClick,
     onCommentReactionCountButtonClick,
     reactionListModalVisible,
@@ -90,10 +86,8 @@ const UserTimelineScreenComponent = ({
                                 />
                                 <PostList
                                     posts={posts}
-                                    onPostEditButtonClick={onPostEditClick}
                                     onPostDeleteButtonClick={onPostDeleteClick}
                                     onPostReactionCountButtonClick={onPostReactionCountButtonClick}
-                                    onCommentEditButtonClick={onCommentEditButtonClick}
                                     onCommentDeleteButtonClick={onCommentDeleteButtonClick}
                                     onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
                                     postsLoading={postsLoading}
