@@ -41,8 +41,6 @@ const HeaderBarContainer = ({
     };
 
     const handleSearchInputBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
-        console.log("handleSearchInputBlur");
-
         if (event.relatedTarget?.classList.contains("search-popover-class")) {
             return;
         }
