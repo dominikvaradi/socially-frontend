@@ -51,3 +51,8 @@ export interface IReactionListItem {
 }
 
 export type TIconPosition = "left" | "right";
+
+export interface ISearchItemUser {
+    userId: string;
+    userName: string;
+}

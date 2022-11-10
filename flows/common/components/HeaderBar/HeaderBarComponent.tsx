@@ -12,8 +12,12 @@ import {
     useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
-import { FiUser, FiMenu, FiEdit, FiLogOut, FiSun, FiMoon, FiSearch } from "react-icons/fi";
+import { FiUser, FiMenu, FiEdit, FiLogOut, FiSun, FiMoon } from "react-icons/fi";
+import { FaHome } from "react-icons/fa";
+import { HiOutlineSearch } from "react-icons/hi";
 import UserNameAvatar from "../UserNameAvatar";
+import SearchPopover from "../SearchPopover";
+import { ISearchItemUser } from "../../services/commonTypes";
 
 type TProps = {
     userName: string;
@@ -22,6 +26,19 @@ type TProps = {
     onProfileButtonClick: () => void;
     onSettingsButtonClick: () => void;
     onSignOutButtonClick: () => void;
+    searchInputRef: React.RefObject<HTMLInputElement>;
+    searchInputValue: string;
+    onSearchInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onSearchInputBlur: (event: React.FocusEvent<HTMLInputElement, Element>) => void;
+    onSearchInputFocus: () => void;
+    searchPopoverVisible: boolean;
+    onSearchPopoverContentBlur: (event: React.FocusEvent<HTMLElement, Element>) => void;
+    searchPopoverSearchItems: ISearchItemUser[];
+    searchPopoverShowMoreSearchItemsButtonVisible: boolean;
+    onSearchPopoverShowMoreSearchItemsButtonClick: () => void;
+    onSearchPopoverSearchItemUserClick: (userId: string) => void;
+    onHomeButtonClick: () => void;
+    onSearchButtonClick: () => void;
 };
 
 const HeaderBarComponent = ({
@@ -31,6 +48,19 @@ const HeaderBarComponent = ({
     onProfileButtonClick,
     onSettingsButtonClick,
     onSignOutButtonClick,
+    searchInputRef,
+    searchInputValue,
+    onSearchInputChange,
+    onSearchInputBlur,
+    onSearchInputFocus,
+    searchPopoverVisible,
+    onSearchPopoverContentBlur,
+    searchPopoverSearchItems,
+    searchPopoverShowMoreSearchItemsButtonVisible,
+    onSearchPopoverShowMoreSearchItemsButtonClick,
+    onSearchPopoverSearchItemUserClick,
+    onHomeButtonClick,
+    onSearchButtonClick,
 }: TProps) => {
     const { toggleColorMode, colorMode } = useColorMode();
 
@@ -40,7 +70,7 @@ const HeaderBarComponent = ({
                 colorMode === "dark" ? "bg-brand-200" : "bg-brand-500"
             }`}
         >
-            <div className="flex-1">
+            <div className="flex flex-1 space-x-2 sm:justify-between">
                 <IconButton
                     ref={lastConversationsExpandButtonRef}
                     colorScheme="brand"
@@ -49,14 +79,50 @@ const HeaderBarComponent = ({
                     className="!h-14 !w-14 !text-xl"
                     onClick={onLastConversationsExpandButtonClick}
                 />
+                <IconButton
+                    colorScheme="brand"
+                    icon={<Icon as={FaHome} />}
+                    aria-label="Return to home screen"
+                    className="!h-14 !w-14 !text-xl"
+                    onClick={onHomeButtonClick}
+                />
+                <IconButton
+                    colorScheme="brand"
+                    icon={<Icon as={HiOutlineSearch} />}
+                    aria-label="Return to home screen"
+                    className="!h-14 !w-14 !text-xl sm:!hidden"
+                    onClick={onSearchButtonClick}
+                />
             </div>
             <div className="hidden h-full flex-grow items-center sm:flex">
-                <InputGroup size="lg" className={`!h-14 ${colorMode === "dark" ? "!text-white" : "!text-black"}`}>
-                    <InputLeftElement className="!h-14" pointerEvents="none">
-                        <Icon as={FiSearch} />
-                    </InputLeftElement>
-                    <Input placeholder="Keresés..." className="!h-14 !bg-[var(--chakra-colors-chakra-body-bg)]" />
-                </InputGroup>
+                <SearchPopover
+                    inputRef={searchInputRef}
+                    visible={searchPopoverVisible}
+                    onContentBlur={onSearchPopoverContentBlur}
+                    trigger={
+                        <InputGroup
+                            size="lg"
+                            className={`!h-14 ${colorMode === "dark" ? "!text-white" : "!text-black"}`}
+                        >
+                            <InputLeftElement className="!h-14" pointerEvents="none">
+                                <Icon as={HiOutlineSearch} />
+                            </InputLeftElement>
+                            <Input
+                                ref={searchInputRef}
+                                value={searchInputValue}
+                                onChange={onSearchInputChange}
+                                onBlur={onSearchInputBlur}
+                                onFocus={onSearchInputFocus}
+                                placeholder="Keresés..."
+                                className="!h-14 !bg-[var(--chakra-colors-chakra-body-bg)]"
+                            />
+                        </InputGroup>
+                    }
+                    searchItems={searchPopoverSearchItems}
+                    showMoreSearchItemsButtonVisible={searchPopoverShowMoreSearchItemsButtonVisible}
+                    onShowMoreSearchItemsButtonClick={onSearchPopoverShowMoreSearchItemsButtonClick}
+                    onSearchItemUserClick={onSearchPopoverSearchItemUserClick}
+                />
             </div>
             <div className="flex flex-1 items-center justify-end space-x-2">
                 <IconButton
