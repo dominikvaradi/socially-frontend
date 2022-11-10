@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import PostComponent from "./PostComponent";
-import { TReaction, IComment, CreateCommentFormValues, IPost } from "../../services/commonTypes";
+import { TReaction, IComment, CreateCommentFormValues, IPost, EditPostFormValues } from "../../services/commonTypes";
 import { FormikHelpers } from "formik";
 
 type TProps = {
     post: IPost;
     editable: boolean;
     deletable: boolean;
-    onEditButtonClick: (postId: string) => void;
     onDeleteButtonClick: (postId: string) => void;
     onReactionCountButtonClick: (postId: string) => void;
     onCommentEditButtonClick: (commentId: string) => void;
@@ -19,7 +18,6 @@ const PostContainer = ({
     post,
     editable,
     deletable,
-    onEditButtonClick,
     onDeleteButtonClick,
     onReactionCountButtonClick,
     onCommentEditButtonClick,
@@ -27,11 +25,12 @@ const PostContainer = ({
     onCommentReactionCountButtonClick,
 }: TProps) => {
     const contentRef = useRef<HTMLParagraphElement>(null);
+    const createCommentInputRef = useRef<HTMLTextAreaElement>(null);
     const [contentExpanded, setContentExpanded] = useState<boolean>(false);
     const [contentNeedExpand, setContentNeedExpand] = useState<boolean>(false);
     const [reactionPopoverVisible, setReactionPopoverVisible] = useState<boolean>(false);
     const [commentsVisible, setCommentsVisible] = useState<boolean>(false);
-    const createCommentInputRef = useRef<HTMLTextAreaElement>(null);
+    const [editing, setEditing] = useState<boolean>(false);
 
     useEffect(() => {
         if (!contentRef.current) return;
@@ -45,7 +44,7 @@ const PostContainer = ({
     );
 
     const handleEditClick = () => {
-        onEditButtonClick(post.id);
+        setEditing((value) => !value);
     };
 
     const handleDeleteClick = () => {
@@ -95,7 +94,10 @@ const PostContainer = ({
         values: CreateCommentFormValues,
         actions: FormikHelpers<CreateCommentFormValues>
     ) => {
-        console.log(`handleCreateCommentSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
+        setTimeout(() => {
+            console.log(`handleCreateCommentSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
+            actions.resetForm();
+        }, 1000);
     };
 
     const handleCommentAuthorProfileClick = (authorId: string) => {
@@ -104,6 +106,18 @@ const PostContainer = ({
 
     const handleLoadMoreCommentsButtonClick = () => {
         console.log("handleLoadMoreCommentsButtonClick");
+    };
+
+    const handleEditPostSubmit = (values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => {
+        setTimeout(() => {
+            console.log(`handleEditPostSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
+            setEditing(false);
+            actions.resetForm();
+        }, 1000);
+    };
+
+    const handleEditPostCancelButtonClick = () => {
+        setEditing(false);
     };
 
     return (
@@ -144,6 +158,9 @@ const PostContainer = ({
             commentsLoading={false}
             loadMoreCommentsButtonVisible={true}
             onLoadMoreCommentsButtonClick={handleLoadMoreCommentsButtonClick}
+            editing={editing}
+            onEditPostSubmit={handleEditPostSubmit}
+            onEditPostCancelButtonClick={handleEditPostCancelButtonClick}
         />
     );
 };

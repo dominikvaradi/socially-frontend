@@ -29,6 +29,11 @@ export interface CreatePostFormValues {
     content: string;
 }
 
+export interface EditPostFormValues {
+    header: string;
+    content: string;
+}
+
 export interface IComment {
     id: string;
     content: string;
