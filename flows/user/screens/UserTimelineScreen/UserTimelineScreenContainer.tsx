@@ -85,6 +85,7 @@ const UserTimelineScreenContainer = () => {
 
     return (
         <UserTimelineScreenComponent
+            userName="Naruto Uzumaki"
             posts={mockPosts}
             onCreatePostSubmit={handleCreatePostSubmit}
             onPostDeleteClick={handlePostDeleteClick}
@@ -108,6 +109,10 @@ const UserTimelineScreenContainer = () => {
             postsLoading={false}
             loadMorePostsButtonVisible={true}
             onLoadMorePostsButtonClick={handleLoadMorePostsButtonClick}
+            userSelf={false}
+            alreadyFriend={true}
+            friendRequestIncoming={true}
+            friendRequestAlreadySent={false}
         />
     );
 };

@@ -1,0 +1,3 @@
+import OutgoingFriendRequestsScreenContainer from "./OutgoingFriendRequestsScreenContainer";
+
+export default OutgoingFriendRequestsScreenContainer;
