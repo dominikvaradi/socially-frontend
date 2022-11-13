@@ -78,6 +78,10 @@ const HeaderBarContainer = ({
         console.log("handleSearchButtonClick");
     };
 
+    const handleFriendRequestsButtonClick = () => {
+        console.log("handleFriendRequestsButtonClick");
+    };
+
     return (
         <HeaderBarComponent
             userName={userName}
@@ -99,6 +103,7 @@ const HeaderBarContainer = ({
             onSearchPopoverSearchItemUserClick={handleSearchPopoverSearchItemUserClick}
             onHomeButtonClick={handleHomeButtonClick}
             onSearchButtonClick={handleSearchButtonClick}
+            onFriendRequestsButtonClick={handleFriendRequestsButtonClick}
         />
     );
 };
