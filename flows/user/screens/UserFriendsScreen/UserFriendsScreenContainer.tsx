@@ -11,11 +11,16 @@ const UserFriendsScreenContainer = () => {
 
     return (
         <UserFriendsScreenComponent
+            userName="Naruto Uzumaki"
             friends={mockFriends}
             friendsLoading={false}
             loadMoreFriendsButtonVisible={true}
             onLoadMoreFriendsButtonClick={handleLoadMoreFriendsButtonClick}
             onUserProfileClick={handleUserProfileClick}
+            userSelf={false}
+            alreadyFriend={true}
+            friendRequestIncoming={true}
+            friendRequestAlreadySent={false}
         />
     );
 };

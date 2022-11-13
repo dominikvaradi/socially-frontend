@@ -11,6 +11,7 @@ import DeleteCommentAlertDialog from "../../../common/components/DeleteCommentAl
 import { FormikHelpers } from "formik";
 
 type TProps = {
+    userName: string;
     posts: IPost[];
     onCreatePostSubmit: (values: CreatePostFormValues, actions: FormikHelpers<CreatePostFormValues>) => void;
     onPostDeleteClick: (postId: string) => void;
@@ -34,9 +35,14 @@ type TProps = {
     postsLoading: boolean;
     loadMorePostsButtonVisible: boolean;
     onLoadMorePostsButtonClick: () => void;
+    userSelf: boolean;
+    alreadyFriend: boolean;
+    friendRequestIncoming: boolean;
+    friendRequestAlreadySent: boolean;
 };
 
 const UserTimelineScreenComponent = ({
+    userName,
     posts,
     onCreatePostSubmit,
     onPostDeleteClick,
@@ -60,12 +66,23 @@ const UserTimelineScreenComponent = ({
     postsLoading,
     loadMorePostsButtonVisible,
     onLoadMorePostsButtonClick,
+    userSelf,
+    alreadyFriend,
+    friendRequestIncoming,
+    friendRequestAlreadySent,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
     return (
         <MainLayout>
-            <ProfileLayout userName="Naruto Uzumaki" activeTab="timeline">
+            <ProfileLayout
+                userName={userName}
+                activeTab="timeline"
+                userSelf={userSelf}
+                alreadyFriend={alreadyFriend}
+                friendRequestIncoming={friendRequestIncoming}
+                friendRequestAlreadySent={friendRequestAlreadySent}
+            >
                 <div className="flex justify-center sm:pl-16">
                     <div className="flex w-full flex-wrap items-start justify-start py-8 px-4 sm:w-[80%] sm:max-w-[1000px] sm:px-0 md:flex-nowrap">
                         <div
@@ -78,24 +95,38 @@ const UserTimelineScreenComponent = ({
                             <div className="">Születési hely: Japan, Leaf Village</div>
                             <div className="">Jelenlegi hely: Japán, Leaf Village modern version</div>
                         </div>
-                        <div className="flex-grow">
-                            <div className="flex w-full flex-col">
-                                <CreatePost
-                                    placeholder="Írj valamit Naruto idővonalára"
-                                    onSubmit={onCreatePostSubmit}
-                                />
-                                <PostList
-                                    posts={posts}
-                                    onPostDeleteButtonClick={onPostDeleteClick}
-                                    onPostReactionCountButtonClick={onPostReactionCountButtonClick}
-                                    onCommentDeleteButtonClick={onCommentDeleteButtonClick}
-                                    onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
-                                    postsLoading={postsLoading}
-                                    loadMorePostsButtonVisible={loadMorePostsButtonVisible}
-                                    onLoadMorePostsButtonClick={onLoadMorePostsButtonClick}
-                                />
+                        {(userSelf || alreadyFriend) && (
+                            <div className="flex-grow">
+                                <div className="flex w-full flex-col">
+                                    <CreatePost
+                                        placeholder="Írj valamit Naruto idővonalára"
+                                        onSubmit={onCreatePostSubmit}
+                                    />
+                                    <PostList
+                                        posts={posts}
+                                        onPostDeleteButtonClick={onPostDeleteClick}
+                                        onPostReactionCountButtonClick={onPostReactionCountButtonClick}
+                                        onCommentDeleteButtonClick={onCommentDeleteButtonClick}
+                                        onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
+                                        postsLoading={postsLoading}
+                                        loadMorePostsButtonVisible={loadMorePostsButtonVisible}
+                                        onLoadMorePostsButtonClick={onLoadMorePostsButtonClick}
+                                    />
+                                </div>
                             </div>
-                        </div>
+                        )}
+                        {!userSelf && !alreadyFriend && (
+                            <div
+                                className={`flex-grow rounded-md p-4 drop-shadow-md ${
+                                    colorMode === "dark" ? "bg-slate-600" : "bg-white"
+                                }`}
+                            >
+                                <p>
+                                    <span className="font-semibold">{userName}</span> még nem a barátod, ezért nem
+                                    láthatod az idővonalát.
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </ProfileLayout>
