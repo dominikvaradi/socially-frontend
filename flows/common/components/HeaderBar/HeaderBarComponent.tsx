@@ -12,7 +12,7 @@ import {
     useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
-import { FiUser, FiMenu, FiEdit, FiLogOut, FiSun, FiMoon } from "react-icons/fi";
+import { FiUser, FiMenu, FiEdit, FiLogOut, FiSun, FiMoon, FiUsers } from "react-icons/fi";
 import { FaHome } from "react-icons/fa";
 import { HiOutlineSearch } from "react-icons/hi";
 import UserNameAvatar from "../UserNameAvatar";
@@ -39,6 +39,7 @@ type TProps = {
     onSearchPopoverSearchItemUserClick: (userId: string) => void;
     onHomeButtonClick: () => void;
     onSearchButtonClick: () => void;
+    onFriendRequestsButtonClick: () => void;
 };
 
 const HeaderBarComponent = ({
@@ -61,6 +62,7 @@ const HeaderBarComponent = ({
     onSearchPopoverSearchItemUserClick,
     onHomeButtonClick,
     onSearchButtonClick,
+    onFriendRequestsButtonClick,
 }: TProps) => {
     const { toggleColorMode, colorMode } = useColorMode();
 
@@ -127,6 +129,13 @@ const HeaderBarComponent = ({
             <div className="flex flex-1 items-center justify-end space-x-2">
                 <IconButton
                     colorScheme="brand"
+                    icon={<Icon as={FiUsers} />}
+                    aria-label="Friend requests"
+                    className="!hidden !h-14 !w-14 !text-xl md:!flex"
+                    onClick={onFriendRequestsButtonClick}
+                />
+                <IconButton
+                    colorScheme="brand"
                     icon={<Icon as={colorMode === "dark" ? FiSun : FiMoon} />}
                     aria-label="Dark-Light mode switch"
                     className="!hidden !h-14 !w-14 !text-xl lg:!flex"
@@ -153,6 +162,13 @@ const HeaderBarComponent = ({
                             className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
                         >
                             Profil szerkesztése
+                        </MenuItem>
+                        <MenuItem
+                            icon={<Icon as={FiUsers} />}
+                            onClick={onFriendRequestsButtonClick}
+                            className={`md:!hidden ${colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}`}
+                        >
+                            Barát-kérelmek
                         </MenuItem>
                         <MenuItem
                             icon={<Icon as={colorMode === "dark" ? FiSun : FiMoon} />}

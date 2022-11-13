@@ -54,7 +54,7 @@ const UserFriendsScreenComponent = ({
                                 <ColorModeSpinner size="lg" />
                             </div>
                         )}
-                        {loadMoreFriendsButtonVisible && (
+                        {friends.length > 0 && loadMoreFriendsButtonVisible && (
                             <div className="flex justify-center">
                                 <Button
                                     colorScheme="brand"
