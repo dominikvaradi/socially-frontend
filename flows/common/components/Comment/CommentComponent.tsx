@@ -125,7 +125,7 @@ const CommentComponent = ({
                                 <Button
                                     onClick={onReactionCountButtonClick}
                                     colorScheme="brand"
-                                    className="!absolute -bottom-3.5 right-2 flex !h-min cursor-pointer select-none items-center space-x-1 !rounded-full !p-1 drop-shadow-md"
+                                    className="!absolute -bottom-3.5 right-2 flex !h-min cursor-pointer select-none items-center space-x-1 !rounded-full !px-2 !py-1 drop-shadow-md"
                                 >
                                     <div className="flex flex-row-reverse items-center -space-x-1 space-x-reverse">
                                         {reactionCount.angryCount > 0 && (
