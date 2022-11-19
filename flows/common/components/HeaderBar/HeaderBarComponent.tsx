@@ -12,7 +12,8 @@ import {
     useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
-import { FiUser, FiMenu, FiEdit, FiLogOut, FiSun, FiMoon, FiUsers } from "react-icons/fi";
+import { FiUser, FiMenu, FiEdit, FiLogOut, FiSun, FiMoon, FiUserPlus } from "react-icons/fi";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
 import { HiOutlineSearch } from "react-icons/hi";
 import UserNameAvatar from "../UserNameAvatar";
@@ -40,6 +41,7 @@ type TProps = {
     onHomeButtonClick: () => void;
     onSearchButtonClick: () => void;
     onFriendRequestsButtonClick: () => void;
+    onConversationsButtonClick: () => void;
 };
 
 const HeaderBarComponent = ({
@@ -63,6 +65,7 @@ const HeaderBarComponent = ({
     onHomeButtonClick,
     onSearchButtonClick,
     onFriendRequestsButtonClick,
+    onConversationsButtonClick,
 }: TProps) => {
     const { toggleColorMode, colorMode } = useColorMode();
 
@@ -129,7 +132,14 @@ const HeaderBarComponent = ({
             <div className="flex flex-1 items-center justify-end space-x-2">
                 <IconButton
                     colorScheme="brand"
-                    icon={<Icon as={FiUsers} />}
+                    icon={<Icon as={IoChatbubbleEllipsesOutline} />}
+                    aria-label="Friend requests"
+                    className="!hidden !h-14 !w-14 !text-xl md:!flex"
+                    onClick={onConversationsButtonClick}
+                />
+                <IconButton
+                    colorScheme="brand"
+                    icon={<Icon as={FiUserPlus} />}
                     aria-label="Friend requests"
                     className="!hidden !h-14 !w-14 !text-xl md:!flex"
                     onClick={onFriendRequestsButtonClick}
@@ -164,7 +174,14 @@ const HeaderBarComponent = ({
                             Profil szerkesztése
                         </MenuItem>
                         <MenuItem
-                            icon={<Icon as={FiUsers} />}
+                            icon={<Icon as={IoChatbubbleEllipsesOutline} />}
+                            onClick={onConversationsButtonClick}
+                            className={`md:!hidden ${colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}`}
+                        >
+                            Beszélgetések
+                        </MenuItem>
+                        <MenuItem
+                            icon={<Icon as={FiUserPlus} />}
                             onClick={onFriendRequestsButtonClick}
                             className={`md:!hidden ${colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}`}
                         >

@@ -15,16 +15,16 @@ type TProps = {
     onConfirmButtonClick: () => void;
 };
 
-const DeleteCommentAlertDialog = ({ visible, onClose, onConfirmButtonClick }: TProps) => {
+const DeleteMessageAlertDialog = ({ visible, onClose, onConfirmButtonClick }: TProps) => {
     const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
 
     return (
         <AlertDialog isOpen={visible} leastDestructiveRef={cancelButtonRef} onClose={onClose} isCentered>
             <AlertDialogOverlay>
                 <AlertDialogContent>
-                    <AlertDialogHeader>Komment törlése</AlertDialogHeader>
+                    <AlertDialogHeader>Üzenet törlése</AlertDialogHeader>
 
-                    <AlertDialogBody>Biztosan törölni szeretnéd a kiválasztott kommentet?</AlertDialogBody>
+                    <AlertDialogBody>Biztosan törölni szeretnéd a kiválasztott üzenetet?</AlertDialogBody>
 
                     <AlertDialogFooter>
                         <div className="flex w-full items-center justify-end space-x-2">
@@ -42,4 +42,4 @@ const DeleteCommentAlertDialog = ({ visible, onClose, onConfirmButtonClick }: TP
     );
 };
 
-export default DeleteCommentAlertDialog;
+export default DeleteMessageAlertDialog;

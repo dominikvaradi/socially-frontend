@@ -16,7 +16,7 @@ type TProps = {
 };
 
 const DeletePostAlertDialog = ({ visible, onClose, onConfirmButtonClick }: TProps) => {
-    const cancelButtonRef = React.useRef(null);
+    const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
 
     return (
         <AlertDialog isOpen={visible} leastDestructiveRef={cancelButtonRef} onClose={onClose} isCentered>
