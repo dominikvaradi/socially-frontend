@@ -40,7 +40,13 @@ export interface MessageResponseDto {
      * @type {string}
      * @memberof MessageResponseDto
      */
-    'userName': string;
+    'userFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageResponseDto
+     */
+    'userLastName': string;
     /**
      * 
      * @type {string}

@@ -31,7 +31,13 @@ export interface UserProfileResponseDto {
      * @type {string}
      * @memberof UserProfileResponseDto
      */
-    'name': string;
+    'firstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserProfileResponseDto
+     */
+    'lastName': string;
     /**
      * 
      * @type {string}

@@ -60,7 +60,7 @@ export const ConversationControllerApiAxiosParamCreator = function (configuratio
             assertParamExists('addUsersToConversation', 'conversationId', conversationId)
             // verify required parameter 'conversationAddUsersRequestDto' is not null or undefined
             assertParamExists('addUsersToConversation', 'conversationAddUsersRequestDto', conversationAddUsersRequestDto)
-            const localVarPath = `/api/conversations/{conversationId}/users`
+            const localVarPath = `/conversations/{conversationId}/users`
                 .replace(`{${"conversationId"}}`, encodeURIComponent(String(conversationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -100,7 +100,7 @@ export const ConversationControllerApiAxiosParamCreator = function (configuratio
         createConversation: async (conversationCreateRequestDto: ConversationCreateRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'conversationCreateRequestDto' is not null or undefined
             assertParamExists('createConversation', 'conversationCreateRequestDto', conversationCreateRequestDto)
-            const localVarPath = `/api/conversations`;
+            const localVarPath = `/conversations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -142,7 +142,7 @@ export const ConversationControllerApiAxiosParamCreator = function (configuratio
             assertParamExists('createMessageInConversation', 'conversationId', conversationId)
             // verify required parameter 'messageCreateRequestDto' is not null or undefined
             assertParamExists('createMessageInConversation', 'messageCreateRequestDto', messageCreateRequestDto)
-            const localVarPath = `/api/conversations/{conversationId}/messages`
+            const localVarPath = `/conversations/{conversationId}/messages`
                 .replace(`{${"conversationId"}}`, encodeURIComponent(String(conversationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -181,7 +181,7 @@ export const ConversationControllerApiAxiosParamCreator = function (configuratio
          * @throws {RequiredError}
          */
         findAllConversationsByCurrentUser: async (page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/conversations`;
+            const localVarPath = `/conversations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -225,7 +225,7 @@ export const ConversationControllerApiAxiosParamCreator = function (configuratio
         findConversationByPublicId: async (conversationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'conversationId' is not null or undefined
             assertParamExists('findConversationByPublicId', 'conversationId', conversationId)
-            const localVarPath = `/api/conversations/{conversationId}`
+            const localVarPath = `/conversations/{conversationId}`
                 .replace(`{${"conversationId"}}`, encodeURIComponent(String(conversationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -264,7 +264,7 @@ export const ConversationControllerApiAxiosParamCreator = function (configuratio
         findMessagesByConversation: async (conversationId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'conversationId' is not null or undefined
             assertParamExists('findMessagesByConversation', 'conversationId', conversationId)
-            const localVarPath = `/api/conversations/{conversationId}/messages`
+            const localVarPath = `/conversations/{conversationId}/messages`
                 .replace(`{${"conversationId"}}`, encodeURIComponent(String(conversationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -312,7 +312,7 @@ export const ConversationControllerApiAxiosParamCreator = function (configuratio
             assertParamExists('removeUserFromConversation', 'conversationId', conversationId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('removeUserFromConversation', 'userId', userId)
-            const localVarPath = `/api/conversations/{conversationId}/users/{userId}`
+            const localVarPath = `/conversations/{conversationId}/users/{userId}`
                 .replace(`{${"conversationId"}}`, encodeURIComponent(String(conversationId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -356,7 +356,7 @@ export const ConversationControllerApiAxiosParamCreator = function (configuratio
             assertParamExists('updateUsersRoleInConversation', 'userId', userId)
             // verify required parameter 'conversationChangeUserRoleRequestDto' is not null or undefined
             assertParamExists('updateUsersRoleInConversation', 'conversationChangeUserRoleRequestDto', conversationChangeUserRoleRequestDto)
-            const localVarPath = `/api/conversations/{conversationId}/users/{userId}/role`
+            const localVarPath = `/conversations/{conversationId}/users/{userId}/role`
                 .replace(`{${"conversationId"}}`, encodeURIComponent(String(conversationId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.

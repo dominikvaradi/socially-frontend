@@ -25,13 +25,19 @@ export interface UserUpdateRequestDto {
      * @type {string}
      * @memberof UserUpdateRequestDto
      */
-    'name': string;
+    'firstName': string;
     /**
      * 
      * @type {string}
      * @memberof UserUpdateRequestDto
      */
-    'birthDate'?: string;
+    'lastName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateRequestDto
+     */
+    'birthDate': string;
     /**
      * 
      * @type {string}

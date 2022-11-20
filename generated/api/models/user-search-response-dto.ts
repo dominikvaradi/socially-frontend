@@ -31,6 +31,12 @@ export interface UserSearchResponseDto {
      * @type {string}
      * @memberof UserSearchResponseDto
      */
-    'name': string;
+    'firstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSearchResponseDto
+     */
+    'lastName': string;
 }
 

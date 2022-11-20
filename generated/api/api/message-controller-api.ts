@@ -50,7 +50,7 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
             assertParamExists('createReactionOnMessage', 'messageId', messageId)
             // verify required parameter 'reactionCreateRequestDto' is not null or undefined
             assertParamExists('createReactionOnMessage', 'reactionCreateRequestDto', reactionCreateRequestDto)
-            const localVarPath = `/api/messages/{messageId}/reactions`
+            const localVarPath = `/messages/{messageId}/reactions`
                 .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -90,7 +90,7 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
         deleteMessage: async (messageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'messageId' is not null or undefined
             assertParamExists('deleteMessage', 'messageId', messageId)
-            const localVarPath = `/api/messages/{messageId}`
+            const localVarPath = `/messages/{messageId}`
                 .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -130,7 +130,7 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
             assertParamExists('deleteReactionFromMessage', 'messageId', messageId)
             // verify required parameter 'reaction' is not null or undefined
             assertParamExists('deleteReactionFromMessage', 'reaction', reaction)
-            const localVarPath = `/api/messages/{messageId}/reactions/{reaction}`
+            const localVarPath = `/messages/{messageId}/reactions/{reaction}`
                 .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)))
                 .replace(`{${"reaction"}}`, encodeURIComponent(String(reaction)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -170,7 +170,7 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
         findAllReactionsByMessage: async (messageId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'messageId' is not null or undefined
             assertParamExists('findAllReactionsByMessage', 'messageId', messageId)
-            const localVarPath = `/api/messages/{messageId}/reactions`
+            const localVarPath = `/messages/{messageId}/reactions`
                 .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -215,7 +215,7 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
         findMessageByPublicId: async (messageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'messageId' is not null or undefined
             assertParamExists('findMessageByPublicId', 'messageId', messageId)
-            const localVarPath = `/api/messages/{messageId}`
+            const localVarPath = `/messages/{messageId}`
                 .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

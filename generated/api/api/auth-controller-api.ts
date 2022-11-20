@@ -12,36 +12,26 @@
  * Do not edit the class manually.
  */
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "axios";
-import { Configuration } from "../configuration";
+
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import {
-    DUMMY_BASE_URL,
-    assertParamExists,
-    setApiKeyToObject,
-    setBasicAuthToObject,
-    setBearerAuthToObject,
-    setOAuthToObject,
-    setSearchParams,
-    serializeDataIfNeeded,
-    toPathString,
-    createRequestFunction,
-} from "../common";
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from "../base";
+import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { RefreshTokenRequestDto } from "../models";
+import { RefreshTokenRequestDto } from '../models';
 // @ts-ignore
-import { RestApiResponseDtoRefreshTokenResponseDto } from "../models";
+import { RestApiResponseDtoRefreshTokenResponseDto } from '../models';
 // @ts-ignore
-import { RestApiResponseDtoUserCreateResponseDto } from "../models";
+import { RestApiResponseDtoUserCreateResponseDto } from '../models';
 // @ts-ignore
-import { RestApiResponseDtoUserLoginResponseDto } from "../models";
+import { RestApiResponseDtoUserLoginResponseDto } from '../models';
 // @ts-ignore
-import { UserCreateRequestDto } from "../models";
+import { UserCreateRequestDto } from '../models';
 // @ts-ignore
-import { UserLoginRequestDto } from "../models";
+import { UserLoginRequestDto } from '../models';
 /**
  * AuthControllerApi - axios parameter creator
  * @export
@@ -49,18 +39,15 @@ import { UserLoginRequestDto } from "../models";
 export const AuthControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
-         * @param {UserCreateRequestDto} userCreateRequestDto
+         * 
+         * @param {UserCreateRequestDto} userCreateRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser: async (
-            userCreateRequestDto: UserCreateRequestDto,
-            options: AxiosRequestConfig = {}
-        ): Promise<RequestArgs> => {
+        createUser: async (userCreateRequestDto: UserCreateRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userCreateRequestDto' is not null or undefined
-            assertParamExists("createUser", "userCreateRequestDto", userCreateRequestDto);
-            const localVarPath = `/api/auth/register`;
+            assertParamExists('createUser', 'userCreateRequestDto', userCreateRequestDto)
+            const localVarPath = `/auth/register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -68,24 +55,18 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarHeaderParameter["Content-Type"] = "application/json";
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            localVarRequestOptions.data = serializeDataIfNeeded(
-                userCreateRequestDto,
-                localVarRequestOptions,
-                configuration
-            );
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userCreateRequestDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -93,18 +74,15 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         *
-         * @param {UserLoginRequestDto} userLoginRequestDto
+         * 
+         * @param {UserLoginRequestDto} userLoginRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginUser: async (
-            userLoginRequestDto: UserLoginRequestDto,
-            options: AxiosRequestConfig = {}
-        ): Promise<RequestArgs> => {
+        loginUser: async (userLoginRequestDto: UserLoginRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userLoginRequestDto' is not null or undefined
-            assertParamExists("loginUser", "userLoginRequestDto", userLoginRequestDto);
-            const localVarPath = `/api/auth/login`;
+            assertParamExists('loginUser', 'userLoginRequestDto', userLoginRequestDto)
+            const localVarPath = `/auth/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -112,24 +90,18 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarHeaderParameter["Content-Type"] = "application/json";
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            localVarRequestOptions.data = serializeDataIfNeeded(
-                userLoginRequestDto,
-                localVarRequestOptions,
-                configuration
-            );
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userLoginRequestDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -137,18 +109,15 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         *
-         * @param {RefreshTokenRequestDto} refreshTokenRequestDto
+         * 
+         * @param {RefreshTokenRequestDto} refreshTokenRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshToken: async (
-            refreshTokenRequestDto: RefreshTokenRequestDto,
-            options: AxiosRequestConfig = {}
-        ): Promise<RequestArgs> => {
+        refreshToken: async (refreshTokenRequestDto: RefreshTokenRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'refreshTokenRequestDto' is not null or undefined
-            assertParamExists("refreshToken", "refreshTokenRequestDto", refreshTokenRequestDto);
-            const localVarPath = `/api/auth/refresh-token`;
+            assertParamExists('refreshToken', 'refreshTokenRequestDto', refreshTokenRequestDto)
+            const localVarPath = `/auth/refresh-token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -156,131 +125,99 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarHeaderParameter["Content-Type"] = "application/json";
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            localVarRequestOptions.data = serializeDataIfNeeded(
-                refreshTokenRequestDto,
-                localVarRequestOptions,
-                configuration
-            );
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(refreshTokenRequestDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
-    };
+    }
 };
 
 /**
  * AuthControllerApi - functional programming interface
  * @export
  */
-export const AuthControllerApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = AuthControllerApiAxiosParamCreator(configuration);
+export const AuthControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AuthControllerApiAxiosParamCreator(configuration)
     return {
         /**
-         *
-         * @param {UserCreateRequestDto} userCreateRequestDto
+         * 
+         * @param {UserCreateRequestDto} userCreateRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUser(
-            userCreateRequestDto: UserCreateRequestDto,
-            options?: AxiosRequestConfig
-        ): Promise<
-            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoUserCreateResponseDto>
-        > {
+        async createUser(userCreateRequestDto: UserCreateRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoUserCreateResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(userCreateRequestDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
-         * @param {UserLoginRequestDto} userLoginRequestDto
+         * 
+         * @param {UserLoginRequestDto} userLoginRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async loginUser(
-            userLoginRequestDto: UserLoginRequestDto,
-            options?: AxiosRequestConfig
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoUserLoginResponseDto>> {
+        async loginUser(userLoginRequestDto: UserLoginRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoUserLoginResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.loginUser(userLoginRequestDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *
-         * @param {RefreshTokenRequestDto} refreshTokenRequestDto
+         * 
+         * @param {RefreshTokenRequestDto} refreshTokenRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async refreshToken(
-            refreshTokenRequestDto: RefreshTokenRequestDto,
-            options?: AxiosRequestConfig
-        ): Promise<
-            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoRefreshTokenResponseDto>
-        > {
+        async refreshToken(refreshTokenRequestDto: RefreshTokenRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoRefreshTokenResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.refreshToken(refreshTokenRequestDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-    };
+    }
 };
 
 /**
  * AuthControllerApi - factory interface
  * @export
  */
-export const AuthControllerApiFactory = function (
-    configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance
-) {
-    const localVarFp = AuthControllerApiFp(configuration);
+export const AuthControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AuthControllerApiFp(configuration)
     return {
         /**
-         *
-         * @param {UserCreateRequestDto} userCreateRequestDto
+         * 
+         * @param {UserCreateRequestDto} userCreateRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser(
-            userCreateRequestDto: UserCreateRequestDto,
-            options?: any
-        ): AxiosPromise<RestApiResponseDtoUserCreateResponseDto> {
+        createUser(userCreateRequestDto: UserCreateRequestDto, options?: any): AxiosPromise<RestApiResponseDtoUserCreateResponseDto> {
             return localVarFp.createUser(userCreateRequestDto, options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {UserLoginRequestDto} userLoginRequestDto
+         * 
+         * @param {UserLoginRequestDto} userLoginRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginUser(
-            userLoginRequestDto: UserLoginRequestDto,
-            options?: any
-        ): AxiosPromise<RestApiResponseDtoUserLoginResponseDto> {
+        loginUser(userLoginRequestDto: UserLoginRequestDto, options?: any): AxiosPromise<RestApiResponseDtoUserLoginResponseDto> {
             return localVarFp.loginUser(userLoginRequestDto, options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {RefreshTokenRequestDto} refreshTokenRequestDto
+         * 
+         * @param {RefreshTokenRequestDto} refreshTokenRequestDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshToken(
-            refreshTokenRequestDto: RefreshTokenRequestDto,
-            options?: any
-        ): AxiosPromise<RestApiResponseDtoRefreshTokenResponseDto> {
+        refreshToken(refreshTokenRequestDto: RefreshTokenRequestDto, options?: any): AxiosPromise<RestApiResponseDtoRefreshTokenResponseDto> {
             return localVarFp.refreshToken(refreshTokenRequestDto, options).then((request) => request(axios, basePath));
         },
     };
@@ -294,41 +231,35 @@ export const AuthControllerApiFactory = function (
  */
 export class AuthControllerApi extends BaseAPI {
     /**
-     *
-     * @param {UserCreateRequestDto} userCreateRequestDto
+     * 
+     * @param {UserCreateRequestDto} userCreateRequestDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthControllerApi
      */
     public createUser(userCreateRequestDto: UserCreateRequestDto, options?: AxiosRequestConfig) {
-        return AuthControllerApiFp(this.configuration)
-            .createUser(userCreateRequestDto, options)
-            .then((request) => request(this.axios, this.basePath));
+        return AuthControllerApiFp(this.configuration).createUser(userCreateRequestDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     *
-     * @param {UserLoginRequestDto} userLoginRequestDto
+     * 
+     * @param {UserLoginRequestDto} userLoginRequestDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthControllerApi
      */
     public loginUser(userLoginRequestDto: UserLoginRequestDto, options?: AxiosRequestConfig) {
-        return AuthControllerApiFp(this.configuration)
-            .loginUser(userLoginRequestDto, options)
-            .then((request) => request(this.axios, this.basePath));
+        return AuthControllerApiFp(this.configuration).loginUser(userLoginRequestDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     *
-     * @param {RefreshTokenRequestDto} refreshTokenRequestDto
+     * 
+     * @param {RefreshTokenRequestDto} refreshTokenRequestDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthControllerApi
      */
     public refreshToken(refreshTokenRequestDto: RefreshTokenRequestDto, options?: AxiosRequestConfig) {
-        return AuthControllerApiFp(this.configuration)
-            .refreshToken(refreshTokenRequestDto, options)
-            .then((request) => request(this.axios, this.basePath));
+        return AuthControllerApiFp(this.configuration).refreshToken(refreshTokenRequestDto, options).then((request) => request(this.axios, this.basePath));
     }
 }

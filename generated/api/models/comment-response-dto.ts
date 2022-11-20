@@ -52,7 +52,13 @@ export interface CommentResponseDto {
      * @type {string}
      * @memberof CommentResponseDto
      */
-    'authorName': string;
+    'authorFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommentResponseDto
+     */
+    'authorLastName'?: string;
     /**
      * 
      * @type {string}

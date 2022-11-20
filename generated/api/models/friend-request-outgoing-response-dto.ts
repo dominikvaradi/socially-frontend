@@ -37,6 +37,12 @@ export interface FriendRequestOutgoingResponseDto {
      * @type {string}
      * @memberof FriendRequestOutgoingResponseDto
      */
-    'addresseeUserName': string;
+    'addresseeUserFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FriendRequestOutgoingResponseDto
+     */
+    'addresseeUserLastName': string;
 }
 

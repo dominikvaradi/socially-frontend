@@ -40,7 +40,13 @@ export interface PostReactionResponseDto {
      * @type {string}
      * @memberof PostReactionResponseDto
      */
-    'userName': string;
+    'userFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostReactionResponseDto
+     */
+    'userLastName': string;
     /**
      * 
      * @type {Reaction}

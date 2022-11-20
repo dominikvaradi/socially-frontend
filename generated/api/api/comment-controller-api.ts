@@ -52,7 +52,7 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
             assertParamExists('createReactionOnComment', 'commentId', commentId)
             // verify required parameter 'reactionCreateRequestDto' is not null or undefined
             assertParamExists('createReactionOnComment', 'reactionCreateRequestDto', reactionCreateRequestDto)
-            const localVarPath = `/api/comments/{commentId}/reactions`
+            const localVarPath = `/comments/{commentId}/reactions`
                 .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -92,7 +92,7 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
         deleteComment: async (commentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'commentId' is not null or undefined
             assertParamExists('deleteComment', 'commentId', commentId)
-            const localVarPath = `/api/comments/{commentId}`
+            const localVarPath = `/comments/{commentId}`
                 .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -132,7 +132,7 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
             assertParamExists('deleteReactionFromComment', 'commentId', commentId)
             // verify required parameter 'reaction' is not null or undefined
             assertParamExists('deleteReactionFromComment', 'reaction', reaction)
-            const localVarPath = `/api/comments/{commentId}/reactions/{reaction}`
+            const localVarPath = `/comments/{commentId}/reactions/{reaction}`
                 .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)))
                 .replace(`{${"reaction"}}`, encodeURIComponent(String(reaction)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -172,7 +172,7 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
         findAllReactionsByComment: async (commentId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'commentId' is not null or undefined
             assertParamExists('findAllReactionsByComment', 'commentId', commentId)
-            const localVarPath = `/api/comments/{commentId}/reactions`
+            const localVarPath = `/comments/{commentId}/reactions`
                 .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -217,7 +217,7 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
         findCommentByPublicId: async (commentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'commentId' is not null or undefined
             assertParamExists('findCommentByPublicId', 'commentId', commentId)
-            const localVarPath = `/api/comments/{commentId}`
+            const localVarPath = `/comments/{commentId}`
                 .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -257,7 +257,7 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
             assertParamExists('updateComment', 'commentId', commentId)
             // verify required parameter 'commentUpdateRequestDto' is not null or undefined
             assertParamExists('updateComment', 'commentUpdateRequestDto', commentUpdateRequestDto)
-            const localVarPath = `/api/comments/{commentId}`
+            const localVarPath = `/comments/{commentId}`
                 .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

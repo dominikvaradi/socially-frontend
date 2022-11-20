@@ -34,13 +34,13 @@ export interface UserLoginResponseDto {
      * @type {string}
      * @memberof UserLoginResponseDto
      */
-    'userName': string;
+    'userFirstName': string;
     /**
      * 
      * @type {string}
      * @memberof UserLoginResponseDto
      */
-    'userEmail': string;
+    'userLastName': string;
     /**
      * 
      * @type {TokenResponseDto}

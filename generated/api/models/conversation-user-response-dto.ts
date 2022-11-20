@@ -40,7 +40,13 @@ export interface ConversationUserResponseDto {
      * @type {string}
      * @memberof ConversationUserResponseDto
      */
-    'userName': string;
+    'userFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationUserResponseDto
+     */
+    'userLastName': string;
     /**
      * 
      * @type {UserConversationRole}

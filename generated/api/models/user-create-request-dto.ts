@@ -37,7 +37,13 @@ export interface UserCreateRequestDto {
      * @type {string}
      * @memberof UserCreateRequestDto
      */
-    'name': string;
+    'firstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCreateRequestDto
+     */
+    'lastName': string;
     /**
      * 
      * @type {string}

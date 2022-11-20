@@ -30,7 +30,7 @@ export class OnboardingController extends BaseController<IOnboardingStore, Onboa
                 response.data.data.accessToken.token,
                 response.data.data.refreshToken.token,
                 response.data.data.userId,
-                response.data.data.userName
+                `${response.data.data.userLastName} ${response.data.data.userFirstName}`
             );
 
             this.router?.push("/");
@@ -80,15 +80,26 @@ export class OnboardingController extends BaseController<IOnboardingStore, Onboa
                 return;
             }
 
-            this.router?.push("/login");
+            tokenStorage.save(
+                response.data.data.accessToken.token,
+                response.data.data.refreshToken.token,
+                response.data.data.userId,
+                `${response.data.data.userLastName} ${response.data.data.userFirstName}`
+            );
+
+            this.router?.push("/");
             this.showToast({
                 title: "Sikeres regisztráció.",
                 status: "success",
             });
 
             actions.resetForm();
-        } catch (error) {
+        } catch (error: any) {
             let toastDescription: string = "Váratlan hiba történt regisztráció közben, kérjük próbálja meg később.";
+
+            if (error?.response?.data?.messages?.includes("USER_ALREADY_EXISTS_WITH_EMAIL")) {
+                toastDescription = "E-Mail cím foglalt.";
+            }
 
             this.showToast({
                 title: "Sikertelen regisztráció.",

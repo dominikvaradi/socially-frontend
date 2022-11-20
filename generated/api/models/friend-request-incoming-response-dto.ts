@@ -37,6 +37,12 @@ export interface FriendRequestIncomingResponseDto {
      * @type {string}
      * @memberof FriendRequestIncomingResponseDto
      */
-    'requesterUserName': string;
+    'requesterUserFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FriendRequestIncomingResponseDto
+     */
+    'requesterUserLastName': string;
 }
 

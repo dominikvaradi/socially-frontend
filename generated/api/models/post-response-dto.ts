@@ -52,7 +52,13 @@ export interface PostResponseDto {
      * @type {string}
      * @memberof PostResponseDto
      */
-    'authorName': string;
+    'authorFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostResponseDto
+     */
+    'authorLastName': string;
     /**
      * 
      * @type {string}
@@ -64,7 +70,13 @@ export interface PostResponseDto {
      * @type {string}
      * @memberof PostResponseDto
      */
-    'addresseeName': string;
+    'addresseeFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostResponseDto
+     */
+    'addresseeLastName': string;
     /**
      * 
      * @type {string}

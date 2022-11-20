@@ -40,7 +40,13 @@ export interface CommentReactionResponseDto {
      * @type {string}
      * @memberof CommentReactionResponseDto
      */
-    'userName': string;
+    'userFirstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommentReactionResponseDto
+     */
+    'userLastName': string;
     /**
      * 
      * @type {Reaction}

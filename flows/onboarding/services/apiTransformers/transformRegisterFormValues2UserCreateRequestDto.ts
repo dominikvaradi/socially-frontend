@@ -7,7 +7,8 @@ export const transformRegisterFormValues2UserCreateRequestDto = (
     return {
         email: registerFormValues.email,
         password: registerFormValues.password,
-        name: `${registerFormValues.firstName} ${registerFormValues.lastName}`,
+        firstName: registerFormValues.firstName,
+        lastName: registerFormValues.lastName,
         birthDate: formatDateToJSONString(registerFormValues.birthDate),
         birthCountry: registerFormValues.birthCountry ? registerFormValues.birthCountry : undefined,
         birthCity: registerFormValues.birthCity ? registerFormValues.birthCity : undefined,

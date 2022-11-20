@@ -50,7 +50,7 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             assertParamExists('createPostOnUser', 'userId', userId)
             // verify required parameter 'postCreateRequestDto' is not null or undefined
             assertParamExists('createPostOnUser', 'postCreateRequestDto', postCreateRequestDto)
-            const localVarPath = `/api/users/{userId}/posts`
+            const localVarPath = `/users/{userId}/posts`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -92,7 +92,7 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         findAllFriendsOfUser: async (userId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('findAllFriendsOfUser', 'userId', userId)
-            const localVarPath = `/api/users/{userId}/friends`
+            const localVarPath = `/users/{userId}/friends`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -139,7 +139,7 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         findAllPostsOfUser: async (userId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('findAllPostsOfUser', 'userId', userId)
-            const localVarPath = `/api/users/{userId}/posts`
+            const localVarPath = `/users/{userId}/posts`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -184,7 +184,7 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         findAllUsersByName: async (name?: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/users`;
+            const localVarPath = `/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -232,7 +232,7 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         findUserByPublicId: async (userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('findUserByPublicId', 'userId', userId)
-            const localVarPath = `/api/users/{userId}`
+            const localVarPath = `/users/{userId}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -272,7 +272,7 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             assertParamExists('updateUser', 'userId', userId)
             // verify required parameter 'userUpdateRequestDto' is not null or undefined
             assertParamExists('updateUser', 'userUpdateRequestDto', userUpdateRequestDto)
-            const localVarPath = `/api/users/{userId}`
+            const localVarPath = `/users/{userId}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

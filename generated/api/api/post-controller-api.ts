@@ -60,7 +60,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
             assertParamExists('createCommentOnPost', 'postId', postId)
             // verify required parameter 'commentCreateRequestDto' is not null or undefined
             assertParamExists('createCommentOnPost', 'commentCreateRequestDto', commentCreateRequestDto)
-            const localVarPath = `/api/posts/{postId}/comments`
+            const localVarPath = `/posts/{postId}/comments`
                 .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -103,7 +103,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
             assertParamExists('createReactionOnPost', 'postId', postId)
             // verify required parameter 'reactionCreateRequestDto' is not null or undefined
             assertParamExists('createReactionOnPost', 'reactionCreateRequestDto', reactionCreateRequestDto)
-            const localVarPath = `/api/posts/{postId}/reactions`
+            const localVarPath = `/posts/{postId}/reactions`
                 .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -143,7 +143,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
         deletePost: async (postId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('deletePost', 'postId', postId)
-            const localVarPath = `/api/posts/{postId}`
+            const localVarPath = `/posts/{postId}`
                 .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -183,7 +183,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
             assertParamExists('deleteReactionFromPost', 'postId', postId)
             // verify required parameter 'reaction' is not null or undefined
             assertParamExists('deleteReactionFromPost', 'reaction', reaction)
-            const localVarPath = `/api/posts/{postId}/reactions/{reaction}`
+            const localVarPath = `/posts/{postId}/reactions/{reaction}`
                 .replace(`{${"postId"}}`, encodeURIComponent(String(postId)))
                 .replace(`{${"reaction"}}`, encodeURIComponent(String(reaction)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -223,7 +223,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
         findAllCommentsByPost: async (postId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('findAllCommentsByPost', 'postId', postId)
-            const localVarPath = `/api/posts/{postId}/comments`
+            const localVarPath = `/posts/{postId}/comments`
                 .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -267,7 +267,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         findAllPostsOnCurrentUsersFeed: async (page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/posts`;
+            const localVarPath = `/posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -313,7 +313,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
         findAllReactionsByPost: async (postId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('findAllReactionsByPost', 'postId', postId)
-            const localVarPath = `/api/posts/{postId}/reactions`
+            const localVarPath = `/posts/{postId}/reactions`
                 .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -358,7 +358,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
         findPostByPublicId: async (postId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('findPostByPublicId', 'postId', postId)
-            const localVarPath = `/api/posts/{postId}`
+            const localVarPath = `/posts/{postId}`
                 .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -398,7 +398,7 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
             assertParamExists('updatePost', 'postId', postId)
             // verify required parameter 'postUpdateRequestDto' is not null or undefined
             assertParamExists('updatePost', 'postUpdateRequestDto', postUpdateRequestDto)
-            const localVarPath = `/api/posts/{postId}`
+            const localVarPath = `/posts/{postId}`
                 .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

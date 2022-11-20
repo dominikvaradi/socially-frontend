@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { TokenResponseDto } from './token-response-dto';
 
 /**
  * 
@@ -25,48 +28,30 @@ export interface UserCreateResponseDto {
      * @type {string}
      * @memberof UserCreateResponseDto
      */
-    'id': string;
+    'userId': string;
     /**
      * 
      * @type {string}
      * @memberof UserCreateResponseDto
      */
-    'email': string;
+    'userFirstName': string;
     /**
      * 
      * @type {string}
      * @memberof UserCreateResponseDto
      */
-    'name': string;
+    'userLastName': string;
     /**
      * 
-     * @type {string}
+     * @type {TokenResponseDto}
      * @memberof UserCreateResponseDto
      */
-    'birthDate': string;
+    'accessToken': TokenResponseDto;
     /**
      * 
-     * @type {string}
+     * @type {TokenResponseDto}
      * @memberof UserCreateResponseDto
      */
-    'birthCountry'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCreateResponseDto
-     */
-    'birthCity'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCreateResponseDto
-     */
-    'currentCountry'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCreateResponseDto
-     */
-    'currentCity'?: string;
+    'refreshToken': TokenResponseDto;
 }
 
