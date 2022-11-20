@@ -65,3 +65,10 @@ export interface ISearchItemUser {
     userId: string;
     userName: string;
 }
+
+export enum TokenStorageKey {
+    ACCESS_TOKEN = "ACCESS_TOKEN",
+    REFRESH_TOKEN = "REFRESH_TOKEN",
+    USER_ID = "USER_ID",
+    USER_NAME = "USER_NAME",
+}
