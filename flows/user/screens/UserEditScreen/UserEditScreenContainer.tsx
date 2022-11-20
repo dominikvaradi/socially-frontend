@@ -5,9 +5,9 @@ import { UserEditFormValues } from "../../services/userTypes";
 import { FormikHelpers } from "formik";
 
 const UserEditValidationSchema = Yup.object().shape({
-    firstName: Yup.string().trim().required("Az mező kitöltése kötelező"),
-    lastName: Yup.string().trim().required("Az mező kitöltése kötelező"),
-    birthDate: Yup.date().nullable().required("Az mező kitöltése kötelező"),
+    firstName: Yup.string().trim().required("A mező kitöltése kötelező"),
+    lastName: Yup.string().trim().required("A mező kitöltése kötelező"),
+    birthDate: Yup.date().nullable().required("A mező kitöltése kötelező"),
     birthCountry: Yup.string(),
     birthCity: Yup.string(),
     currentCountry: Yup.string(),

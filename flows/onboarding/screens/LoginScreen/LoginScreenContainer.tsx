@@ -1,28 +1,19 @@
-import { FormikHelpers } from "formik";
 import React from "react";
-import { LoginFormValues } from "../../services/onboardingTypes";
 import LoginScreenComponent from "./LoginScreenComponent";
 import * as Yup from "yup";
+import { useOnboardingContext } from "../../services/onboardingContext";
 
 const LoginValidationSchema = Yup.object().shape({
-    email: Yup.string().trim().required("Az mező kitöltése kötelező"),
+    email: Yup.string().trim().required("A mező kitöltése kötelező"),
     password: Yup.string().trim().required("A mező kitöltése kötelező"),
 });
 
 const LoginScreenContainer = () => {
-    const handleSubmit = (values: LoginFormValues, actions: FormikHelpers<LoginFormValues>) => {
-        setTimeout(() => {
-            const email = values.email.trim();
-            const password = values.password.trim();
+    const { controller } = useOnboardingContext();
 
-            console.log("login\nEmail: " + email + "\nPassword: " + password);
-            actions.resetForm();
-        }, 500);
-    };
+    const handleSubmit = controller.submitLogin;
 
-    const handleRegisterButtonClick = () => {
-        console.log("handleRegisterButtonClick");
-    };
+    const handleRegisterButtonClick = controller.navigateToRegisterPage;
 
     return (
         <LoginScreenComponent
