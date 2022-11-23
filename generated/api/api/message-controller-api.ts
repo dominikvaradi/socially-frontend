@@ -23,9 +23,7 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { EmptyRestApiResponseDto } from '../models';
 // @ts-ignore
-import { Reaction } from '../models';
-// @ts-ignore
-import { ReactionCreateRequestDto } from '../models';
+import { ReactionToggleRequestDto } from '../models';
 // @ts-ignore
 import { RestApiResponseDtoMessageReactionResponseDto } from '../models';
 // @ts-ignore
@@ -41,49 +39,6 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @param {string} messageId 
-         * @param {ReactionCreateRequestDto} reactionCreateRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createReactionOnMessage: async (messageId: string, reactionCreateRequestDto: ReactionCreateRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'messageId' is not null or undefined
-            assertParamExists('createReactionOnMessage', 'messageId', messageId)
-            // verify required parameter 'reactionCreateRequestDto' is not null or undefined
-            assertParamExists('createReactionOnMessage', 'reactionCreateRequestDto', reactionCreateRequestDto)
-            const localVarPath = `/messages/{messageId}/reactions`
-                .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication BearerToken required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(reactionCreateRequestDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} messageId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -92,47 +47,6 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
             assertParamExists('deleteMessage', 'messageId', messageId)
             const localVarPath = `/messages/{messageId}`
                 .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication BearerToken required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} messageId 
-         * @param {Reaction} reaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteReactionFromMessage: async (messageId: string, reaction: Reaction, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'messageId' is not null or undefined
-            assertParamExists('deleteReactionFromMessage', 'messageId', messageId)
-            // verify required parameter 'reaction' is not null or undefined
-            assertParamExists('deleteReactionFromMessage', 'reaction', reaction)
-            const localVarPath = `/messages/{messageId}/reactions/{reaction}`
-                .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)))
-                .replace(`{${"reaction"}}`, encodeURIComponent(String(reaction)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -243,6 +157,49 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} messageId 
+         * @param {ReactionToggleRequestDto} reactionToggleRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        toggleReactionOnMessage: async (messageId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'messageId' is not null or undefined
+            assertParamExists('toggleReactionOnMessage', 'messageId', messageId)
+            // verify required parameter 'reactionToggleRequestDto' is not null or undefined
+            assertParamExists('toggleReactionOnMessage', 'reactionToggleRequestDto', reactionToggleRequestDto)
+            const localVarPath = `/messages/{messageId}/reactions`
+                .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(reactionToggleRequestDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -256,33 +213,11 @@ export const MessageControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} messageId 
-         * @param {ReactionCreateRequestDto} reactionCreateRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createReactionOnMessage(messageId: string, reactionCreateRequestDto: ReactionCreateRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoMessageReactionResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createReactionOnMessage(messageId, reactionCreateRequestDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} messageId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async deleteMessage(messageId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmptyRestApiResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMessage(messageId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} messageId 
-         * @param {Reaction} reaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteReactionFromMessage(messageId: string, reaction: Reaction, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmptyRestApiResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteReactionFromMessage(messageId, reaction, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -307,6 +242,17 @@ export const MessageControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.findMessageByPublicId(messageId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {string} messageId 
+         * @param {ReactionToggleRequestDto} reactionToggleRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async toggleReactionOnMessage(messageId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoMessageReactionResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.toggleReactionOnMessage(messageId, reactionToggleRequestDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -320,31 +266,11 @@ export const MessageControllerApiFactory = function (configuration?: Configurati
         /**
          * 
          * @param {string} messageId 
-         * @param {ReactionCreateRequestDto} reactionCreateRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createReactionOnMessage(messageId: string, reactionCreateRequestDto: ReactionCreateRequestDto, options?: any): AxiosPromise<RestApiResponseDtoMessageReactionResponseDto> {
-            return localVarFp.createReactionOnMessage(messageId, reactionCreateRequestDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} messageId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteMessage(messageId: string, options?: any): AxiosPromise<EmptyRestApiResponseDto> {
             return localVarFp.deleteMessage(messageId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} messageId 
-         * @param {Reaction} reaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteReactionFromMessage(messageId: string, reaction: Reaction, options?: any): AxiosPromise<EmptyRestApiResponseDto> {
-            return localVarFp.deleteReactionFromMessage(messageId, reaction, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -366,6 +292,16 @@ export const MessageControllerApiFactory = function (configuration?: Configurati
         findMessageByPublicId(messageId: string, options?: any): AxiosPromise<RestApiResponseDtoMessageResponseDto> {
             return localVarFp.findMessageByPublicId(messageId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {string} messageId 
+         * @param {ReactionToggleRequestDto} reactionToggleRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        toggleReactionOnMessage(messageId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: any): AxiosPromise<RestApiResponseDtoMessageReactionResponseDto> {
+            return localVarFp.toggleReactionOnMessage(messageId, reactionToggleRequestDto, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -379,36 +315,12 @@ export class MessageControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} messageId 
-     * @param {ReactionCreateRequestDto} reactionCreateRequestDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MessageControllerApi
-     */
-    public createReactionOnMessage(messageId: string, reactionCreateRequestDto: ReactionCreateRequestDto, options?: AxiosRequestConfig) {
-        return MessageControllerApiFp(this.configuration).createReactionOnMessage(messageId, reactionCreateRequestDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} messageId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MessageControllerApi
      */
     public deleteMessage(messageId: string, options?: AxiosRequestConfig) {
         return MessageControllerApiFp(this.configuration).deleteMessage(messageId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} messageId 
-     * @param {Reaction} reaction 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MessageControllerApi
-     */
-    public deleteReactionFromMessage(messageId: string, reaction: Reaction, options?: AxiosRequestConfig) {
-        return MessageControllerApiFp(this.configuration).deleteReactionFromMessage(messageId, reaction, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -433,5 +345,17 @@ export class MessageControllerApi extends BaseAPI {
      */
     public findMessageByPublicId(messageId: string, options?: AxiosRequestConfig) {
         return MessageControllerApiFp(this.configuration).findMessageByPublicId(messageId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} messageId 
+     * @param {ReactionToggleRequestDto} reactionToggleRequestDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MessageControllerApi
+     */
+    public toggleReactionOnMessage(messageId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: AxiosRequestConfig) {
+        return MessageControllerApiFp(this.configuration).toggleReactionOnMessage(messageId, reactionToggleRequestDto, options).then((request) => request(this.axios, this.basePath));
     }
 }

@@ -1,6 +1,12 @@
 import React from "react";
 import MainLayoutComponent from "../../../common/components/MainLayout";
-import { CreatePostFormValues, IPost, IReactionListItem, TReaction } from "../../../common/services/commonTypes";
+import {
+    CreatePostFormValues,
+    EditPostFormValues,
+    IPost,
+    IReactionListItem,
+    TReaction,
+} from "../../../common/services/commonTypes";
 import CreatePost from "../../../common/components/CreatePost";
 import { FormikHelpers } from "formik";
 import ReactionListModal from "../../../common/components/ReactionListModal";
@@ -26,12 +32,16 @@ export type TProps = {
     deletePostAlertDialogVisible: boolean;
     onDeletePostAlertDialogClose: () => void;
     onDeletePostAlertDialogConfirmButtonClick: () => void;
+    deletePostAlertDialogConfirmButtonLoading: boolean;
     deleteCommentAlertDialogVisible: boolean;
     onDeleteCommentAlertDialogClose: () => void;
     onDeleteCommentAlertDialogConfirmButtonClick: () => void;
+    deleteCommentAlertDialogConfirmButtonLoading: boolean;
     postsLoading: boolean;
     loadMorePostsButtonVisible: boolean;
     onLoadMorePostsButtonClick: () => void;
+    onTogglePostReaction: (postId: string, reaction: TReaction) => Promise<void>;
+    onEditPostSubmit: (postId: string, values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => void;
 };
 
 const HomeFeedScreenComponent = ({
@@ -52,12 +62,16 @@ const HomeFeedScreenComponent = ({
     deletePostAlertDialogVisible,
     onDeletePostAlertDialogClose,
     onDeletePostAlertDialogConfirmButtonClick,
+    deletePostAlertDialogConfirmButtonLoading,
     deleteCommentAlertDialogVisible,
     onDeleteCommentAlertDialogClose,
     onDeleteCommentAlertDialogConfirmButtonClick,
+    deleteCommentAlertDialogConfirmButtonLoading,
     postsLoading,
     loadMorePostsButtonVisible,
     onLoadMorePostsButtonClick,
+    onTogglePostReaction,
+    onEditPostSubmit,
 }: TProps) => {
     return (
         <MainLayoutComponent>
@@ -77,6 +91,8 @@ const HomeFeedScreenComponent = ({
                         postsLoading={postsLoading}
                         loadMorePostsButtonVisible={loadMorePostsButtonVisible}
                         onLoadMorePostsButtonClick={onLoadMorePostsButtonClick}
+                        onTogglePostReaction={onTogglePostReaction}
+                        onEditPostSubmit={onEditPostSubmit}
                     />
                 </div>
             </div>
@@ -94,11 +110,13 @@ const HomeFeedScreenComponent = ({
                 visible={deletePostAlertDialogVisible}
                 onClose={onDeletePostAlertDialogClose}
                 onConfirmButtonClick={onDeletePostAlertDialogConfirmButtonClick}
+                confirmButtonLoading={deletePostAlertDialogConfirmButtonLoading}
             />
             <DeleteCommentAlertDialog
                 visible={deleteCommentAlertDialogVisible}
                 onClose={onDeleteCommentAlertDialogClose}
                 onConfirmButtonClick={onDeleteCommentAlertDialogConfirmButtonClick}
+                confirmButtonLoading={deleteCommentAlertDialogConfirmButtonLoading}
             />
         </MainLayoutComponent>
     );

@@ -25,7 +25,7 @@ type TProps = {
     lastConversationsExpandButtonRef: React.RefObject<HTMLButtonElement>;
     onLastConversationsExpandButtonClick: () => void;
     onProfileButtonClick: () => void;
-    onSettingsButtonClick: () => void;
+    onEditUserProfileButtonClick: () => void;
     onSignOutButtonClick: () => void;
     searchInputRef: React.RefObject<HTMLInputElement>;
     searchInputValue: string;
@@ -49,7 +49,7 @@ const HeaderBarComponent = ({
     lastConversationsExpandButtonRef,
     onLastConversationsExpandButtonClick,
     onProfileButtonClick,
-    onSettingsButtonClick,
+    onEditUserProfileButtonClick,
     onSignOutButtonClick,
     searchInputRef,
     searchInputValue,
@@ -168,7 +168,7 @@ const HeaderBarComponent = ({
                         </MenuItem>
                         <MenuItem
                             icon={<Icon as={FiEdit} />}
-                            onClick={onSettingsButtonClick}
+                            onClick={onEditUserProfileButtonClick}
                             className={colorMode === "dark" ? "!text-brand-200" : "!text-brand-800"}
                         >
                             Profil szerkesztése

@@ -46,9 +46,9 @@ export interface ConversationResponseDto {
     'type': ConversationType;
     /**
      * 
-     * @type {Set<ConversationUserResponseDto>}
+     * @type {Array<ConversationUserResponseDto>}
      * @memberof ConversationResponseDto
      */
-    'members': Set<ConversationUserResponseDto>;
+    'members': Array<ConversationUserResponseDto>;
 }
 

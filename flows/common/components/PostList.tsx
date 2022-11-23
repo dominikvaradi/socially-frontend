@@ -1,8 +1,9 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
-import { IPost } from "../services/commonTypes";
+import { EditPostFormValues, IPost, TReaction } from "../services/commonTypes";
 import Post from "./Post";
 import ColorModeSpinner from "./ColorModeSpinner";
+import { FormikHelpers } from "formik/dist/types";
 
 type TProps = {
     posts: IPost[];
@@ -13,6 +14,8 @@ type TProps = {
     postsLoading: boolean;
     loadMorePostsButtonVisible: boolean;
     onLoadMorePostsButtonClick: () => void;
+    onTogglePostReaction: (postId: string, reaction: TReaction) => Promise<void>;
+    onEditPostSubmit: (postId: string, values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => void;
 };
 
 const PostList = ({
@@ -24,6 +27,8 @@ const PostList = ({
     postsLoading,
     loadMorePostsButtonVisible,
     onLoadMorePostsButtonClick,
+    onTogglePostReaction,
+    onEditPostSubmit,
 }: TProps) => {
     return (
         <div className="my-10 flex w-full flex-col space-y-10">
@@ -31,12 +36,12 @@ const PostList = ({
                 <Post
                     key={post.id}
                     post={post}
-                    editable={true}
-                    deletable={true}
                     onDeleteButtonClick={onPostDeleteButtonClick}
                     onReactionCountButtonClick={onPostReactionCountButtonClick}
                     onCommentDeleteButtonClick={onCommentDeleteButtonClick}
                     onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
+                    onTogglePostReaction={onTogglePostReaction}
+                    onEditPostSubmit={onEditPostSubmit}
                 />
             ))}
             {posts.length === 0 && postsLoading && (

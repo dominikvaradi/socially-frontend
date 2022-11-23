@@ -2,11 +2,11 @@ import { Button, Icon, IconButton, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import MainLayout from "../../../common/components/MainLayout";
 import GroupAvatar from "../../../common/components/GroupAvatar";
-import { IConversation } from "../../services/conversationTypes";
 import { getConversationTitle } from "../../../common/services/commonUtils";
 import UserNameAvatar from "../../../common/components/UserNameAvatar";
 import ColorModeSpinner from "../../../common/components/ColorModeSpinner";
 import { FiPlus } from "react-icons/fi";
+import { IConversation } from "../../../common/services/commonTypes";
 
 type TProp = {
     conversations: IConversation[];

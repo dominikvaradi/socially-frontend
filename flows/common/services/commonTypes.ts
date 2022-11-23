@@ -1,7 +1,12 @@
-export interface ILastConversation {
+import { IConversationMember } from "../../conversation/services/conversationTypes";
+
+export interface IConversation {
     id: string;
-    userName: string;
+    members: IConversationMember[];
+    type: TConversationType;
 }
+
+export type TConversationType = "DIRECT" | "GROUP";
 
 export interface IPost {
     id: string;
@@ -9,10 +14,14 @@ export interface IPost {
     content: string;
     authorId: string;
     authorName: string;
+    addresseeId: string;
+    addresseeName: string;
     commentCount: number;
     createdTimeString: string;
     reactionCount: IReactionCount;
     activeReactionOfUser?: TReaction;
+    editable: boolean;
+    deletable: boolean;
 }
 
 export type TReaction = "LIKE" | "HEART" | "FUNNY" | "ANGRY";

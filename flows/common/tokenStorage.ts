@@ -1,4 +1,4 @@
-import { TokenStorageKey } from "./commonTypes";
+import { TokenStorageKey } from "./services/commonTypes";
 
 class TokenStorage {
     save = (accessToken: string, refreshToken: string, userId: string, userName: string) => {
@@ -26,6 +26,10 @@ class TokenStorage {
     setRefreshToken = (refreshToken: string) => {
         localStorage.setItem(TokenStorageKey.REFRESH_TOKEN, refreshToken);
     };
+
+    getUserId = () => localStorage.getItem(TokenStorageKey.USER_ID);
+
+    getUserName = () => localStorage.getItem(TokenStorageKey.USER_NAME);
 }
 
 export default new TokenStorage();

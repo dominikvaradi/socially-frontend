@@ -1,12 +1,14 @@
 import { Icon, IconButton, useColorMode } from "@chakra-ui/react";
-import React from "react";
+import React, { Fragment } from "react";
 import UserNameAvatar from "./UserNameAvatar";
-import { ILastConversation } from "../services/commonTypes";
 import { FiPlus } from "react-icons/fi";
+import { IConversation } from "../services/commonTypes";
+import { getConversationTitle } from "../services/commonUtils";
+import GroupAvatar from "./GroupAvatar";
 
 type TProps = {
     drawerExpanded: boolean;
-    last10Conversations: ILastConversation[];
+    last10Conversations: IConversation[];
     onLastConversationClick: (lastConversationId: string) => void;
     onCreateNewConversationButtonClick: () => void;
 };
@@ -28,14 +30,24 @@ const Last10ConversationsSidebar = ({
             }`}
         >
             <div className="flex h-full flex-col space-y-2 overflow-y-auto p-2">
-                {last10Conversations.map((c) => (
-                    <UserNameAvatar
-                        key={c.id}
-                        className="select-none"
-                        userName={c.userName}
-                        clickable
-                        onClick={() => onLastConversationClick(c.id)}
-                    />
+                {last10Conversations.map((conversation) => (
+                    <Fragment key={conversation.id}>
+                        {conversation.type === "DIRECT" && (
+                            <UserNameAvatar
+                                className="select-none"
+                                userName={getConversationTitle(conversation.members, 100)}
+                                clickable
+                                onClick={() => onLastConversationClick(conversation.id)}
+                            />
+                        )}
+                        {conversation.type === "GROUP" && (
+                            <GroupAvatar
+                                className="select-none"
+                                clickable
+                                onClick={() => onLastConversationClick(conversation.id)}
+                            />
+                        )}
+                    </Fragment>
                 ))}
                 <IconButton
                     colorScheme="brand"

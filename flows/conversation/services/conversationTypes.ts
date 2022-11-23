@@ -27,11 +27,3 @@ export interface ChangeConversationRoleAlertDialogSubject {
     userId: string;
     role: TConversationRole;
 }
-
-export interface IConversation {
-    id: string;
-    members: IConversationMember[];
-    type: TConversationType;
-}
-
-export type TConversationType = "DIRECT" | "GROUP";

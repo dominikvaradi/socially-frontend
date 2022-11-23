@@ -2,26 +2,33 @@ import React, { useEffect, useRef, useState } from "react";
 import PostComponent from "./PostComponent";
 import { TReaction, IComment, CreateCommentFormValues, IPost, EditPostFormValues } from "../../services/commonTypes";
 import { FormikHelpers } from "formik";
+import { useCommonContext } from "../../services/commonContext";
 
 type TProps = {
     post: IPost;
-    editable: boolean;
-    deletable: boolean;
     onDeleteButtonClick: (postId: string) => void;
     onReactionCountButtonClick: (postId: string) => void;
     onCommentDeleteButtonClick: (commentId: string) => void;
     onCommentReactionCountButtonClick: (commentId: string) => void;
+    onTogglePostReaction: (postId: string, reaction: TReaction) => Promise<void>;
+    onEditPostSubmit: (
+        postId: string,
+        values: EditPostFormValues,
+        actions: FormikHelpers<EditPostFormValues>
+    ) => Promise<void>;
 };
 
 const PostContainer = ({
     post,
-    editable,
-    deletable,
     onDeleteButtonClick,
     onReactionCountButtonClick,
     onCommentDeleteButtonClick,
     onCommentReactionCountButtonClick,
+    onTogglePostReaction,
+    onEditPostSubmit,
 }: TProps) => {
+    const { controller } = useCommonContext();
+
     const contentRef = useRef<HTMLParagraphElement>(null);
     const createCommentInputRef = useRef<HTMLTextAreaElement>(null);
     const [contentExpanded, setContentExpanded] = useState<boolean>(false);
@@ -61,7 +68,9 @@ const PostContainer = ({
         }, 50);
     };
 
-    const handleAuthorProfileClick = () => {};
+    const handleAuthorProfileClick = () => {
+        controller.navigateToUserTimelinePage(post.authorId);
+    };
 
     const handleReactionCountButtonClick = () => {
         onReactionCountButtonClick(post.id);
@@ -71,9 +80,10 @@ const PostContainer = ({
         setCommentsVisible((visible) => !visible);
     };
 
-    const handleReactionPopoverToggleButtonClick = (reaction: TReaction) => {
+    const handleReactionPopoverToggleButtonClick = async (reaction: TReaction) => {
+        await onTogglePostReaction(post.id, reaction);
+
         setReactionPopoverVisible(false);
-        console.log("handleReactionPopoverToggleButtonClick: " + reaction);
     };
 
     const handleReactionButtonClick = () => {
@@ -98,12 +108,9 @@ const PostContainer = ({
         console.log("handleLoadMoreCommentsButtonClick");
     };
 
-    const handleEditPostSubmit = (values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => {
-        setTimeout(() => {
-            console.log(`handleEditPostSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
-            setEditing(false);
-            actions.resetForm();
-        }, 1000);
+    const handleEditPostSubmit = async (values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => {
+        await onEditPostSubmit(post.id, values, actions);
+        setEditing(false);
     };
 
     const handleEditPostCancelButtonClick = () => {
@@ -117,8 +124,8 @@ const PostContainer = ({
             authorName={post.authorName}
             commentCount={post.commentCount}
             createdTimeString={post.createdTimeString}
-            editable={editable}
-            deletable={deletable}
+            editable={post.editable}
+            deletable={post.deletable}
             onEditClick={handleEditClick}
             onDeleteClick={handleDeleteClick}
             reactionCount={post.reactionCount}

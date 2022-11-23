@@ -1,5 +1,5 @@
-import { RegisterFormValues } from "../onboardingTypes";
-import { UserCreateRequestDto } from "../../../../generated/api";
+import { RegisterFormValues } from "../../onboardingTypes";
+import { UserCreateRequestDto } from "../../../../../generated/api";
 
 export const transformRegisterFormValues2UserCreateRequestDto = (
     registerFormValues: RegisterFormValues
