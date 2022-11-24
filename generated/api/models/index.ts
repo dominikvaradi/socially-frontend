@@ -39,7 +39,6 @@ export * from './rest-api-response-dto-conversation-response-dto';
 export * from './rest-api-response-dto-conversation-user-response-dto';
 export * from './rest-api-response-dto-friend-request-incoming-response-dto';
 export * from './rest-api-response-dto-friend-request-outgoing-response-dto';
-export * from './rest-api-response-dto-message-reaction-response-dto';
 export * from './rest-api-response-dto-message-response-dto';
 export * from './rest-api-response-dto-page-response-dto-comment-reaction-response-dto';
 export * from './rest-api-response-dto-page-response-dto-comment-response-dto';

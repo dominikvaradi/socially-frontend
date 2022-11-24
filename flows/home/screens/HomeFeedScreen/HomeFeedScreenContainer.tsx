@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HomeFeedScreenComponent from "./HomeFeedScreenComponent";
-import { TReaction } from "../../../common/services/commonTypes";
+import { IComment, IPost, TReaction } from "../../../common/services/commonTypes";
 import { useHomeContext } from "../../services/homeContext";
 import { useCommonContext } from "../../../common/services/commonContext";
 
@@ -8,11 +8,13 @@ const HomeFeedScreenContainer = () => {
     const { controller: commonController } = useCommonContext();
     const { store, controller } = useHomeContext();
 
-    const [reactionListModalVisible, setReactionListModalVisible] = useState<boolean>(false);
-    const [deletePostAlertDialogPostId, setDeletePostAlertDialogPostId] = useState<string | undefined>(undefined);
+    const [reactionListModalPost, setReactionListModalPost] = useState<IPost | undefined>(undefined);
+    const [reactionListModalComment, setReactionListModalComment] = useState<IComment | undefined>(undefined);
+    const [reactionListModalReaction, setReactionListModalReaction] = useState<TReaction | undefined>(undefined);
+    const [deletePostAlertDialogPost, setDeletePostAlertDialogPost] = useState<IPost | undefined>(undefined);
     const [deletePostAlertDialogConfirmButtonLoading, setDeletePostAlertDialogConfirmButtonLoading] =
         useState<boolean>(false);
-    const [deleteCommentAlertDialogCommentId, setDeleteCommentAlertDialogCommentId] = useState<string | undefined>(
+    const [deleteCommentAlertDialogComment, setDeleteCommentAlertDialogComment] = useState<IComment | undefined>(
         undefined
     );
     const [deleteCommentAlertDialogConfirmButtonLoading, setDeleteCommentAlertDialogConfirmButtonLoading] =
@@ -27,66 +29,90 @@ const HomeFeedScreenContainer = () => {
 
     const handleCreatePostSubmit = controller.createPost;
 
-    const handlePostDeleteClick = (postId: string) => {
-        setDeletePostAlertDialogPostId(postId);
+    const handlePostDeleteClick = (post: IPost) => {
+        setDeletePostAlertDialogPost(post);
     };
 
-    const handlePostReactionCountButtonClick = (postId: string) => {
-        setReactionListModalVisible(true);
-        console.log("handlePostReactionCountButtonClick: " + postId);
+    const handlePostReactionCountButtonClick = async (post: IPost) => {
+        if (reactionListModalComment) {
+            return;
+        }
+
+        const result = await controller.loadReactionsForPost(post);
+        if (!result) return;
+
+        setReactionListModalPost(post);
     };
 
     const handleUserProfileClick = controller.navigateToUserTimelinePage;
 
-    const handleCommentDeleteButtonClick = (commentId: string) => {
-        setDeleteCommentAlertDialogCommentId(commentId);
+    const handleCommentDeleteButtonClick = (comment: IComment) => {
+        setDeleteCommentAlertDialogComment(comment);
     };
 
-    const handleCommentReactionCountButtonClick = (commentId: string) => {
-        console.log("handleCommentReactionCountButtonClick: " + commentId);
+    const handleCommentReactionCountButtonClick = async (comment: IComment) => {
+        if (reactionListModalPost) {
+            return;
+        }
+
+        const result = await controller.loadReactionsForComment(comment);
+        if (!result) return;
+
+        setReactionListModalComment(comment);
     };
 
     const handleReactionListModalClose = () => {
-        setReactionListModalVisible(false);
+        setReactionListModalPost(undefined);
+        setReactionListModalComment(undefined);
+        setReactionListModalReaction(undefined);
     };
 
     const handleReactionListModalTabChange = (reaction?: TReaction) => {
-        console.log("handleReactionListModalTabChange: " + reaction);
+        if (reactionListModalPost) {
+            controller.loadReactionsForPost(reactionListModalPost, reaction);
+        } else if (reactionListModalComment) {
+            controller.loadReactionsForComment(reactionListModalComment, reaction);
+        }
+
+        setReactionListModalReaction(reaction);
     };
 
     const handleReactionListLoadMoreItemsButtonClick = () => {
-        console.log("handleReactionListLoadMoreItemsButtonClick");
+        if (reactionListModalPost) {
+            controller.loadMoreReactionsForPost(reactionListModalPost, reactionListModalReaction);
+        } else if (reactionListModalComment) {
+            controller.loadMoreReactionsForComment(reactionListModalComment, reactionListModalReaction);
+        }
     };
 
     const handleDeletePostAlertDialogClose = () => {
-        setDeletePostAlertDialogPostId(undefined);
+        setDeletePostAlertDialogPost(undefined);
     };
 
     const handleDeletePostAlertDialogConfirmButtonClick = async () => {
-        if (!deletePostAlertDialogPostId) return;
+        if (!deletePostAlertDialogPost) return;
 
         setDeletePostAlertDialogConfirmButtonLoading(true);
 
-        await controller.deletePost(deletePostAlertDialogPostId);
+        await controller.deletePost(deletePostAlertDialogPost);
 
         setDeletePostAlertDialogConfirmButtonLoading(false);
-        setDeletePostAlertDialogPostId(undefined);
+        setDeletePostAlertDialogPost(undefined);
     };
 
     const handleDeleteCommentAlertDialogClose = () => {
-        setDeleteCommentAlertDialogCommentId(undefined);
+        setDeleteCommentAlertDialogComment(undefined);
     };
 
     const handleDeleteCommentAlertDialogConfirmButtonClick = async () => {
-        if (!deleteCommentAlertDialogCommentId) return;
+        if (!deleteCommentAlertDialogComment) return;
 
         setDeleteCommentAlertDialogConfirmButtonLoading(true);
 
-        // await controller....
-        console.log("handleDeleteCommentAlertDialogConfirmButtonClick: " + deleteCommentAlertDialogCommentId);
+        await controller.deleteComment(deleteCommentAlertDialogComment);
 
         setDeleteCommentAlertDialogConfirmButtonLoading(false);
-        setDeleteCommentAlertDialogCommentId(undefined);
+        setDeleteCommentAlertDialogComment(undefined);
     };
 
     const handleLoadMorePostsButtonClick = () => {
@@ -97,6 +123,16 @@ const HomeFeedScreenContainer = () => {
 
     const handleEditPostSubmit = controller.editPost;
 
+    const handleLoadCommentsForPost = controller.loadCommentsForPost;
+
+    const handleLoadMoreCommentsForPost = controller.loadMoreCommentsForPost;
+
+    const handleCreateCommentForPostSubmit = controller.createCommentForPost;
+
+    const handleToggleCommentReaction = controller.toggleReactionOnComment;
+
+    const handleEditCommentSubmit = controller.editComment;
+
     return (
         <HomeFeedScreenComponent
             posts={store.feedScreenStore.posts}
@@ -106,18 +142,21 @@ const HomeFeedScreenContainer = () => {
             onUserProfileClick={handleUserProfileClick}
             onCommentDeleteButtonClick={handleCommentDeleteButtonClick}
             onCommentReactionCountButtonClick={handleCommentReactionCountButtonClick}
-            reactionListModalVisible={reactionListModalVisible}
+            reactionListModalVisible={!!reactionListModalPost || !!reactionListModalComment}
             onReactionListModalClose={handleReactionListModalClose}
             onReactionListModalTabChange={handleReactionListModalTabChange}
             reactionListReactionItems={store.feedScreenStore.reactionListReactionItems}
-            reactionListLoadMoreItemsButtonVisible={store.feedScreenStore.reactionListLoadMoreItemsButtonVisible}
+            reactionListLoadMoreItemsButtonVisible={
+                store.feedScreenStore.reactionListReactionItems.length <
+                store.feedScreenStore.reactionListReactionItemsTotalElementCount
+            }
             onReactionListLoadMoreItemsButtonClick={handleReactionListLoadMoreItemsButtonClick}
-            reactionListLoading={store.feedScreenStore.reactionListLoading}
-            deletePostAlertDialogVisible={!!deletePostAlertDialogPostId}
+            reactionListLoading={store.feedScreenStore.reactionListReactionItemsLoading}
+            deletePostAlertDialogVisible={!!deletePostAlertDialogPost}
             onDeletePostAlertDialogClose={handleDeletePostAlertDialogClose}
             onDeletePostAlertDialogConfirmButtonClick={handleDeletePostAlertDialogConfirmButtonClick}
             deletePostAlertDialogConfirmButtonLoading={deletePostAlertDialogConfirmButtonLoading}
-            deleteCommentAlertDialogVisible={!!deleteCommentAlertDialogCommentId}
+            deleteCommentAlertDialogVisible={!!deleteCommentAlertDialogComment}
             onDeleteCommentAlertDialogClose={handleDeleteCommentAlertDialogClose}
             onDeleteCommentAlertDialogConfirmButtonClick={handleDeleteCommentAlertDialogConfirmButtonClick}
             deleteCommentAlertDialogConfirmButtonLoading={deleteCommentAlertDialogConfirmButtonLoading}
@@ -128,6 +167,11 @@ const HomeFeedScreenContainer = () => {
             onLoadMorePostsButtonClick={handleLoadMorePostsButtonClick}
             onTogglePostReaction={handleTogglePostReaction}
             onEditPostSubmit={handleEditPostSubmit}
+            onLoadCommentsForPost={handleLoadCommentsForPost}
+            onLoadMoreCommentsForPost={handleLoadMoreCommentsForPost}
+            onCreateCommentForPostSubmit={handleCreateCommentForPostSubmit}
+            onToggleCommentReaction={handleToggleCommentReaction}
+            onEditCommentSubmit={handleEditCommentSubmit}
         />
     );
 };

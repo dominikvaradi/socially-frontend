@@ -25,6 +25,8 @@ import { CommentUpdateRequestDto } from '../models';
 // @ts-ignore
 import { EmptyRestApiResponseDto } from '../models';
 // @ts-ignore
+import { Reaction } from '../models';
+// @ts-ignore
 import { ReactionToggleRequestDto } from '../models';
 // @ts-ignore
 import { RestApiResponseDtoCommentResponseDto } from '../models';
@@ -76,12 +78,13 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @param {string} commentId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllReactionsByComment: async (commentId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findAllReactionsByComment: async (commentId: string, reaction?: Reaction, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'commentId' is not null or undefined
             assertParamExists('findAllReactionsByComment', 'commentId', commentId)
             const localVarPath = `/comments/{commentId}/reactions`
@@ -100,6 +103,10 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
             // authentication BearerToken required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (reaction !== undefined) {
+                localVarQueryParameter['reaction'] = reaction;
+            }
 
             if (page !== undefined) {
                 localVarQueryParameter['page'] = page;
@@ -266,13 +273,14 @@ export const CommentControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} commentId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findAllReactionsByComment(commentId: string, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllReactionsByComment(commentId, page, size, options);
+        async findAllReactionsByComment(commentId: string, reaction?: Reaction, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllReactionsByComment(commentId, reaction, page, size, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -329,13 +337,14 @@ export const CommentControllerApiFactory = function (configuration?: Configurati
         /**
          * 
          * @param {string} commentId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllReactionsByComment(commentId: string, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto> {
-            return localVarFp.findAllReactionsByComment(commentId, page, size, options).then((request) => request(axios, basePath));
+        findAllReactionsByComment(commentId: string, reaction?: Reaction, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto> {
+            return localVarFp.findAllReactionsByComment(commentId, reaction, page, size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -390,14 +399,15 @@ export class CommentControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} commentId 
+     * @param {Reaction} [reaction] 
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommentControllerApi
      */
-    public findAllReactionsByComment(commentId: string, page?: number, size?: number, options?: AxiosRequestConfig) {
-        return CommentControllerApiFp(this.configuration).findAllReactionsByComment(commentId, page, size, options).then((request) => request(this.axios, this.basePath));
+    public findAllReactionsByComment(commentId: string, reaction?: Reaction, page?: number, size?: number, options?: AxiosRequestConfig) {
+        return CommentControllerApiFp(this.configuration).findAllReactionsByComment(commentId, reaction, page, size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

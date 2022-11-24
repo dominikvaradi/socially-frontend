@@ -1,21 +1,46 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
-import { EditPostFormValues, IPost, TReaction } from "../services/commonTypes";
+import {
+    CreateCommentFormValues,
+    EditCommentFormValues,
+    EditPostFormValues,
+    IComment,
+    IPost,
+    TReaction,
+} from "../services/commonTypes";
 import Post from "./Post";
 import ColorModeSpinner from "./ColorModeSpinner";
 import { FormikHelpers } from "formik/dist/types";
 
 type TProps = {
     posts: IPost[];
-    onPostDeleteButtonClick: (postId: string) => void;
-    onPostReactionCountButtonClick: (postId: string) => void;
-    onCommentDeleteButtonClick: (commentId: string) => void;
-    onCommentReactionCountButtonClick: (commentId: string) => void;
+    onPostDeleteButtonClick: (post: IPost) => void;
+    onPostReactionCountButtonClick: (post: IPost) => void;
+    onCommentDeleteButtonClick: (comment: IComment) => void;
+    onCommentReactionCountButtonClick: (comment: IComment) => void;
     postsLoading: boolean;
     loadMorePostsButtonVisible: boolean;
     onLoadMorePostsButtonClick: () => void;
-    onTogglePostReaction: (postId: string, reaction: TReaction) => Promise<void>;
-    onEditPostSubmit: (postId: string, values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => void;
+    onTogglePostReaction: (post: IPost, reaction: TReaction) => Promise<void>;
+    onEditPostSubmit: (
+        post: IPost,
+        values: EditPostFormValues,
+        actions: FormikHelpers<EditPostFormValues>
+    ) => Promise<void>;
+    onLoadCommentsForPost: (post: IPost) => Promise<void>;
+    onLoadMoreCommentsForPost: (post: IPost) => Promise<void>;
+    onCreateCommentForPostSubmit: (
+        post: IPost,
+        values: CreateCommentFormValues,
+        actions: FormikHelpers<CreateCommentFormValues>
+    ) => void;
+    onToggleCommentReaction: (post: IPost, comment: IComment, reaction: TReaction) => Promise<void>;
+    onEditCommentSubmit: (
+        post: IPost,
+        comment: IComment,
+        values: EditCommentFormValues,
+        actions: FormikHelpers<EditCommentFormValues>
+    ) => Promise<void>;
 };
 
 const PostList = ({
@@ -29,6 +54,11 @@ const PostList = ({
     onLoadMorePostsButtonClick,
     onTogglePostReaction,
     onEditPostSubmit,
+    onLoadCommentsForPost,
+    onLoadMoreCommentsForPost,
+    onCreateCommentForPostSubmit,
+    onToggleCommentReaction,
+    onEditCommentSubmit,
 }: TProps) => {
     return (
         <div className="my-10 flex w-full flex-col space-y-10">
@@ -42,6 +72,11 @@ const PostList = ({
                     onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
                     onTogglePostReaction={onTogglePostReaction}
                     onEditPostSubmit={onEditPostSubmit}
+                    onLoadComments={onLoadCommentsForPost}
+                    onLoadMoreComments={onLoadMoreCommentsForPost}
+                    onCreateCommentSubmit={onCreateCommentForPostSubmit}
+                    onToggleCommentReaction={onToggleCommentReaction}
+                    onEditCommentSubmit={onEditCommentSubmit}
                 />
             ))}
             {posts.length === 0 && postsLoading && (

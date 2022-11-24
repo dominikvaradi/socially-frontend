@@ -2,22 +2,29 @@ import React, { useState } from "react";
 import CommentComponent from "./CommentComponent";
 import { EditCommentFormValues, IComment, TReaction } from "../../services/commonTypes";
 import { FormikHelpers } from "formik/dist/types";
+import { useCommonContext } from "../../services/commonContext";
 
 type TProps = {
     comment: IComment;
-    editable: boolean;
-    deletable: boolean;
-    onDeleteButtonClick: (commentId: string) => void;
-    onReactionCountButtonClick: (commentId: string) => void;
+    onDeleteButtonClick: (comment: IComment) => void;
+    onReactionCountButtonClick: (comment: IComment) => void;
+    onToggleCommentReaction: (comment: IComment, reaction: TReaction) => Promise<void>;
+    onEditCommentSubmit: (
+        comment: IComment,
+        values: EditCommentFormValues,
+        actions: FormikHelpers<EditCommentFormValues>
+    ) => Promise<void>;
 };
 
 const CommentContainer = ({
     comment,
-    editable,
-    deletable,
     onDeleteButtonClick,
     onReactionCountButtonClick,
+    onToggleCommentReaction,
+    onEditCommentSubmit,
 }: TProps) => {
+    const { controller } = useCommonContext();
+
     const [reactionPopoverVisible, setReactionPopoverVisible] = useState<boolean>(false);
     const [editing, setEditing] = useState<boolean>(false);
 
@@ -26,9 +33,10 @@ const CommentContainer = ({
         0
     );
 
-    const handleReactionPopoverToggleButtonClick = (reaction: TReaction) => {
+    const handleReactionPopoverToggleButtonClick = async (reaction: TReaction) => {
+        await onToggleCommentReaction(comment, reaction);
+
         setReactionPopoverVisible(false);
-        console.log("handleReactionPopoverToggleButtonClick: " + reaction);
     };
 
     const handleReactionButtonClick = () => {
@@ -40,7 +48,7 @@ const CommentContainer = ({
     };
 
     const handleAuthorProfileClick = () => {
-        console.log("handleAuthorProfileClick: " + comment.authorId);
+        controller.navigateToUserTimelinePage(comment.authorId);
     };
 
     const handleEditButtonClick = () => {
@@ -48,19 +56,19 @@ const CommentContainer = ({
     };
 
     const handleDeleteButtonClick = () => {
-        onDeleteButtonClick(comment.id);
+        onDeleteButtonClick(comment);
     };
 
     const handleReactionCountButtonClick = () => {
-        onReactionCountButtonClick(comment.id);
+        onReactionCountButtonClick(comment);
     };
 
-    const handleEditCommentSubmit = (values: EditCommentFormValues, actions: FormikHelpers<EditCommentFormValues>) => {
-        setTimeout(() => {
-            console.log(`handleEditCommentSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
-            setEditing(false);
-            actions.resetForm();
-        }, 1000);
+    const handleEditCommentSubmit = async (
+        values: EditCommentFormValues,
+        actions: FormikHelpers<EditCommentFormValues>
+    ) => {
+        await onEditCommentSubmit(comment, values, actions);
+        setEditing(false);
     };
 
     const handleEditCommentCancelButtonClick = () => {
@@ -72,8 +80,8 @@ const CommentContainer = ({
             authorName={comment.authorName}
             content={comment.content}
             createdTimeString={comment.createdTimeString}
-            editable={editable}
-            deletable={deletable}
+            editable={comment.editable}
+            deletable={comment.deletable}
             reactionCount={comment.reactionCount}
             reactionCountSum={reactionCountSum}
             activeReaction={comment.activeReactionOfUser}

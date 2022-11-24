@@ -22,6 +22,7 @@ export interface IPost {
     activeReactionOfUser?: TReaction;
     editable: boolean;
     deletable: boolean;
+    comments: IComment[];
 }
 
 export type TReaction = "LIKE" | "HEART" | "FUNNY" | "ANGRY";
@@ -45,12 +46,15 @@ export interface EditPostFormValues {
 
 export interface IComment {
     id: string;
+    postId: string;
     content: string;
     authorId: string;
     authorName: string;
     createdTimeString: string;
     reactionCount: IReactionCount;
     activeReactionOfUser?: TReaction;
+    editable: boolean;
+    deletable: boolean;
 }
 
 export interface CreateCommentFormValues {

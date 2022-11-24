@@ -1,20 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
 import PostComponent from "./PostComponent";
-import { TReaction, IComment, CreateCommentFormValues, IPost, EditPostFormValues } from "../../services/commonTypes";
+import {
+    TReaction,
+    CreateCommentFormValues,
+    IPost,
+    EditPostFormValues,
+    EditCommentFormValues,
+    IComment,
+} from "../../services/commonTypes";
 import { FormikHelpers } from "formik";
 import { useCommonContext } from "../../services/commonContext";
 
 type TProps = {
     post: IPost;
-    onDeleteButtonClick: (postId: string) => void;
-    onReactionCountButtonClick: (postId: string) => void;
-    onCommentDeleteButtonClick: (commentId: string) => void;
-    onCommentReactionCountButtonClick: (commentId: string) => void;
-    onTogglePostReaction: (postId: string, reaction: TReaction) => Promise<void>;
+    onDeleteButtonClick: (post: IPost) => void;
+    onReactionCountButtonClick: (post: IPost) => void;
+    onCommentDeleteButtonClick: (comment: IComment) => void;
+    onCommentReactionCountButtonClick: (comment: IComment) => void;
+    onTogglePostReaction: (post: IPost, reaction: TReaction) => Promise<void>;
     onEditPostSubmit: (
-        postId: string,
+        post: IPost,
         values: EditPostFormValues,
         actions: FormikHelpers<EditPostFormValues>
+    ) => Promise<void>;
+    onLoadComments: (post: IPost) => Promise<void>;
+    onLoadMoreComments: (post: IPost) => Promise<void>;
+    onCreateCommentSubmit: (
+        post: IPost,
+        values: CreateCommentFormValues,
+        actions: FormikHelpers<CreateCommentFormValues>
+    ) => void;
+    onToggleCommentReaction: (post: IPost, comment: IComment, reaction: TReaction) => Promise<void>;
+    onEditCommentSubmit: (
+        post: IPost,
+        comment: IComment,
+        values: EditCommentFormValues,
+        actions: FormikHelpers<EditCommentFormValues>
     ) => Promise<void>;
 };
 
@@ -26,6 +47,11 @@ const PostContainer = ({
     onCommentReactionCountButtonClick,
     onTogglePostReaction,
     onEditPostSubmit,
+    onLoadComments,
+    onLoadMoreComments,
+    onCreateCommentSubmit,
+    onToggleCommentReaction,
+    onEditCommentSubmit,
 }: TProps) => {
     const { controller } = useCommonContext();
 
@@ -36,6 +62,7 @@ const PostContainer = ({
     const [reactionPopoverVisible, setReactionPopoverVisible] = useState<boolean>(false);
     const [commentsVisible, setCommentsVisible] = useState<boolean>(false);
     const [editing, setEditing] = useState<boolean>(false);
+    const [commentsLoading, setCommentsLoading] = useState(false);
 
     useEffect(() => {
         if (!contentRef.current) return;
@@ -53,15 +80,22 @@ const PostContainer = ({
     };
 
     const handleDeleteClick = () => {
-        onDeleteButtonClick(post.id);
+        onDeleteButtonClick(post);
     };
 
     const handleContentExpandClick = () => {
         setContentExpanded((currentlyExpanded) => !currentlyExpanded);
     };
 
-    const handleCommentButtonClick = () => {
-        setCommentsVisible(true);
+    const handleCommentButtonClick = async () => {
+        if (!commentsVisible) {
+            setCommentsLoading(true);
+            setCommentsVisible(true);
+
+            await onLoadComments(post);
+
+            setCommentsLoading(false);
+        }
 
         setTimeout(() => {
             createCommentInputRef.current?.focus();
@@ -73,15 +107,24 @@ const PostContainer = ({
     };
 
     const handleReactionCountButtonClick = () => {
-        onReactionCountButtonClick(post.id);
+        onReactionCountButtonClick(post);
     };
 
-    const handleCommentCountButtonClick = () => {
-        setCommentsVisible((visible) => !visible);
+    const handleCommentCountButtonClick = async () => {
+        if (!commentsVisible) {
+            setCommentsLoading(true);
+            setCommentsVisible(true);
+
+            await onLoadComments(post);
+
+            setCommentsLoading(false);
+        } else {
+            setCommentsVisible(false);
+        }
     };
 
     const handleReactionPopoverToggleButtonClick = async (reaction: TReaction) => {
-        await onTogglePostReaction(post.id, reaction);
+        await onTogglePostReaction(post, reaction);
 
         setReactionPopoverVisible(false);
     };
@@ -98,23 +141,36 @@ const PostContainer = ({
         values: CreateCommentFormValues,
         actions: FormikHelpers<CreateCommentFormValues>
     ) => {
-        setTimeout(() => {
-            console.log(`handleCreateCommentSubmit:\nvalues: ${JSON.stringify(values, null, 2)}`);
-            actions.resetForm();
-        }, 1000);
+        onCreateCommentSubmit(post, values, actions);
     };
 
-    const handleLoadMoreCommentsButtonClick = () => {
-        console.log("handleLoadMoreCommentsButtonClick");
+    const handleLoadMoreCommentsButtonClick = async () => {
+        setCommentsLoading(true);
+
+        await onLoadMoreComments(post);
+
+        setCommentsLoading(false);
     };
 
     const handleEditPostSubmit = async (values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => {
-        await onEditPostSubmit(post.id, values, actions);
+        await onEditPostSubmit(post, values, actions);
         setEditing(false);
     };
 
     const handleEditPostCancelButtonClick = () => {
         setEditing(false);
+    };
+
+    const handleToggleCommentReaction = async (comment: IComment, reaction: TReaction) => {
+        await onToggleCommentReaction(post, comment, reaction);
+    };
+
+    const handleEditCommentSubmit = async (
+        comment: IComment,
+        values: EditCommentFormValues,
+        actions: FormikHelpers<EditCommentFormValues>
+    ) => {
+        await onEditCommentSubmit(post, comment, values, actions);
     };
 
     return (
@@ -143,76 +199,22 @@ const PostContainer = ({
             onReactionButtonClick={handleReactionButtonClick}
             onReactionPopoverToggleButtonClick={handleReactionPopoverToggleButtonClick}
             onReactionPopoverClose={handleReactionPopoverClose}
-            comments={mockComments}
+            comments={post.comments}
             commentsVisible={commentsVisible}
             createCommentInputRef={createCommentInputRef}
             onCreateCommentSubmit={handleCreateCommentSubmit}
             onCommentDeleteButtonClick={onCommentDeleteButtonClick}
             onCommentReactionCountButtonClick={onCommentReactionCountButtonClick}
-            commentsLoading={false}
-            loadMoreCommentsButtonVisible={true}
+            commentsLoading={commentsLoading}
+            loadMoreCommentsButtonVisible={post.comments.length < post.commentCount}
             onLoadMoreCommentsButtonClick={handleLoadMoreCommentsButtonClick}
             editing={editing}
             onEditPostSubmit={handleEditPostSubmit}
             onEditPostCancelButtonClick={handleEditPostCancelButtonClick}
+            onToggleCommentReaction={handleToggleCommentReaction}
+            onEditCommentSubmit={handleEditCommentSubmit}
         />
     );
 };
 
 export default PostContainer;
-
-const mockComments: IComment[] = [
-    {
-        id: "0",
-        content: "Lorem Ipsum",
-        authorId: "0",
-        authorName: "Naruto Uzumaki",
-        createdTimeString: "2 perce",
-        reactionCount: {
-            likeCount: 1,
-            heartCount: 1,
-            funnyCount: 0,
-            angryCount: 0,
-        },
-    },
-    {
-        id: "1",
-        content: "Lorem Ipsum2",
-        authorId: "1",
-        authorName: "Teszt Elek",
-        createdTimeString: "5 perce",
-        reactionCount: {
-            likeCount: 0,
-            heartCount: 0,
-            funnyCount: 0,
-            angryCount: 0,
-        },
-    },
-    {
-        id: "2",
-        content: "Lorem Ipsum2",
-        authorId: "2",
-        authorName: "Sasuke Uchiha",
-        createdTimeString: "1 órája",
-        reactionCount: {
-            likeCount: 4,
-            heartCount: 2,
-            funnyCount: 1,
-            angryCount: 0,
-        },
-    },
-    {
-        id: "3",
-        content:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, randomusz ig sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum asde.",
-        authorId: "3",
-        authorName: "Hinata Hyuga",
-        createdTimeString: "2 órája",
-        reactionCount: {
-            likeCount: 0,
-            heartCount: 0,
-            funnyCount: 0,
-            angryCount: 1,
-        },
-    },
-];

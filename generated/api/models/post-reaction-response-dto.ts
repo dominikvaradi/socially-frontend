@@ -28,6 +28,12 @@ export interface PostReactionResponseDto {
      * @type {string}
      * @memberof PostReactionResponseDto
      */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostReactionResponseDto
+     */
     'postId': string;
     /**
      * 

@@ -23,9 +23,9 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { EmptyRestApiResponseDto } from '../models';
 // @ts-ignore
-import { ReactionToggleRequestDto } from '../models';
+import { Reaction } from '../models';
 // @ts-ignore
-import { RestApiResponseDtoMessageReactionResponseDto } from '../models';
+import { ReactionToggleRequestDto } from '../models';
 // @ts-ignore
 import { RestApiResponseDtoMessageResponseDto } from '../models';
 // @ts-ignore
@@ -76,12 +76,13 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @param {string} messageId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllReactionsByMessage: async (messageId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findAllReactionsByMessage: async (messageId: string, reaction?: Reaction, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'messageId' is not null or undefined
             assertParamExists('findAllReactionsByMessage', 'messageId', messageId)
             const localVarPath = `/messages/{messageId}/reactions`
@@ -100,6 +101,10 @@ export const MessageControllerApiAxiosParamCreator = function (configuration?: C
             // authentication BearerToken required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (reaction !== undefined) {
+                localVarQueryParameter['reaction'] = reaction;
+            }
 
             if (page !== undefined) {
                 localVarQueryParameter['page'] = page;
@@ -223,13 +228,14 @@ export const MessageControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} messageId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findAllReactionsByMessage(messageId: string, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoMessageReactionResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllReactionsByMessage(messageId, page, size, options);
+        async findAllReactionsByMessage(messageId: string, reaction?: Reaction, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoMessageReactionResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllReactionsByMessage(messageId, reaction, page, size, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -249,7 +255,7 @@ export const MessageControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toggleReactionOnMessage(messageId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoMessageReactionResponseDto>> {
+        async toggleReactionOnMessage(messageId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoMessageResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.toggleReactionOnMessage(messageId, reactionToggleRequestDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -275,13 +281,14 @@ export const MessageControllerApiFactory = function (configuration?: Configurati
         /**
          * 
          * @param {string} messageId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllReactionsByMessage(messageId: string, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoMessageReactionResponseDto> {
-            return localVarFp.findAllReactionsByMessage(messageId, page, size, options).then((request) => request(axios, basePath));
+        findAllReactionsByMessage(messageId: string, reaction?: Reaction, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoMessageReactionResponseDto> {
+            return localVarFp.findAllReactionsByMessage(messageId, reaction, page, size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -299,7 +306,7 @@ export const MessageControllerApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toggleReactionOnMessage(messageId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: any): AxiosPromise<RestApiResponseDtoMessageReactionResponseDto> {
+        toggleReactionOnMessage(messageId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: any): AxiosPromise<RestApiResponseDtoMessageResponseDto> {
             return localVarFp.toggleReactionOnMessage(messageId, reactionToggleRequestDto, options).then((request) => request(axios, basePath));
         },
     };
@@ -326,14 +333,15 @@ export class MessageControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} messageId 
+     * @param {Reaction} [reaction] 
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MessageControllerApi
      */
-    public findAllReactionsByMessage(messageId: string, page?: number, size?: number, options?: AxiosRequestConfig) {
-        return MessageControllerApiFp(this.configuration).findAllReactionsByMessage(messageId, page, size, options).then((request) => request(this.axios, this.basePath));
+    public findAllReactionsByMessage(messageId: string, reaction?: Reaction, page?: number, size?: number, options?: AxiosRequestConfig) {
+        return MessageControllerApiFp(this.configuration).findAllReactionsByMessage(messageId, reaction, page, size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

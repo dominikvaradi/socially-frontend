@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import {
     AuthControllerApi,
+    CommentControllerApi,
     Configuration,
     ConfigurationParameters,
     ConversationControllerApi,
@@ -77,3 +78,4 @@ export const userApi = () => new UserControllerApi(createConfiguration(), undefi
 export const conversationApi = () =>
     new ConversationControllerApi(createConfiguration(), undefined, createAxiosInstance());
 export const postApi = () => new PostControllerApi(createConfiguration(), undefined, createAxiosInstance());
+export const commentApi = () => new CommentControllerApi(createConfiguration(), undefined, createAxiosInstance());

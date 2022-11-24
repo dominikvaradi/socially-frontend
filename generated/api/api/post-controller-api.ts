@@ -27,6 +27,8 @@ import { EmptyRestApiResponseDto } from '../models';
 // @ts-ignore
 import { PostUpdateRequestDto } from '../models';
 // @ts-ignore
+import { Reaction } from '../models';
+// @ts-ignore
 import { ReactionToggleRequestDto } from '../models';
 // @ts-ignore
 import { RestApiResponseDtoCommentResponseDto } from '../models';
@@ -217,12 +219,13 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} postId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllReactionsByPost: async (postId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findAllReactionsByPost: async (postId: string, reaction?: Reaction, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('findAllReactionsByPost', 'postId', postId)
             const localVarPath = `/posts/{postId}/reactions`
@@ -241,6 +244,10 @@ export const PostControllerApiAxiosParamCreator = function (configuration?: Conf
             // authentication BearerToken required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (reaction !== undefined) {
+                localVarQueryParameter['reaction'] = reaction;
+            }
 
             if (page !== undefined) {
                 localVarQueryParameter['page'] = page;
@@ -441,13 +448,14 @@ export const PostControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} postId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findAllReactionsByPost(postId: string, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoPostReactionResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllReactionsByPost(postId, page, size, options);
+        async findAllReactionsByPost(postId: string, reaction?: Reaction, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoPostReactionResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllReactionsByPost(postId, reaction, page, size, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -535,13 +543,14 @@ export const PostControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @param {string} postId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllReactionsByPost(postId: string, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoPostReactionResponseDto> {
-            return localVarFp.findAllReactionsByPost(postId, page, size, options).then((request) => request(axios, basePath));
+        findAllReactionsByPost(postId: string, reaction?: Reaction, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoPostReactionResponseDto> {
+            return localVarFp.findAllReactionsByPost(postId, reaction, page, size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -633,14 +642,15 @@ export class PostControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} postId 
+     * @param {Reaction} [reaction] 
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PostControllerApi
      */
-    public findAllReactionsByPost(postId: string, page?: number, size?: number, options?: AxiosRequestConfig) {
-        return PostControllerApiFp(this.configuration).findAllReactionsByPost(postId, page, size, options).then((request) => request(this.axios, this.basePath));
+    public findAllReactionsByPost(postId: string, reaction?: Reaction, page?: number, size?: number, options?: AxiosRequestConfig) {
+        return PostControllerApiFp(this.configuration).findAllReactionsByPost(postId, reaction, page, size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

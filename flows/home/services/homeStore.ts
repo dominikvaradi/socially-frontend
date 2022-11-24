@@ -10,7 +10,7 @@ export const defaultHomeStore: THomeStore = {
         postsLoading: false,
         postsTotalElementCount: 0,
         reactionListReactionItems: [],
-        reactionListLoading: false,
-        reactionListLoadMoreItemsButtonVisible: false,
+        reactionListReactionItemsLoading: false,
+        reactionListReactionItemsTotalElementCount: 0,
     },
 };

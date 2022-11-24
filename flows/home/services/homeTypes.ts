@@ -5,6 +5,6 @@ export interface IHomeFeedScreenStore {
     postsLoading: boolean;
     postsTotalElementCount: number;
     reactionListReactionItems: IReactionListItem[];
-    reactionListLoading: boolean;
-    reactionListLoadMoreItemsButtonVisible: boolean;
+    reactionListReactionItemsLoading: boolean;
+    reactionListReactionItemsTotalElementCount: number;
 }

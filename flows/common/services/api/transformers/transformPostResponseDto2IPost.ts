@@ -21,5 +21,6 @@ export const transformPostResponseDto2IPost = (postResponseDto: PostResponseDto)
         deletable:
             postResponseDto.authorId === tokenStorage.getUserId() ||
             postResponseDto.addresseeId === tokenStorage.getUserId(),
+        comments: [],
     };
 };
