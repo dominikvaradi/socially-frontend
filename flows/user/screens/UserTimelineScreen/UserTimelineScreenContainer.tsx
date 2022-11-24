@@ -125,6 +125,8 @@ const mockPosts: IPost[] = [
         content: "Lorem ipsum.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 0,
         createdTimeString: "2 perce",
         reactionCount: {
@@ -133,6 +135,8 @@ const mockPosts: IPost[] = [
             funnyCount: 0,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "1",
@@ -141,6 +145,8 @@ const mockPosts: IPost[] = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet leo nibh. Donec a dolor dictum eros finibus posuere quis non mauris. Morbi dictum tempor elit non rhoncus. Vivamus non rhoncus velit. Curabitur convallis id eros ac suscipit. Praesent aliquet sagittis facilisis. Curabitur posuere mi id faucibus ullamcorper. Suspendisse nulla ex, aliquam gravida enim eu, euismod luctus eros. Aenean eu urna fermentum, finibus tortor ac, pretium dolor. Vivamus finibus sapien et augue condimentum dignissim.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 0,
         createdTimeString: "14 perce",
         reactionCount: {
@@ -149,6 +155,8 @@ const mockPosts: IPost[] = [
             funnyCount: 0,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "2",
@@ -156,6 +164,8 @@ const mockPosts: IPost[] = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet leo nibh. Donec a dolor dictum eros finibus posuere quis non mauris. Morbi dictum tempor elit non rhoncus. Vivamus non rhoncus velit. Curabitur convallis id eros ac suscipit. Praesent aliquet sagittis facilisis. Curabitur posuere mi id faucibus ullamcorper. Suspendisse nulla ex, aliquam gravida enim eu, euismod luctus eros. Aenean eu urna fermentum, finibus tortor ac, pretium dolor. Vivamus finibus sapien et augue condimentum dignissim.",
         authorId: "0",
         authorName: "Hubert Blaine Wolfe­schlegel­stein­hausen­berger­dorff Sr.",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 3,
         createdTimeString: "28 perce",
         reactionCount: {
@@ -164,6 +174,8 @@ const mockPosts: IPost[] = [
             funnyCount: 0,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "3",
@@ -178,6 +190,8 @@ const mockPosts: IPost[] = [
             "Nunc semper ullamcorper risus, id hendrerit odio euismod at. Sed id vulputate metus. Suspendisse quis massa dictum, pulvinar elit quis, sodales turpis. Vivamus gravida varius nisi, vel dictum ipsum molestie eu. Vivamus nec molestie nulla, quis efficitur sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut ut consectetur sem. Nullam bibendum sit amet dui quis scelerisque. Donec in nunc posuere, vulputate neque ac, mattis sapien. Mauris id augue at felis pellentesque interdum. Aenean euismod hendrerit enim, id pretium quam semper non.",
         authorId: "0",
         authorName: "Kovács-Nagyné Naruto Csillagvirág Narcisszusz Bonaventúra Szebasztián Esztella",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 5,
         createdTimeString: "1 órája",
         reactionCount: {
@@ -186,6 +200,8 @@ const mockPosts: IPost[] = [
             funnyCount: 0,
             angryCount: 5,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "4",
@@ -193,6 +209,8 @@ const mockPosts: IPost[] = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet leo nibh. Donec a dolor dictum eros finibus posuere quis non mauris. Morbi dictum tempor elit non rhoncus. Vivamus non rhoncus velit. Curabitur convallis id eros ac suscipit. Praesent aliquet sagittis facilisis. Curabitur posuere mi id faucibus ullamcorper. Suspendisse nulla ex, aliquam gravida enim eu, euismod luctus eros. Aenean eu urna fermentum, finibus tortor ac, pretium dolor. Vivamus finibus sapien et augue condimentum dignissim.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 3,
         createdTimeString: "2 órája",
         reactionCount: {
@@ -201,6 +219,8 @@ const mockPosts: IPost[] = [
             funnyCount: 0,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "5",
@@ -209,6 +229,8 @@ const mockPosts: IPost[] = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet leo nibh. Donec a dolor dictum eros finibus posuere quis non mauris. Morbi dictum tempor elit non rhoncus. Vivamus non rhoncus velit. Curabitur convallis id eros ac suscipit. Praesent aliquet sagittis facilisis. Curabitur posuere mi id faucibus ullamcorper. Suspendisse nulla ex, aliquam gravida enim eu, euismod luctus eros. Aenean eu urna fermentum, finibus tortor ac, pretium dolor. Vivamus finibus sapien et augue condimentum dignissim.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 13,
         createdTimeString: "4 órája",
         reactionCount: {
@@ -217,6 +239,8 @@ const mockPosts: IPost[] = [
             funnyCount: 1,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "6",
@@ -224,6 +248,8 @@ const mockPosts: IPost[] = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet leo nibh. Donec a dolor dictum eros finibus posuere quis non mauris. Morbi dictum tempor elit non rhoncus. Vivamus non rhoncus velit. Curabitur convallis id eros ac suscipit. Praesent aliquet sagittis facilisis. Curabitur posuere mi id faucibus ullamcorper. Suspendisse nulla ex, aliquam gravida enim eu, euismod luctus eros. Aenean eu urna fermentum, finibus tortor ac, pretium dolor. Vivamus finibus sapien et augue condimentum dignissim.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 20,
         createdTimeString: "5 órája",
         reactionCount: {
@@ -232,6 +258,8 @@ const mockPosts: IPost[] = [
             funnyCount: 1,
             angryCount: 1,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "7",
@@ -240,6 +268,8 @@ const mockPosts: IPost[] = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet leo nibh. Donec a dolor dictum eros finibus posuere quis non mauris. Morbi dictum tempor elit non rhoncus. Vivamus non rhoncus velit. Curabitur convallis id eros ac suscipit. Praesent aliquet sagittis facilisis. Curabitur posuere mi id faucibus ullamcorper. Suspendisse nulla ex, aliquam gravida enim eu, euismod luctus eros. Aenean eu urna fermentum, finibus tortor ac, pretium dolor. Vivamus finibus sapien et augue condimentum dignissim.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 1,
         createdTimeString: "10 órája",
         reactionCount: {
@@ -248,6 +278,8 @@ const mockPosts: IPost[] = [
             funnyCount: 0,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "8",
@@ -255,6 +287,8 @@ const mockPosts: IPost[] = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet leo nibh. Donec a dolor dictum eros finibus posuere quis non mauris. Morbi dictum tempor elit non rhoncus. Vivamus non rhoncus velit. Curabitur convallis id eros ac suscipit. Praesent aliquet sagittis facilisis. Curabitur posuere mi id faucibus ullamcorper. Suspendisse nulla ex, aliquam gravida enim eu, euismod luctus eros. Aenean eu urna fermentum, finibus tortor ac, pretium dolor. Vivamus finibus sapien et augue condimentum dignissim.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 0,
         createdTimeString: "10 órája",
         reactionCount: {
@@ -263,6 +297,8 @@ const mockPosts: IPost[] = [
             funnyCount: 20,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "9",
@@ -271,6 +307,8 @@ const mockPosts: IPost[] = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet leo nibh. Donec a dolor dictum eros finibus posuere quis non mauris. Morbi dictum tempor elit non rhoncus. Vivamus non rhoncus velit. Curabitur convallis id eros ac suscipit. Praesent aliquet sagittis facilisis. Curabitur posuere mi id faucibus ullamcorper. Suspendisse nulla ex, aliquam gravida enim eu, euismod luctus eros. Aenean eu urna fermentum, finibus tortor ac, pretium dolor. Vivamus finibus sapien et augue condimentum dignissim.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 20,
         createdTimeString: "1 napja",
         reactionCount: {
@@ -279,6 +317,8 @@ const mockPosts: IPost[] = [
             funnyCount: 0,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
     {
         id: "10",
@@ -304,6 +344,8 @@ const mockPosts: IPost[] = [
             "Integer tristique, nunc vel auctor lobortis, magna elit commodo metus, in bibendum elit lacus finibus nibh. Proin quis fermentum turpis. Etiam egestas lacus ex, ac accumsan mi tristique sed. Suspendisse condimentum, lectus sit amet aliquet maximus, dui risus suscipit nisl, in rhoncus leo dui ac lacus. Nunc non consequat lacus. Sed imperdiet sed justo ac venenatis. Nulla semper auctor ipsum id ullamcorper. Phasellus vehicula, ligula non efficitur mollis, est sapien pulvinar nunc, quis tincidunt orci erat sed quam. Vivamus ut lacinia diam, imperdiet dapibus enim.",
         authorId: "0",
         authorName: "Naruto Uzumaki",
+        addresseeId: "0",
+        addresseeName: "Dummy Ernő",
         commentCount: 2,
         createdTimeString: "2 napja",
         reactionCount: {
@@ -312,6 +354,8 @@ const mockPosts: IPost[] = [
             funnyCount: 0,
             angryCount: 0,
         },
+        editable: true,
+        deletable: true,
     },
 ];
 

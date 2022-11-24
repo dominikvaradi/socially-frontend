@@ -120,7 +120,7 @@ const CommentComponent = ({
                                     </Menu>
                                 )}
                             </div>
-                            <p className="p-1 text-justify">{content}</p>
+                            <p className="whitespace-pre-line p-1 text-justify">{content}</p>
                             {reactionCountSum > 0 && (
                                 <Button
                                     onClick={onReactionCountButtonClick}

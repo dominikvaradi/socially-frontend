@@ -2,6 +2,7 @@ import { Button, Collapse, Icon, IconButton, useColorMode } from "@chakra-ui/rea
 import React from "react";
 import {
     CreateCommentFormValues,
+    EditCommentFormValues,
     EditPostFormValues,
     IComment,
     IReactionCount,
@@ -48,14 +49,20 @@ type TProps = {
     commentsVisible: boolean;
     createCommentInputRef: React.RefObject<HTMLTextAreaElement>;
     onCreateCommentSubmit: (values: CreateCommentFormValues, actions: FormikHelpers<CreateCommentFormValues>) => void;
-    onCommentDeleteButtonClick: (commentId: string) => void;
-    onCommentReactionCountButtonClick: (commentId: string) => void;
+    onCommentDeleteButtonClick: (comment: IComment) => void;
+    onCommentReactionCountButtonClick: (comment: IComment) => void;
     commentsLoading: boolean;
     loadMoreCommentsButtonVisible: boolean;
     onLoadMoreCommentsButtonClick: () => void;
     editing: boolean;
     onEditPostSubmit: (values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => void;
     onEditPostCancelButtonClick: () => void;
+    onToggleCommentReaction: (comment: IComment, reaction: TReaction) => Promise<void>;
+    onEditCommentSubmit: (
+        comment: IComment,
+        values: EditCommentFormValues,
+        actions: FormikHelpers<EditCommentFormValues>
+    ) => Promise<void>;
 };
 
 const PostComponent = ({
@@ -95,6 +102,8 @@ const PostComponent = ({
     editing,
     onEditPostSubmit,
     onEditPostCancelButtonClick,
+    onToggleCommentReaction,
+    onEditCommentSubmit,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
@@ -143,7 +152,7 @@ const PostComponent = ({
                         <p className="text-lg font-semibold">{header}</p>
                         <p
                             ref={contentRef}
-                            className={`max-h-[200px] overflow-hidden text-justify ${
+                            className={`max-h-[200px] overflow-hidden whitespace-pre-line text-justify ${
                                 contentNeedExpand ? "hidden" : "block"
                             }`}
                         >
@@ -151,7 +160,11 @@ const PostComponent = ({
                         </p>
                         {contentNeedExpand && (
                             <>
-                                <Collapse in={contentExpanded} startingHeight="200px" className="text-justify">
+                                <Collapse
+                                    in={contentExpanded}
+                                    startingHeight="200px"
+                                    className="whitespace-pre-line text-justify"
+                                >
                                     {content}
                                 </Collapse>
                                 <Button
@@ -172,33 +185,43 @@ const PostComponent = ({
                                 </Button>
                             </>
                         )}
-                        <div className="mt-3 mb-1 flex items-end justify-between">
-                            <Button
-                                onClick={onReactionCountButtonClick}
-                                variant="ghost"
-                                colorScheme="brand"
-                                className="flex cursor-pointer select-none items-center space-x-1 !p-1"
-                            >
-                                <div className="flex flex-row-reverse items-center -space-x-2 space-x-reverse text-2xl">
-                                    {reactionCount.angryCount > 0 && <span>{getUnicodeStringByReaction("ANGRY")}</span>}
-                                    {reactionCount.funnyCount > 0 && <span>{getUnicodeStringByReaction("FUNNY")}</span>}
-                                    {reactionCount.heartCount > 0 && <span>{getUnicodeStringByReaction("HEART")}</span>}
-                                    {reactionCount.likeCount > 0 && <span>{getUnicodeStringByReaction("LIKE")}</span>}
-                                </div>
-                                {reactionCountSum > 0 && <span>{reactionCountSum}</span>}
-                            </Button>
-                            {commentCount > 0 && (
+                        {(reactionCountSum > 0 || commentCount > 0) && (
+                            <div className="mt-3 mb-1 flex items-end justify-between">
                                 <Button
-                                    onClick={onCommentCountButtonClick}
-                                    size="sm"
-                                    leftIcon={<Icon as={SlBubbles} />}
-                                    colorScheme="brand"
+                                    onClick={onReactionCountButtonClick}
                                     variant="ghost"
+                                    colorScheme="brand"
+                                    className="flex cursor-pointer select-none items-center space-x-1 !p-1"
                                 >
-                                    {commentCount} komment
+                                    <div className="flex flex-row-reverse items-center -space-x-2 space-x-reverse text-2xl">
+                                        {reactionCount.angryCount > 0 && (
+                                            <span>{getUnicodeStringByReaction("ANGRY")}</span>
+                                        )}
+                                        {reactionCount.funnyCount > 0 && (
+                                            <span>{getUnicodeStringByReaction("FUNNY")}</span>
+                                        )}
+                                        {reactionCount.heartCount > 0 && (
+                                            <span>{getUnicodeStringByReaction("HEART")}</span>
+                                        )}
+                                        {reactionCount.likeCount > 0 && (
+                                            <span>{getUnicodeStringByReaction("LIKE")}</span>
+                                        )}
+                                    </div>
+                                    {reactionCountSum > 0 && <span>{reactionCountSum}</span>}
                                 </Button>
-                            )}
-                        </div>
+                                {commentCount > 0 && (
+                                    <Button
+                                        onClick={onCommentCountButtonClick}
+                                        size="sm"
+                                        leftIcon={<Icon as={SlBubbles} />}
+                                        colorScheme="brand"
+                                        variant="ghost"
+                                    >
+                                        {commentCount} komment
+                                    </Button>
+                                )}
+                            </div>
+                        )}
                     </div>
                 )}
                 {editing && (
@@ -249,10 +272,10 @@ const PostComponent = ({
                         <Comment
                             key={comment.id}
                             comment={comment}
-                            editable={true}
-                            deletable={true}
                             onDeleteButtonClick={onCommentDeleteButtonClick}
                             onReactionCountButtonClick={onCommentReactionCountButtonClick}
+                            onToggleCommentReaction={onToggleCommentReaction}
+                            onEditCommentSubmit={onEditCommentSubmit}
                         />
                     ))}
                     {comments.length === 0 && commentsLoading && (

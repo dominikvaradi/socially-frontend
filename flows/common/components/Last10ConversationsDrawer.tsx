@@ -11,13 +11,15 @@ import {
 import React from "react";
 import UserNameAvatar from "./UserNameAvatar";
 import { FiPlus } from "react-icons/fi";
-import { ILastConversation } from "../services/commonTypes";
+import { IConversation } from "../services/commonTypes";
+import { getConversationTitle } from "../services/commonUtils";
+import GroupAvatar from "./GroupAvatar";
 
 type TProps = {
     expanded: boolean;
     onClose: () => void;
     expandButtonRef: React.RefObject<HTMLButtonElement>;
-    last10Conversations: ILastConversation[];
+    last10Conversations: IConversation[];
     onLastConversationClick: (lastConversationId: string) => void;
     onCreateNewConversationButtonClick: () => void;
 };
@@ -45,16 +47,17 @@ const Last10ConversationsDrawer = ({
                 <DrawerHeader>Utolsó 10 beszélgetés</DrawerHeader>
                 <DrawerBody>
                     <div className="flex h-full w-full flex-col space-y-1 overflow-y-auto p-3">
-                        {last10Conversations.map((c) => (
+                        {last10Conversations.map((conversation) => (
                             <div
-                                key={c.id}
-                                className={`
-                                    flex cursor-pointer items-center space-x-2 rounded-xl p-1 ${itemHoverStyle} ${itemActiveStyle}
-                                `}
-                                onClick={() => onLastConversationClick(c.id)}
+                                onClick={() => onLastConversationClick(conversation.id)}
+                                key={conversation.id}
+                                className={`flex cursor-pointer select-none items-center gap-2 rounded-lg p-1 ${itemHoverStyle} ${itemActiveStyle}`}
                             >
-                                <UserNameAvatar className="select-none" userName={c.userName} />
-                                <span className="select-none text-xl">{c.userName}</span>
+                                {conversation.type === "DIRECT" && (
+                                    <UserNameAvatar userName={getConversationTitle(conversation.members, 100)} />
+                                )}
+                                {conversation.type === "GROUP" && <GroupAvatar />}
+                                <span className="leading-none">{getConversationTitle(conversation.members, 100)}</span>
                             </div>
                         ))}
                         <div

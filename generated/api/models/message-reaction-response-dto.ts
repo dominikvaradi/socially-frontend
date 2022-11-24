@@ -28,6 +28,12 @@ export interface MessageReactionResponseDto {
      * @type {string}
      * @memberof MessageReactionResponseDto
      */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageReactionResponseDto
+     */
     'messageId': string;
     /**
      * 

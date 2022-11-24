@@ -27,9 +27,7 @@ import { EmptyRestApiResponseDto } from '../models';
 // @ts-ignore
 import { Reaction } from '../models';
 // @ts-ignore
-import { ReactionCreateRequestDto } from '../models';
-// @ts-ignore
-import { RestApiResponseDtoCommentReactionResponseDto } from '../models';
+import { ReactionToggleRequestDto } from '../models';
 // @ts-ignore
 import { RestApiResponseDtoCommentResponseDto } from '../models';
 // @ts-ignore
@@ -40,49 +38,6 @@ import { RestApiResponseDtoPageResponseDtoCommentReactionResponseDto } from '../
  */
 export const CommentControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @param {string} commentId 
-         * @param {ReactionCreateRequestDto} reactionCreateRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createReactionOnComment: async (commentId: string, reactionCreateRequestDto: ReactionCreateRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'commentId' is not null or undefined
-            assertParamExists('createReactionOnComment', 'commentId', commentId)
-            // verify required parameter 'reactionCreateRequestDto' is not null or undefined
-            assertParamExists('createReactionOnComment', 'reactionCreateRequestDto', reactionCreateRequestDto)
-            const localVarPath = `/comments/{commentId}/reactions`
-                .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication BearerToken required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(reactionCreateRequestDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @param {string} commentId 
@@ -123,53 +78,13 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @param {string} commentId 
-         * @param {Reaction} reaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteReactionFromComment: async (commentId: string, reaction: Reaction, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'commentId' is not null or undefined
-            assertParamExists('deleteReactionFromComment', 'commentId', commentId)
-            // verify required parameter 'reaction' is not null or undefined
-            assertParamExists('deleteReactionFromComment', 'reaction', reaction)
-            const localVarPath = `/comments/{commentId}/reactions/{reaction}`
-                .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)))
-                .replace(`{${"reaction"}}`, encodeURIComponent(String(reaction)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication BearerToken required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} commentId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllReactionsByComment: async (commentId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findAllReactionsByComment: async (commentId: string, reaction?: Reaction, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'commentId' is not null or undefined
             assertParamExists('findAllReactionsByComment', 'commentId', commentId)
             const localVarPath = `/comments/{commentId}/reactions`
@@ -188,6 +103,10 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
             // authentication BearerToken required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (reaction !== undefined) {
+                localVarQueryParameter['reaction'] = reaction;
+            }
 
             if (page !== undefined) {
                 localVarQueryParameter['page'] = page;
@@ -239,6 +158,49 @@ export const CommentControllerApiAxiosParamCreator = function (configuration?: C
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} commentId 
+         * @param {ReactionToggleRequestDto} reactionToggleRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        toggleReactionOnComment: async (commentId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'commentId' is not null or undefined
+            assertParamExists('toggleReactionOnComment', 'commentId', commentId)
+            // verify required parameter 'reactionToggleRequestDto' is not null or undefined
+            assertParamExists('toggleReactionOnComment', 'reactionToggleRequestDto', reactionToggleRequestDto)
+            const localVarPath = `/comments/{commentId}/reactions`
+                .replace(`{${"commentId"}}`, encodeURIComponent(String(commentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(reactionToggleRequestDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -301,17 +263,6 @@ export const CommentControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} commentId 
-         * @param {ReactionCreateRequestDto} reactionCreateRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createReactionOnComment(commentId: string, reactionCreateRequestDto: ReactionCreateRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoCommentReactionResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createReactionOnComment(commentId, reactionCreateRequestDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} commentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -322,24 +273,14 @@ export const CommentControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} commentId 
-         * @param {Reaction} reaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteReactionFromComment(commentId: string, reaction: Reaction, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmptyRestApiResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteReactionFromComment(commentId, reaction, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} commentId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findAllReactionsByComment(commentId: string, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllReactionsByComment(commentId, page, size, options);
+        async findAllReactionsByComment(commentId: string, reaction?: Reaction, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllReactionsByComment(commentId, reaction, page, size, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -350,6 +291,17 @@ export const CommentControllerApiFp = function(configuration?: Configuration) {
          */
         async findCommentByPublicId(commentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoCommentResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.findCommentByPublicId(commentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} commentId 
+         * @param {ReactionToggleRequestDto} reactionToggleRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async toggleReactionOnComment(commentId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoCommentResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.toggleReactionOnComment(commentId, reactionToggleRequestDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -376,16 +328,6 @@ export const CommentControllerApiFactory = function (configuration?: Configurati
         /**
          * 
          * @param {string} commentId 
-         * @param {ReactionCreateRequestDto} reactionCreateRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createReactionOnComment(commentId: string, reactionCreateRequestDto: ReactionCreateRequestDto, options?: any): AxiosPromise<RestApiResponseDtoCommentReactionResponseDto> {
-            return localVarFp.createReactionOnComment(commentId, reactionCreateRequestDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} commentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -395,23 +337,14 @@ export const CommentControllerApiFactory = function (configuration?: Configurati
         /**
          * 
          * @param {string} commentId 
-         * @param {Reaction} reaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteReactionFromComment(commentId: string, reaction: Reaction, options?: any): AxiosPromise<EmptyRestApiResponseDto> {
-            return localVarFp.deleteReactionFromComment(commentId, reaction, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} commentId 
+         * @param {Reaction} [reaction] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllReactionsByComment(commentId: string, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto> {
-            return localVarFp.findAllReactionsByComment(commentId, page, size, options).then((request) => request(axios, basePath));
+        findAllReactionsByComment(commentId: string, reaction?: Reaction, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto> {
+            return localVarFp.findAllReactionsByComment(commentId, reaction, page, size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -421,6 +354,16 @@ export const CommentControllerApiFactory = function (configuration?: Configurati
          */
         findCommentByPublicId(commentId: string, options?: any): AxiosPromise<RestApiResponseDtoCommentResponseDto> {
             return localVarFp.findCommentByPublicId(commentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} commentId 
+         * @param {ReactionToggleRequestDto} reactionToggleRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        toggleReactionOnComment(commentId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: any): AxiosPromise<RestApiResponseDtoCommentResponseDto> {
+            return localVarFp.toggleReactionOnComment(commentId, reactionToggleRequestDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -445,18 +388,6 @@ export class CommentControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} commentId 
-     * @param {ReactionCreateRequestDto} reactionCreateRequestDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommentControllerApi
-     */
-    public createReactionOnComment(commentId: string, reactionCreateRequestDto: ReactionCreateRequestDto, options?: AxiosRequestConfig) {
-        return CommentControllerApiFp(this.configuration).createReactionOnComment(commentId, reactionCreateRequestDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} commentId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommentControllerApi
@@ -468,26 +399,15 @@ export class CommentControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} commentId 
-     * @param {Reaction} reaction 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommentControllerApi
-     */
-    public deleteReactionFromComment(commentId: string, reaction: Reaction, options?: AxiosRequestConfig) {
-        return CommentControllerApiFp(this.configuration).deleteReactionFromComment(commentId, reaction, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} commentId 
+     * @param {Reaction} [reaction] 
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommentControllerApi
      */
-    public findAllReactionsByComment(commentId: string, page?: number, size?: number, options?: AxiosRequestConfig) {
-        return CommentControllerApiFp(this.configuration).findAllReactionsByComment(commentId, page, size, options).then((request) => request(this.axios, this.basePath));
+    public findAllReactionsByComment(commentId: string, reaction?: Reaction, page?: number, size?: number, options?: AxiosRequestConfig) {
+        return CommentControllerApiFp(this.configuration).findAllReactionsByComment(commentId, reaction, page, size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -499,6 +419,18 @@ export class CommentControllerApi extends BaseAPI {
      */
     public findCommentByPublicId(commentId: string, options?: AxiosRequestConfig) {
         return CommentControllerApiFp(this.configuration).findCommentByPublicId(commentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} commentId 
+     * @param {ReactionToggleRequestDto} reactionToggleRequestDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommentControllerApi
+     */
+    public toggleReactionOnComment(commentId: string, reactionToggleRequestDto: ReactionToggleRequestDto, options?: AxiosRequestConfig) {
+        return CommentControllerApiFp(this.configuration).toggleReactionOnComment(commentId, reactionToggleRequestDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

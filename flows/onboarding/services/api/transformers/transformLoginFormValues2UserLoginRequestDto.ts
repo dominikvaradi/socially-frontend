@@ -1,5 +1,5 @@
-import { LoginFormValues } from "../onboardingTypes";
-import { UserLoginRequestDto } from "../../../../generated/api";
+import { LoginFormValues } from "../../onboardingTypes";
+import { UserLoginRequestDto } from "../../../../../generated/api";
 
 export const transformLoginFormValues2UserLoginRequestDto = (loginFormValues: LoginFormValues): UserLoginRequestDto => {
     return {

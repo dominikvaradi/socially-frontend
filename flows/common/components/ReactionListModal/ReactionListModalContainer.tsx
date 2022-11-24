@@ -31,10 +31,15 @@ const ReactionListModalContainer = ({
         onTabChange(mapTabIndex2Reaction(tabIndex));
     };
 
+    const handleClose = () => {
+        setCurrentTabIndex(0);
+        onClose();
+    };
+
     return (
         <ReactionListModalComponent
             visible={visible}
-            onClose={onClose}
+            onClose={handleClose}
             currentTabIndex={currentTabIndex}
             onTabChange={handleTabChange}
             reactionItems={reactionItems}

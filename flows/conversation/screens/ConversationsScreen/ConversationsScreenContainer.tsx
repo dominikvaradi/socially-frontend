@@ -1,6 +1,6 @@
 import React from "react";
 import ConversationsScreenComponent from "./ConversationsScreenComponent";
-import { IConversation } from "../../services/conversationTypes";
+import { IConversation } from "../../../common/services/commonTypes";
 
 const ConversationsScreenContainer = () => {
     const handleConversationClick = (conversationId: string) => {

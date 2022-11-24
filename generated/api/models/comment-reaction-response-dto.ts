@@ -28,6 +28,12 @@ export interface CommentReactionResponseDto {
      * @type {string}
      * @memberof CommentReactionResponseDto
      */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommentReactionResponseDto
+     */
     'commentId': string;
     /**
      * 

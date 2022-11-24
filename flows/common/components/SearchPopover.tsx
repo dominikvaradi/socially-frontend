@@ -61,7 +61,12 @@ const SearchPopover = ({
                                 <span>{si.userName}</span>
                             </div>
                         ))}
-                        {showMoreSearchItemsButtonVisible && (
+                        {searchItems.length === 0 && (
+                            <p className="text-center">
+                                Nem található egyetlen felhasználó sem a keresési feltételnek megfelelően.
+                            </p>
+                        )}
+                        {searchItems.length > 0 && showMoreSearchItemsButtonVisible && (
                             <div
                                 onClick={onShowMoreSearchItemsButtonClick}
                                 className={`flex cursor-pointer items-center gap-2 rounded-md p-2 ${nameHoverStyle} ${nameActiveStyle}`}

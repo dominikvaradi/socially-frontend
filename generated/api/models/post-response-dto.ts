@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import { Reaction } from './reaction';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ReactionCountResponseDto } from './reaction-count-response-dto';
 
 /**
@@ -85,15 +88,21 @@ export interface PostResponseDto {
     'created': string;
     /**
      * 
-     * @type {Set<ReactionCountResponseDto>}
+     * @type {Array<ReactionCountResponseDto>}
      * @memberof PostResponseDto
      */
-    'reactionsCount': Set<ReactionCountResponseDto>;
+    'reactionsCount': Array<ReactionCountResponseDto>;
     /**
      * 
      * @type {number}
      * @memberof PostResponseDto
      */
     'commentsCount': number;
+    /**
+     * 
+     * @type {Reaction}
+     * @memberof PostResponseDto
+     */
+    'currentUsersReaction'?: Reaction;
 }
 

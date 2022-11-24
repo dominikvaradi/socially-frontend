@@ -1,16 +1,13 @@
 import React, { PropsWithChildren } from "react";
-import HeaderBarComponent from "../HeaderBar";
-import { ILastConversation } from "../../services/commonTypes";
+import HeaderBar from "../HeaderBar";
 import Last10ConversationsDrawer from "../Last10ConversationsDrawer";
 import Last10ConversationsSidebar from "../Last10ConversationsSidebar";
 import { useColorMode } from "@chakra-ui/react";
+import { IConversation } from "../../services/commonTypes";
 
 type TProps = {
     onLastConversationsExpandButtonClick: () => void;
-    onProfileButtonClick: () => void;
-    onSettingsButtonClick: () => void;
-    onSignOutButtonClick: () => void;
-    last10Conversations: ILastConversation[];
+    last10Conversations: IConversation[];
     onLastConversationClick: (conversationId: string) => void;
     onCreateNewConversationButtonClick: () => void;
     lastConversationsExpandButtonRef: React.RefObject<HTMLButtonElement>;
@@ -19,29 +16,22 @@ type TProps = {
 };
 
 const MainLayoutComponent = ({
-    children,
     onLastConversationsExpandButtonClick,
-    onProfileButtonClick,
-    onSettingsButtonClick,
-    onSignOutButtonClick,
     last10Conversations,
     onLastConversationClick,
     onCreateNewConversationButtonClick,
     lastConversationsExpandButtonRef,
     last10ConversationsDrawerExpanded,
     onLast10ConversationsDrawerClose,
+    children,
 }: PropsWithChildren<TProps>) => {
     const { colorMode } = useColorMode();
 
     return (
         <div className="absolute top-0 left-0 flex h-screen w-screen flex-col">
-            <HeaderBarComponent
-                userName="Naruto Uzumaki"
+            <HeaderBar
                 lastConversationsExpandButtonRef={lastConversationsExpandButtonRef}
                 onLastConversationsExpandButtonClick={onLastConversationsExpandButtonClick}
-                onProfileButtonClick={onProfileButtonClick}
-                onSettingsButtonClick={onSettingsButtonClick}
-                onSignOutButtonClick={onSignOutButtonClick}
             />
 
             <div className="relative h-full w-full overflow-hidden">
