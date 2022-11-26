@@ -2,6 +2,8 @@ import React from "react";
 import RegisterScreenComponent from "./RegisterScreenComponent";
 import * as Yup from "yup";
 import { useOnboardingContext } from "../../services/onboardingContext";
+import { RegisterFormValues } from "../../services/onboardingTypes";
+import { FormikHelpers } from "formik";
 
 const RegisterValidationSchema = Yup.object().shape({
     firstName: Yup.string().trim().required("A mező kitöltése kötelező"),
@@ -25,9 +27,13 @@ const RegisterValidationSchema = Yup.object().shape({
 const RegisterScreenContainer = () => {
     const { controller } = useOnboardingContext();
 
-    const handleSubmit = controller.submitRegister;
+    const handleSubmit = (values: RegisterFormValues, actions: FormikHelpers<RegisterFormValues>) => {
+        controller.submitRegister(values, actions);
+    };
 
-    const handleLoginButtonClick = controller.navigateToLoginPage;
+    const handleLoginButtonClick = () => {
+        controller.navigateToLoginPage();
+    };
 
     return (
         <RegisterScreenComponent

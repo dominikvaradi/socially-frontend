@@ -29,7 +29,6 @@ const REACTIONS_FETCH_SIZE = 10;
 export class HomeController extends BaseController<THomeStore, HomeStoreService> {
     initFeedScreen = async () => {
         this.storeService.resetStore();
-        this.storeService.setFeedScreenStorePostsLoading(true);
 
         const response = await homeApi.fetchPosts(0, POSTS_FETCH_SIZE);
         if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {

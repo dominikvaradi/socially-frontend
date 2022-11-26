@@ -36,13 +36,6 @@ export class HomeStoreService extends BaseStoreService<THomeStore> {
         });
     };
 
-    setFeedScreenReactionListReactionItems = (reactionItems: IReactionListItem[], totalElementCount: number) => {
-        this.setStore((draftStore) => {
-            draftStore.feedScreenStore.reactionListReactionItems = reactionItems;
-            draftStore.feedScreenStore.reactionListReactionItemsTotalElementCount = totalElementCount;
-        });
-    };
-
     setFeedScreenReactionListReactionItemsAndLoading = (
         reactionItems: IReactionListItem[],
         totalElementCount: number,

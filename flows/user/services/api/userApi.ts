@@ -7,17 +7,29 @@ import {
     PostUpdateRequestDto,
     Reaction,
     RestApiResponseDtoCommentResponseDto,
+    RestApiResponseDtoFriendRequestIncomingResponseDto,
+    RestApiResponseDtoFriendRequestOutgoingResponseDto,
     RestApiResponseDtoPageResponseDtoCommentReactionResponseDto,
     RestApiResponseDtoPageResponseDtoCommentResponseDto,
     RestApiResponseDtoPageResponseDtoPostReactionResponseDto,
     RestApiResponseDtoPageResponseDtoPostResponseDto,
+    RestApiResponseDtoPageResponseDtoUserSearchResponseDto,
     RestApiResponseDtoPostResponseDto,
+    RestApiResponseDtoUserProfileResponseDto,
+    UserUpdateRequestDto,
 } from "../../../../generated/api";
-import { commentApi, postApi, userApi } from "../../../common/apiHandler";
+import { commentApi, friendshipApi, postApi, userApi } from "../../../common/apiHandler";
 
-export const homeApi = {
-    fetchPosts: (page: number, size: number): AxiosPromise<RestApiResponseDtoPageResponseDtoPostResponseDto> =>
-        postApi().findAllPostsOnCurrentUsersFeed(page, size),
+export const api = {
+    fetchUser: (userId: string): AxiosPromise<RestApiResponseDtoUserProfileResponseDto> =>
+        userApi().findUserByPublicId(userId),
+
+    fetchPostsForUser: (
+        userId: string,
+        page: number,
+        size: number
+    ): AxiosPromise<RestApiResponseDtoPageResponseDtoPostResponseDto> =>
+        userApi().findAllPostsOfUser(userId, page, size),
 
     createPost: (
         userId: string,
@@ -76,4 +88,35 @@ export const homeApi = {
         reaction?: Reaction
     ): AxiosPromise<RestApiResponseDtoPageResponseDtoCommentReactionResponseDto> =>
         commentApi().findAllReactionsByComment(commentId, reaction, page, size),
+
+    revokeOutgoingFriendRequest: (
+        friendshipId: string
+    ): AxiosPromise<RestApiResponseDtoFriendRequestOutgoingResponseDto> =>
+        friendshipApi().revokeOutgoingFriendRequest(friendshipId),
+
+    sendFriendRequest: (addresseeUserId: string): AxiosPromise<RestApiResponseDtoFriendRequestOutgoingResponseDto> =>
+        friendshipApi().createNewFriendRequest({ addresseeUserId: addresseeUserId }),
+
+    acceptIncomingFriendRequest: (
+        friendshipId: string
+    ): AxiosPromise<RestApiResponseDtoFriendRequestIncomingResponseDto> =>
+        friendshipApi().acceptIncomingFriendRequest(friendshipId),
+
+    declineIncomingFriendRequest: (
+        friendshipId: string
+    ): AxiosPromise<RestApiResponseDtoFriendRequestIncomingResponseDto> =>
+        friendshipApi().declineIncomingFriendRequest(friendshipId),
+
+    deleteFriend: (friendshipId: string): AxiosPromise<EmptyRestApiResponseDto> =>
+        friendshipApi().deleteFriendship(friendshipId),
+
+    fetchFriendsOfUser: (
+        userId: string,
+        page: number,
+        size: number
+    ): AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto> =>
+        userApi().findAllFriendsOfUser(userId, page, size),
+
+    editUser: (userId: string, userUpdateRequestDto: UserUpdateRequestDto) =>
+        userApi().updateUser(userId, userUpdateRequestDto),
 };

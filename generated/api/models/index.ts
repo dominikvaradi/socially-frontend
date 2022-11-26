@@ -12,6 +12,7 @@ export * from './empty-rest-api-response-dto';
 export * from './friend-request-create-request-dto';
 export * from './friend-request-incoming-response-dto';
 export * from './friend-request-outgoing-response-dto';
+export * from './friendship-status';
 export * from './message-create-request-dto';
 export * from './message-reaction-response-dto';
 export * from './message-response-dto';

@@ -7,10 +7,10 @@ export type THomeStore = {
 export const defaultHomeStore: THomeStore = {
     feedScreenStore: {
         posts: [],
-        postsLoading: false,
+        postsLoading: true,
         postsTotalElementCount: 0,
         reactionListReactionItems: [],
-        reactionListReactionItemsLoading: false,
+        reactionListReactionItemsLoading: true,
         reactionListReactionItemsTotalElementCount: 0,
     },
 };

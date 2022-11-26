@@ -5,49 +5,55 @@ import ProfileLayoutComponent from "./ProfileLayoutComponent";
 type TProps = {
     userName: string;
     activeTab: TProfileLayoutTab;
-    userSelf: boolean;
+    userEqualSelf: boolean;
     alreadyFriend: boolean;
     friendRequestIncoming: boolean;
     friendRequestAlreadySent: boolean;
+    userLoading: boolean;
+    onRevokeOutgoingFriendRequestButtonClick: () => void;
+    onAddFriendButtonClick: () => void;
+    onAcceptIncomingFriendRequestButtonClick: () => void;
+    onDeclineIncomingFriendRequestButtonClick: () => void;
+    onDeleteFriend: () => Promise<void>;
+    onTimelineButtonClick: () => void;
+    onFriendsButtonClick: () => void;
 };
 
 const ProfileLayoutContainer = ({
     userName,
     activeTab,
     children,
-    userSelf,
+    userEqualSelf,
     alreadyFriend,
     friendRequestIncoming,
     friendRequestAlreadySent,
+    userLoading,
+    onRevokeOutgoingFriendRequestButtonClick,
+    onAddFriendButtonClick,
+    onAcceptIncomingFriendRequestButtonClick,
+    onDeclineIncomingFriendRequestButtonClick,
+    onDeleteFriend,
+    onTimelineButtonClick,
+    onFriendsButtonClick,
 }: React.PropsWithChildren<TProps>) => {
     const [deleteFriendAlertDialogVisible, setDeleteFriendAlertDialogVisible] = useState<boolean>(false);
+    const [deleteFriendAlertDialogConfirmButtonLoading, setDeleteFriendAlertDialogConfirmButtonLoading] =
+        useState<boolean>(false);
 
     const handleDeleteFriendButtonClick = () => {
         setDeleteFriendAlertDialogVisible(true);
-    };
-
-    const handleRevokeOutgoingFriendRequestButtonClick = () => {
-        console.log("handleRevokeOutgoingFriendRequestButtonClick");
-    };
-
-    const handleAddFriendButtonClick = () => {
-        console.log("handleAddFriendButtonClick");
-    };
-
-    const handleAcceptIncomingFriendRequestButtonClick = () => {
-        console.log("handleAcceptIncomingFriendRequestButtonClick");
-    };
-
-    const handleDeclineIncomingFriendRequestButtonClick = () => {
-        console.log("handleDeclineIncomingFriendRequestButtonClick");
     };
 
     const handleDeleteFriendAlertDialogClose = () => {
         setDeleteFriendAlertDialogVisible(false);
     };
 
-    const handleDeleteFriendAlertDialogConfirmButtonClick = () => {
-        console.log("handleDeleteFriendAlertDialogConfirmButtonClick");
+    const handleDeleteFriendAlertDialogConfirmButtonClick = async () => {
+        setDeleteFriendAlertDialogConfirmButtonLoading(true);
+
+        await onDeleteFriend();
+
+        setDeleteFriendAlertDialogConfirmButtonLoading(false);
         setDeleteFriendAlertDialogVisible(false);
     };
 
@@ -55,18 +61,22 @@ const ProfileLayoutContainer = ({
         <ProfileLayoutComponent
             userName={userName}
             activeTab={activeTab}
-            userSelf={userSelf}
+            userEqualSelf={userEqualSelf}
             alreadyFriend={alreadyFriend}
             friendRequestIncoming={friendRequestIncoming}
             friendRequestAlreadySent={friendRequestAlreadySent}
             onDeleteFriendButtonClick={handleDeleteFriendButtonClick}
-            onRevokeOutgoingFriendRequestButtonClick={handleRevokeOutgoingFriendRequestButtonClick}
-            onAddFriendButtonClick={handleAddFriendButtonClick}
-            onAcceptIncomingFriendRequestButtonClick={handleAcceptIncomingFriendRequestButtonClick}
-            onDeclineIncomingFriendRequestButtonClick={handleDeclineIncomingFriendRequestButtonClick}
+            onRevokeOutgoingFriendRequestButtonClick={onRevokeOutgoingFriendRequestButtonClick}
+            onAddFriendButtonClick={onAddFriendButtonClick}
+            onAcceptIncomingFriendRequestButtonClick={onAcceptIncomingFriendRequestButtonClick}
+            onDeclineIncomingFriendRequestButtonClick={onDeclineIncomingFriendRequestButtonClick}
             deleteFriendAlertDialogVisible={deleteFriendAlertDialogVisible}
             onDeleteFriendAlertDialogClose={handleDeleteFriendAlertDialogClose}
             onDeleteFriendAlertDialogConfirmButtonClick={handleDeleteFriendAlertDialogConfirmButtonClick}
+            deleteFriendAlertDialogConfirmButtonLoading={deleteFriendAlertDialogConfirmButtonLoading}
+            userLoading={userLoading}
+            onTimelineButtonClick={onTimelineButtonClick}
+            onFriendsButtonClick={onFriendsButtonClick}
         >
             {children}
         </ProfileLayoutComponent>

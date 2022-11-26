@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { FriendshipStatus } from './friendship-status';
 
 /**
  * 
@@ -68,5 +71,29 @@ export interface UserProfileResponseDto {
      * @memberof UserProfileResponseDto
      */
     'currentCity'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserProfileResponseDto
+     */
+    'equalToCurrentUser': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserProfileResponseDto
+     */
+    'friendshipId'?: string;
+    /**
+     * 
+     * @type {FriendshipStatus}
+     * @memberof UserProfileResponseDto
+     */
+    'friendshipStatusOfCurrentUser'?: FriendshipStatus;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserProfileResponseDto
+     */
+    'friendshipStatusLastModifierEqualToCurrentUser'?: boolean;
 }
 

@@ -13,10 +13,18 @@ type TProps = {
     loadMoreFriendsButtonVisible: boolean;
     onLoadMoreFriendsButtonClick: () => void;
     onUserProfileClick: (userId: string) => void;
-    userSelf: boolean;
+    userEqualSelf: boolean;
     alreadyFriend: boolean;
     friendRequestIncoming: boolean;
     friendRequestAlreadySent: boolean;
+    userLoading: boolean;
+    onRevokeOutgoingFriendRequestButtonClick: () => void;
+    onAddFriendButtonClick: () => void;
+    onAcceptIncomingFriendRequestButtonClick: () => void;
+    onDeclineIncomingFriendRequestButtonClick: () => void;
+    onDeleteFriend: () => Promise<void>;
+    onTimelineButtonClick: () => void;
+    onFriendsButtonClick: () => void;
 };
 
 const UserFriendsScreenComponent = ({
@@ -26,10 +34,18 @@ const UserFriendsScreenComponent = ({
     loadMoreFriendsButtonVisible,
     onLoadMoreFriendsButtonClick,
     onUserProfileClick,
-    userSelf,
+    userEqualSelf,
     alreadyFriend,
     friendRequestIncoming,
     friendRequestAlreadySent,
+    userLoading,
+    onRevokeOutgoingFriendRequestButtonClick,
+    onAddFriendButtonClick,
+    onAcceptIncomingFriendRequestButtonClick,
+    onDeclineIncomingFriendRequestButtonClick,
+    onDeleteFriend,
+    onTimelineButtonClick,
+    onFriendsButtonClick,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
@@ -43,13 +59,21 @@ const UserFriendsScreenComponent = ({
             <ProfileLayout
                 userName={userName}
                 activeTab="friends"
-                userSelf={userSelf}
+                userEqualSelf={userEqualSelf}
                 alreadyFriend={alreadyFriend}
                 friendRequestIncoming={friendRequestIncoming}
                 friendRequestAlreadySent={friendRequestAlreadySent}
+                userLoading={userLoading}
+                onRevokeOutgoingFriendRequestButtonClick={onRevokeOutgoingFriendRequestButtonClick}
+                onAddFriendButtonClick={onAddFriendButtonClick}
+                onAcceptIncomingFriendRequestButtonClick={onAcceptIncomingFriendRequestButtonClick}
+                onDeclineIncomingFriendRequestButtonClick={onDeclineIncomingFriendRequestButtonClick}
+                onDeleteFriend={onDeleteFriend}
+                onTimelineButtonClick={onTimelineButtonClick}
+                onFriendsButtonClick={onFriendsButtonClick}
             >
                 <div className="flex w-full justify-center py-8 px-4 sm:px-0 sm:pl-16">
-                    {(userSelf || alreadyFriend) && (
+                    {(userEqualSelf || alreadyFriend) && !userLoading && (
                         <div
                             className={`flex w-full max-w-[1200px] flex-col gap-2 rounded-md p-4 drop-shadow-md sm:w-[80%] ${
                                 colorMode === "dark" ? "bg-slate-600" : "bg-white"
@@ -59,7 +83,7 @@ const UserFriendsScreenComponent = ({
                             <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
                                 {friends.map((f) => (
                                     <div
-                                        key={f.id}
+                                        key={f.userId}
                                         onClick={() => onUserProfileClick(f.userId)}
                                         className={`flex cursor-pointer select-none items-center space-x-2 rounded-lg p-1 ${itemHoverStyle} ${itemActiveStyle}`}
                                     >
@@ -91,7 +115,7 @@ const UserFriendsScreenComponent = ({
                             )}
                         </div>
                     )}
-                    {!userSelf && !alreadyFriend && (
+                    {!userEqualSelf && !alreadyFriend && !userLoading && (
                         <div
                             className={`flex w-full max-w-[1200px] flex-col gap-2 rounded-md p-4 drop-shadow-md sm:w-[80%] ${
                                 colorMode === "dark" ? "bg-slate-600" : "bg-white"
@@ -101,6 +125,13 @@ const UserFriendsScreenComponent = ({
                                 <span className="font-semibold">{userName}</span> még nem a barátod, ezért nem láthatod
                                 a barátait.
                             </p>
+                        </div>
+                    )}
+                    {userLoading && (
+                        <div className="mt-8 flex flex-grow justify-center">
+                            <div className="flex justify-center">
+                                <ColorModeSpinner size="xl" />
+                            </div>
                         </div>
                     )}
                 </div>

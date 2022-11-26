@@ -9,7 +9,7 @@ export interface ICommonStore {
 
 export const defaultCommonStore: ICommonStore = {
     headerBarSearchPopoverSearchItems: [],
-    headerBarSearchPopoverSearchItemsLoading: false,
+    headerBarSearchPopoverSearchItemsLoading: true,
     headerBarSearchPopoverSearchItemsTotalElementCount: 0,
     last10Conversations: [],
 };

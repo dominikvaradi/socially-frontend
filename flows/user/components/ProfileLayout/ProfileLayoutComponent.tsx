@@ -8,7 +8,7 @@ import DeleteFriendAlertDialog from "../DeleteFriendAlertDialog";
 type TProps = {
     userName: string;
     activeTab: TProfileLayoutTab;
-    userSelf: boolean;
+    userEqualSelf: boolean;
     alreadyFriend: boolean;
     friendRequestIncoming: boolean;
     friendRequestAlreadySent: boolean;
@@ -20,13 +20,17 @@ type TProps = {
     deleteFriendAlertDialogVisible: boolean;
     onDeleteFriendAlertDialogClose: () => void;
     onDeleteFriendAlertDialogConfirmButtonClick: () => void;
+    deleteFriendAlertDialogConfirmButtonLoading: boolean;
+    userLoading: boolean;
+    onTimelineButtonClick: () => void;
+    onFriendsButtonClick: () => void;
 };
 
 const ProfileLayoutComponent = ({
     userName,
     activeTab,
     children,
-    userSelf,
+    userEqualSelf,
     alreadyFriend,
     friendRequestIncoming,
     friendRequestAlreadySent,
@@ -38,6 +42,10 @@ const ProfileLayoutComponent = ({
     deleteFriendAlertDialogVisible,
     onDeleteFriendAlertDialogClose,
     onDeleteFriendAlertDialogConfirmButtonClick,
+    deleteFriendAlertDialogConfirmButtonLoading,
+    userLoading,
+    onTimelineButtonClick,
+    onFriendsButtonClick,
 }: React.PropsWithChildren<TProps>) => {
     const { colorMode } = useColorMode();
 
@@ -50,14 +58,14 @@ const ProfileLayoutComponent = ({
             >
                 <div className="flex w-full flex-col px-4 sm:w-[80%] sm:px-0">
                     <div className="mt-8 flex flex-col gap-4 border-b border-black pb-1 md:flex-row md:items-end md:justify-between">
-                        <div className={`flex items-end space-x-4 md:pb-4 ${userSelf ? "pb-4" : ""}`}>
-                            <UserNameAvatar userName={userName} size="2xl" clickable />
-                            <div className="flex flex-col">
-                                <span className="text-4xl font-medium">{userName}</span>
-                                <span>13 ismerős</span>
-                            </div>
+                        <div className={`flex items-end space-x-4 md:pb-4 ${userEqualSelf ? "pb-4" : ""}`}>
+                            <UserNameAvatar userName={!userLoading ? userName : undefined} size="2xl" clickable />
+                            <span className="text-4xl font-medium">
+                                {userLoading && "Betöltés alatt..."}
+                                {!userLoading && userName}
+                            </span>
                         </div>
-                        {!userSelf && (
+                        {!userEqualSelf && !userLoading && (
                             <div>
                                 {alreadyFriend && (
                                     <Button
@@ -125,10 +133,18 @@ const ProfileLayoutComponent = ({
                         )}
                     </div>
                     <div className="flex w-full space-x-2 py-4">
-                        <Button colorScheme="brand" variant={activeTab === "timeline" ? "solid" : "ghost"}>
+                        <Button
+                            onClick={onTimelineButtonClick}
+                            colorScheme="brand"
+                            variant={activeTab === "timeline" ? "solid" : "ghost"}
+                        >
                             Idővonal
                         </Button>
-                        <Button colorScheme="brand" variant={activeTab === "friends" ? "solid" : "ghost"}>
+                        <Button
+                            onClick={onFriendsButtonClick}
+                            colorScheme="brand"
+                            variant={activeTab === "friends" ? "solid" : "ghost"}
+                        >
                             Ismerősök
                         </Button>
                     </div>
@@ -140,6 +156,7 @@ const ProfileLayoutComponent = ({
                 visible={deleteFriendAlertDialogVisible}
                 onClose={onDeleteFriendAlertDialogClose}
                 onConfirmButtonClick={onDeleteFriendAlertDialogConfirmButtonClick}
+                confirmButtonLoading={deleteFriendAlertDialogConfirmButtonLoading}
             />
         </div>
     );

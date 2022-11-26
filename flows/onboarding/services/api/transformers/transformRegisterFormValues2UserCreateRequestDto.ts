@@ -1,5 +1,6 @@
 import { RegisterFormValues } from "../../onboardingTypes";
 import { UserCreateRequestDto } from "../../../../../generated/api";
+import { formatDateToJSONString } from "../../../../common/services/commonUtils";
 
 export const transformRegisterFormValues2UserCreateRequestDto = (
     registerFormValues: RegisterFormValues
@@ -15,10 +16,4 @@ export const transformRegisterFormValues2UserCreateRequestDto = (
         currentCountry: registerFormValues.currentCountry ? registerFormValues.currentCountry : undefined,
         currentCity: registerFormValues.currentCity ? registerFormValues.currentCity : undefined,
     };
-};
-const formatDateToJSONString = (date: Date): string => {
-    return `${date.getFullYear()}-${date.getMonth().toString().padStart(2, "0")}-${date
-        .getDate()
-        .toString()
-        .padStart(2, "0")}`;
 };

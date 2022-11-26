@@ -34,9 +34,13 @@ const HeaderBarContainer = ({ lastConversationsExpandButtonRef, onLastConversati
         controller.navigateToUserTimelinePage(loggedInUserId);
     };
 
-    const handleEditUserProfileButtonClick = controller.navigateToUserEditPage;
+    const handleEditUserProfileButtonClick = () => {
+        controller.navigateToUserEditPage();
+    };
 
-    const handleSignOutButtonClick = controller.logoutCurrentUser;
+    const handleSignOutButtonClick = () => {
+        controller.logoutCurrentUser();
+    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedSearchItemFetch = useCallback(debounce(controller.fetchHeaderBarSearchPopoverSearchItems, 500), [
@@ -82,17 +86,29 @@ const HeaderBarContainer = ({ lastConversationsExpandButtonRef, onLastConversati
 
     const handleSearchPopoverShowMoreSearchItemsButtonClick = () => {
         controller.navigateToSearchPage(searchInputValue);
+        setSearchPopoverVisible(false);
     };
 
-    const handleSearchPopoverSearchItemUserClick = controller.navigateToUserTimelinePage;
+    const handleSearchPopoverSearchItemUserClick = (userId: string) => {
+        controller.navigateToUserTimelinePage(userId);
+        setSearchPopoverVisible(false);
+    };
 
-    const handleHomeButtonClick = controller.navigateToHomePage;
+    const handleHomeButtonClick = () => {
+        controller.navigateToHomePage();
+    };
 
-    const handleSearchButtonClick = controller.navigateToSearchPage;
+    const handleSearchButtonClick = () => {
+        controller.navigateToSearchPage();
+    };
 
-    const handleFriendRequestsButtonClick = controller.navigateToIncomingFriendRequestsPage;
+    const handleFriendRequestsButtonClick = () => {
+        controller.navigateToIncomingFriendRequestsPage();
+    };
 
-    const handleConversationsButtonClick = controller.navigateToConversationsPage;
+    const handleConversationsButtonClick = () => {
+        controller.navigateToConversationsPage();
+    };
 
     return (
         <HeaderBarComponent

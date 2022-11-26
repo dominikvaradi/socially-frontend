@@ -5,6 +5,7 @@ import "../styles/index.scss";
 import { OnboardingContextProvider } from "../flows/onboarding/services/onboardingContext";
 import { HomeContextProvider } from "../flows/home/services/homeContext";
 import { CommonContextProvider } from "../flows/common/services/commonContext";
+import { UserContextProvider } from "../flows/user/services/userContext";
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
@@ -12,7 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <CommonContextProvider>
                 <OnboardingContextProvider>
                     <HomeContextProvider>
-                        <Component {...pageProps} />
+                        <UserContextProvider>
+                            <Component {...pageProps} />
+                        </UserContextProvider>
                     </HomeContextProvider>
                 </OnboardingContextProvider>
             </CommonContextProvider>

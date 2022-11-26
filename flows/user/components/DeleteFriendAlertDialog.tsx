@@ -14,9 +14,16 @@ type TProps = {
     visible: boolean;
     onClose: () => void;
     onConfirmButtonClick: () => void;
+    confirmButtonLoading: boolean;
 };
 
-const DeleteFriendAlertDialog = ({ userName, visible, onClose, onConfirmButtonClick }: TProps) => {
+const DeleteFriendAlertDialog = ({
+    userName,
+    visible,
+    onClose,
+    onConfirmButtonClick,
+    confirmButtonLoading,
+}: TProps) => {
     const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
 
     return (
@@ -35,7 +42,7 @@ const DeleteFriendAlertDialog = ({ userName, visible, onClose, onConfirmButtonCl
                             <Button ref={cancelButtonRef} onClick={onClose}>
                                 Mégsem
                             </Button>
-                            <Button colorScheme="red" onClick={onConfirmButtonClick}>
+                            <Button colorScheme="red" onClick={onConfirmButtonClick} isLoading={confirmButtonLoading}>
                                 Törlés
                             </Button>
                         </div>
