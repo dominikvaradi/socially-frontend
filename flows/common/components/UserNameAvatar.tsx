@@ -4,7 +4,7 @@ import { AvatarProps } from "@chakra-ui/avatar";
 
 type TProps = {
     className?: string;
-    userName: string;
+    userName?: string;
     clickable?: boolean;
 } & AvatarProps;
 

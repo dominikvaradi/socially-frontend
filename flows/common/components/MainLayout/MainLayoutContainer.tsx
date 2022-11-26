@@ -12,9 +12,13 @@ const MainLayoutContainer = ({ children }: React.PropsWithChildren) => {
         setLast10ConversationsDrawerExpanded((expanded) => !expanded);
     };
 
-    const handleLastConversationClick = controller.navigateToConversationPage;
+    const handleLastConversationClick = (conversationId: string) => {
+        controller.navigateToConversationPage(conversationId);
+    };
 
-    const handleCreateNewConversationButtonClick = controller.navigateToCreateNewConversationPage;
+    const handleCreateNewConversationButtonClick = () => {
+        controller.navigateToCreateNewConversationPage();
+    };
 
     const handleLast10ConversationsDrawerClose = () => {
         setLast10ConversationsDrawerExpanded(false);

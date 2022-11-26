@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import UserEditScreenComponent from "./UserEditScreenComponent";
 import * as Yup from "yup";
 import { UserEditFormValues } from "../../services/userTypes";
 import { FormikHelpers } from "formik";
+import { useUserContext } from "../../services/userContext";
+import { useCommonContext } from "../../../common/services/commonContext";
 
 const UserEditValidationSchema = Yup.object().shape({
     firstName: Yup.string().trim().required("A mező kitöltése kötelező"),
@@ -15,40 +17,26 @@ const UserEditValidationSchema = Yup.object().shape({
 });
 
 const UserEditScreenContainer = () => {
-    const [formikInitialValues, setFormikInitialValues] = useState<UserEditFormValues>({
-        firstName: "",
-        lastName: "",
-        birthDate: new Date(),
-        birthCountry: "",
-        birthCity: "",
-        currentCountry: "",
-        currentCity: "",
-    });
+    const { controller: commonController } = useCommonContext();
+    const { store, controller } = useUserContext();
 
     useEffect(() => {
-        setTimeout(() => {
-            setFormikInitialValues({
-                firstName: "teszt",
-                lastName: "teszt",
-                birthDate: new Date("2022-05-19"),
-                birthCountry: "teszt",
-                birthCity: "teszt",
-                currentCountry: "teszt",
-                currentCity: "teszt",
-            });
-        }, 50);
-    }, []);
+        (async () => {
+            await commonController.initMainLayout();
+            await controller.initEditScreen();
+        })();
+    }, [controller, commonController]);
 
-    const handleSubmit = (values: UserEditFormValues, actions: FormikHelpers<UserEditFormValues>) => {
-        setTimeout(() => {
-            console.log("user-edit\n" + JSON.stringify(values, null, 2));
-            actions.resetForm();
-        }, 500);
+    const handleSubmit = async (values: UserEditFormValues, actions: FormikHelpers<UserEditFormValues>) => {
+        const result = await controller.editUser(values, actions);
+        if (!result) return;
+
+        await commonController.initMainLayout();
     };
 
     return (
         <UserEditScreenComponent
-            formikInitialValues={formikInitialValues}
+            formikInitialValues={store.editScreenStore.userEditFormValues}
             validationSchema={UserEditValidationSchema}
             onSubmit={handleSubmit}
         />

@@ -21,6 +21,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
+import { EmptyRestApiResponseDto } from '../models';
+// @ts-ignore
 import { FriendRequestCreateRequestDto } from '../models';
 // @ts-ignore
 import { RestApiResponseDtoFriendRequestIncomingResponseDto } from '../models';
@@ -122,6 +124,43 @@ export const FriendshipControllerApiAxiosParamCreator = function (configuration?
             // verify required parameter 'friendshipId' is not null or undefined
             assertParamExists('declineIncomingFriendRequest', 'friendshipId', friendshipId)
             const localVarPath = `/friendships/incoming/{friendshipId}`
+                .replace(`{${"friendshipId"}}`, encodeURIComponent(String(friendshipId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} friendshipId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteFriendship: async (friendshipId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'friendshipId' is not null or undefined
+            assertParamExists('deleteFriendship', 'friendshipId', friendshipId)
+            const localVarPath = `/friendships/existing/{friendshipId}`
                 .replace(`{${"friendshipId"}}`, encodeURIComponent(String(friendshipId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -314,6 +353,16 @@ export const FriendshipControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
+         * @param {string} friendshipId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteFriendship(friendshipId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmptyRestApiResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFriendship(friendshipId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
@@ -380,6 +429,15 @@ export const FriendshipControllerApiFactory = function (configuration?: Configur
          */
         declineIncomingFriendRequest(friendshipId: string, options?: any): AxiosPromise<RestApiResponseDtoFriendRequestIncomingResponseDto> {
             return localVarFp.declineIncomingFriendRequest(friendshipId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} friendshipId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteFriendship(friendshipId: string, options?: any): AxiosPromise<EmptyRestApiResponseDto> {
+            return localVarFp.deleteFriendship(friendshipId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -451,6 +509,17 @@ export class FriendshipControllerApi extends BaseAPI {
      */
     public declineIncomingFriendRequest(friendshipId: string, options?: AxiosRequestConfig) {
         return FriendshipControllerApiFp(this.configuration).declineIncomingFriendRequest(friendshipId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} friendshipId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FriendshipControllerApi
+     */
+    public deleteFriendship(friendshipId: string, options?: AxiosRequestConfig) {
+        return FriendshipControllerApiFp(this.configuration).deleteFriendship(friendshipId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -1,86 +1,83 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UserFriendsScreenComponent from "./UserFriendsScreenComponent";
-import { IFriendItem } from "../../services/userTypes";
+import { useUserContext } from "../../services/userContext";
+import { useRouter } from "next/router";
+import { useCommonContext } from "../../../common/services/commonContext";
 
 const UserFriendsScreenContainer = () => {
-    const handleLoadMoreFriendsButtonClick = () => {};
+    const router = useRouter();
+    const { controller: commonController } = useCommonContext();
+    const { store, controller } = useUserContext();
+
+    useEffect(() => {
+        if (!router.isReady) return;
+
+        (async () => {
+            await commonController.initMainLayout();
+            await controller.initFriendsScreen(router.query.userId as string);
+        })();
+    }, [controller, commonController, router]);
+
+    const handleLoadMoreFriendsButtonClick = () => {
+        controller.loadMoreFriends();
+    };
 
     const handleUserProfileClick = (userId: string) => {
-        console.log("handleUserProfileClick: " + userId);
+        controller.navigateToUserTimelinePage(userId);
+    };
+
+    const handleRevokeOutgoingFriendRequestButtonClick = () => {
+        controller.revokeFriendsScreenOutgoingFriendRequest();
+    };
+
+    const handleAddFriendButtonClick = () => {
+        controller.sendFriendsScreenFriendRequest();
+    };
+
+    const handleAcceptIncomingFriendRequestButtonClick = () => {
+        controller.acceptFriendsScreenIncomingFriendRequest();
+    };
+
+    const handleDeclineIncomingFriendRequestButtonClick = () => {
+        controller.declineFriendsScreenIncomingFriendRequest();
+    };
+
+    const handleDeleteFriend = async () => {
+        await controller.deleteFriendsScreenFriend();
+    };
+
+    const handleTimelineButtonClick = () => {
+        controller.navigateToUserTimelinePage(store.friendsScreenStore.user!.id);
+    };
+
+    const handleFriendsButtonClick = () => {
+        controller.navigateToUserFriendsPage(store.friendsScreenStore.user!.id);
     };
 
     return (
         <UserFriendsScreenComponent
-            userName="Naruto Uzumaki"
-            friends={mockFriends}
-            friendsLoading={false}
-            loadMoreFriendsButtonVisible={true}
+            userName={store.friendsScreenStore.user?.name ?? "Betöltés alatt..."}
+            friends={store.friendsScreenStore.friends}
+            friendsLoading={store.friendsScreenStore.friendsLoading}
+            loadMoreFriendsButtonVisible={
+                store.friendsScreenStore.friends.length < store.friendsScreenStore.friendsTotalElementCount
+            }
             onLoadMoreFriendsButtonClick={handleLoadMoreFriendsButtonClick}
             onUserProfileClick={handleUserProfileClick}
-            userSelf={false}
-            alreadyFriend={true}
-            friendRequestIncoming={true}
-            friendRequestAlreadySent={false}
+            userEqualSelf={!!store.friendsScreenStore.user?.userEqualSelf}
+            alreadyFriend={!!store.friendsScreenStore.user?.userAlreadyFriend}
+            friendRequestIncoming={!!store.friendsScreenStore.user?.friendRequestIncomingOfUser}
+            friendRequestAlreadySent={!!store.friendsScreenStore.user?.friendRequestAlreadySentToUser}
+            userLoading={store.friendsScreenStore.userLoading}
+            onRevokeOutgoingFriendRequestButtonClick={handleRevokeOutgoingFriendRequestButtonClick}
+            onAddFriendButtonClick={handleAddFriendButtonClick}
+            onAcceptIncomingFriendRequestButtonClick={handleAcceptIncomingFriendRequestButtonClick}
+            onDeclineIncomingFriendRequestButtonClick={handleDeclineIncomingFriendRequestButtonClick}
+            onDeleteFriend={handleDeleteFriend}
+            onTimelineButtonClick={handleTimelineButtonClick}
+            onFriendsButtonClick={handleFriendsButtonClick}
         />
     );
 };
-
-const mockFriends: IFriendItem[] = [
-    {
-        id: "0",
-        userId: "0",
-        userName: "Naruto Uzumaki",
-    },
-    {
-        id: "1",
-        userId: "1",
-        userName: "Sasuke Uchiha",
-    },
-    {
-        id: "2",
-        userId: "2",
-        userName: "Hinata Hyuga",
-    },
-    {
-        id: "3",
-        userId: "3",
-        userName: "Sakura Haruno",
-    },
-    {
-        id: "4",
-        userId: "4",
-        userName: "Sakura Haruno",
-    },
-    {
-        id: "5",
-        userId: "4",
-        userName: "Sakura Haruno",
-    },
-    {
-        id: "6",
-        userId: "4",
-        userName: "Sakura Haruno",
-    },
-    {
-        id: "7",
-        userId: "4",
-        userName: "Sakura Haruno",
-    },
-    {
-        id: "8",
-        userId: "4",
-        userName: "Sakura Haruno",
-    },
-    {
-        id: "9",
-        userId: "4",
-        userName: "Sakura Haruno",
-    },
-    {
-        id: "10",
-        userId: "4",
-        userName: "Sakura Haruno",
-    },
-];
 
 export default UserFriendsScreenContainer;
