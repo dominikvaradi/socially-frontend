@@ -1,7 +1,7 @@
 import { Button, Icon, IconButton, Input, InputGroup, InputLeftElement, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import MainLayout from "../../../common/components/MainLayout";
-import { FiArrowLeft, FiPlusCircle, FiMinusCircle } from "react-icons/fi";
+import { FiArrowLeft, FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import { HiOutlineSearch } from "react-icons/hi";
 import UserNameAvatar from "../../../common/components/UserNameAvatar";
 import ColorModeSpinner from "../../../common/components/ColorModeSpinner";
@@ -18,6 +18,8 @@ type TProps = {
     onBackButtonClick: () => void;
     onCreateConversationButtonClick: () => void;
     createConversationButtonLoading: boolean;
+    onSearchSubmitButtonClick: () => void;
+    searchFired: boolean;
 };
 
 const NewConversationScreenComponent = ({
@@ -31,6 +33,8 @@ const NewConversationScreenComponent = ({
     onBackButtonClick,
     onCreateConversationButtonClick,
     createConversationButtonLoading,
+    onSearchSubmitButtonClick,
+    searchFired,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
@@ -98,7 +102,9 @@ const NewConversationScreenComponent = ({
                                         className="!bg-[var(--chakra-colors-chakra-body-bg)]"
                                     />
                                 </InputGroup>
-                                <Button colorScheme="brand">Keresés</Button>
+                                <Button onClick={onSearchSubmitButtonClick} colorScheme="brand">
+                                    Keresés
+                                </Button>
                             </div>
                             <div className="flex flex-col gap-2">
                                 {searchItems.map((si) => (
@@ -125,7 +131,7 @@ const NewConversationScreenComponent = ({
                                         <ColorModeSpinner size="lg" />
                                     </div>
                                 )}
-                                {searchItems.length === 0 && !searchItemsLoading && (
+                                {searchItems.length === 0 && !searchItemsLoading && searchFired && (
                                     <p className="text-center">Nincsen egyetlen megjeleníthető találat sem.</p>
                                 )}
                             </div>

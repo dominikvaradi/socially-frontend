@@ -115,7 +115,7 @@ export const api = {
         page: number,
         size: number
     ): AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto> =>
-        userApi().findAllFriendsOfUser(userId, page, size),
+        userApi().findAllFriendsOfUser(userId, undefined, page, size),
 
     editUser: (userId: string, userUpdateRequestDto: UserUpdateRequestDto) =>
         userApi().updateUser(userId, userUpdateRequestDto),

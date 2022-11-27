@@ -350,6 +350,8 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
                 status: "error",
             });
 
+            this.storeService.setFeedScreenReactionListReactionItemsLoading(false);
+
             return false;
         }
 
@@ -376,6 +378,8 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
             });
+
+            this.storeService.setFeedScreenReactionListReactionItemsLoading(false);
 
             return false;
         }

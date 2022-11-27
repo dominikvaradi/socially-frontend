@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NewConversationScreenComponent from "./NewConversationScreenComponent";
 import { ISearchItemUser } from "../../../common/services/commonTypes";
+import { useConversationContext } from "../../services/conversationContext";
+import { useCommonContext } from "../../../common/services/commonContext";
 
 const NewConversationScreenContainer = () => {
+    const { store, controller } = useConversationContext();
+    const { controller: commonController } = useCommonContext();
+
     const [searchInputValue, setSearchInputValue] = useState<string>("");
     const [members, setMembers] = useState<ISearchItemUser[]>([]);
+    const [searchFired, setSearchFired] = useState<boolean>(false);
+
+    useEffect(() => {
+        (async () => {
+            await commonController.initMainLayout();
+            await controller.initNewConversationScreen();
+        })();
+    }, [commonController, controller]);
 
     const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInputValue(event.target.value);
@@ -16,10 +29,10 @@ const NewConversationScreenContainer = () => {
 
     const handleAddUserToConversationButtonClick = (userId: string) => {
         setMembers((value) => {
-            const searchItemToAdd = mockSearchItems.find((si) => si.userId === userId);
-            if (!searchItemToAdd) return value;
+            const searchItemToAdd = store.newConversationScreenStore.searchItemUsers.find((si) => si.userId === userId);
+            if (!searchItemToAdd || value.find((m) => m.userId === userId)) return value;
 
-            const newArray = value.filter((member) => member.userId !== userId);
+            const newArray = [...value];
             newArray.unshift(searchItemToAdd);
 
             return newArray;
@@ -27,11 +40,21 @@ const NewConversationScreenContainer = () => {
     };
 
     const handleBackButtonClick = () => {
-        console.log("handleBackButtonClick");
+        controller.navigateToConversationsListPage();
     };
 
     const handleCreateConversationButtonClick = () => {
-        console.log("handleCreateConversationButtonClick");
+        if (members.length === 0) return;
+
+        controller.createConversation(members.map((m) => m.userId));
+    };
+
+    const handleSearchSubmitButtonClick = () => {
+        if (searchInputValue.length === 0) return;
+
+        setSearchFired(true);
+
+        controller.searchFriendsOfCurrentUser(searchInputValue);
     };
 
     return (
@@ -39,38 +62,17 @@ const NewConversationScreenContainer = () => {
             searchInputValue={searchInputValue}
             onSearchInputChange={handleSearchInputChange}
             members={members}
-            searchItems={mockSearchItems}
+            searchItems={store.newConversationScreenStore.searchItemUsers}
             onRemoveUserFromConversationButtonClick={handleRemoveUserFromConversationButtonClick}
             onAddUserToConversationButtonClick={handleAddUserToConversationButtonClick}
-            searchItemsLoading={false}
+            searchItemsLoading={store.newConversationScreenStore.searchItemUsersLoading}
             onBackButtonClick={handleBackButtonClick}
             onCreateConversationButtonClick={handleCreateConversationButtonClick}
-            createConversationButtonLoading={false}
+            createConversationButtonLoading={store.newConversationScreenStore.submitting}
+            onSearchSubmitButtonClick={handleSearchSubmitButtonClick}
+            searchFired={searchFired}
         />
     );
 };
 
 export default NewConversationScreenContainer;
-
-const mockSearchItems: ISearchItemUser[] = [
-    {
-        userId: "0",
-        userName: "Naruto Uzumaki",
-    },
-    {
-        userId: "1",
-        userName: "Sasuke Uchiha",
-    },
-    {
-        userId: "2",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "3",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "4",
-        userName: "Hinata Hyuga",
-    },
-];

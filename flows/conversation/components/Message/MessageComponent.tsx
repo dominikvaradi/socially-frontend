@@ -3,11 +3,12 @@ import React from "react";
 import UserNameAvatar from "../../../common/components/UserNameAvatar";
 import { IReactionCount, TReaction } from "../../../common/services/commonTypes";
 import { getUnicodeStringByReaction } from "../../../common/services/commonUtils";
-import { MdOutlineAddReaction, MdAddReaction } from "react-icons/md";
+import { MdAddReaction, MdOutlineAddReaction } from "react-icons/md";
 import { FiTrash2 } from "react-icons/fi";
 import ReactionPopover from "../../../common/components/ReactionPopover";
 
 type TProps = {
+    className?: string;
     userName: string;
     content: string;
     writtenBySelf: boolean;
@@ -25,6 +26,7 @@ type TProps = {
 };
 
 const MessageComponent = ({
+    className,
     userName,
     content,
     writtenBySelf,
@@ -43,7 +45,7 @@ const MessageComponent = ({
     const { colorMode } = useColorMode();
 
     return (
-        <div className={`flex ${writtenBySelf ? "justify-end" : ""}`}>
+        <div className={`flex ${writtenBySelf ? "justify-end" : ""} ${className || ""}`}>
             <div
                 className={`flex gap-2 ${
                     writtenBySelf ? "flex-row-reverse" : ""
@@ -65,7 +67,7 @@ const MessageComponent = ({
                         />
                     )}
                     <p
-                        className={`rounded-3xl p-4 text-justify leading-tight ${
+                        className={`break-all rounded-3xl p-4 text-justify leading-tight ${
                             colorMode === "dark" ? "bg-gray-500" : "bg-brand-100"
                         }`}
                     >

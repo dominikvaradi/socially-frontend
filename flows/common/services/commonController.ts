@@ -62,7 +62,7 @@ export class CommonController extends BaseController<ICommonStore, CommonStoreSe
     };
 
     navigateToConversationPage = (conversationId: string) => {
-        this.router?.push(`/conversations/${conversationId}`);
+        this.router?.push(`/conversation/${conversationId}`);
     };
 
     navigateToCreateNewConversationPage = () => {
@@ -78,7 +78,7 @@ export class CommonController extends BaseController<ICommonStore, CommonStoreSe
     };
 
     navigateToConversationsPage = () => {
-        this.router?.push("/conversations");
+        this.router?.push("/conversation");
     };
 
     navigateToSearchPage = (searchTerm?: string) => {

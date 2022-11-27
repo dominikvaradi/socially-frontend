@@ -8,6 +8,7 @@ import { CommonContextProvider } from "../flows/common/services/commonContext";
 import { UserContextProvider } from "../flows/user/services/userContext";
 import { FriendRequestContextProvider } from "../flows/friend-request/services/friendRequestContext";
 import { SearchContextProvider } from "../flows/search/services/searchContext";
+import { ConversationContextProvider } from "../flows/conversation/services/conversationContext";
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
@@ -18,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
                         <UserContextProvider>
                             <FriendRequestContextProvider>
                                 <SearchContextProvider>
-                                    <Component {...pageProps} />
+                                    <ConversationContextProvider>
+                                        <Component {...pageProps} />
+                                    </ConversationContextProvider>
                                 </SearchContextProvider>
                             </FriendRequestContextProvider>
                         </UserContextProvider>

@@ -19,10 +19,11 @@ type TProps = {
     messagesLoading: boolean;
     loadMoreMessagesButtonVisible: boolean;
     onLoadMoreMessagesButtonClick: () => void;
-    onMessageReactionCountButtonClick: (messageId: string) => void;
-    onMessageDeleteButtonClick: (messageId: string) => void;
+    onMessageReactionCountButtonClick: (message: IMessage) => void;
+    onMessageDeleteButtonClick: (message: IMessage) => void;
     deleteMessageAlertDialogVisible: boolean;
     onDeleteMessageAlertDialogClose: () => void;
+    deleteMessageAlertDialogConfirmButtonLoading: boolean;
     onDeleteMessageAlertDialogConfirmButtonClick: () => void;
     reactionListModalVisible: boolean;
     onReactionListModalClose: () => void;
@@ -38,6 +39,7 @@ type TProps = {
     onConversationMembersButtonClick: () => void;
     onBackButtonClick: () => void;
     onMessageSubmit: (values: CreateMessageFormValues, actions: FormikHelpers<CreateMessageFormValues>) => void;
+    onToggleMessageReaction: (message: IMessage, reaction: TReaction) => Promise<void>;
 };
 
 const ConversationScreenComponent = ({
@@ -50,6 +52,7 @@ const ConversationScreenComponent = ({
     onMessageDeleteButtonClick,
     deleteMessageAlertDialogVisible,
     onDeleteMessageAlertDialogClose,
+    deleteMessageAlertDialogConfirmButtonLoading,
     onDeleteMessageAlertDialogConfirmButtonClick,
     reactionListModalVisible,
     onReactionListModalClose,
@@ -65,6 +68,7 @@ const ConversationScreenComponent = ({
     onConversationMembersButtonClick,
     onBackButtonClick,
     onMessageSubmit,
+    onToggleMessageReaction,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
@@ -127,7 +131,29 @@ const ConversationScreenComponent = ({
                             </MenuList>
                         </Menu>
                     </div>
-                    <div className="flex flex-grow flex-col space-y-12 overflow-y-auto overflow-x-hidden border-b p-2 shadow-inner sm:p-6">
+                    <div className="flex flex-grow flex-col-reverse space-y-12 space-y-reverse overflow-y-auto overflow-x-hidden border-b p-2 shadow-inner sm:p-6">
+                        <div className="!h-0" ref={messagesBottomPlaceholderRef}>
+                            &nbsp;
+                        </div>
+                        {messages.map((message, index) => (
+                            <Message
+                                className={index === 0 ? "!m-0" : undefined}
+                                key={message.id}
+                                message={message}
+                                showUserName={groupConversation}
+                                onReactionCountButtonClick={onMessageReactionCountButtonClick}
+                                onDeleteButtonClick={onMessageDeleteButtonClick}
+                                onToggleMessageReaction={onToggleMessageReaction}
+                            />
+                        ))}
+                        {messages.length === 0 && (
+                            <div className="flex flex-grow items-center justify-center">
+                                {messagesLoading && <ColorModeSpinner size="lg" />}
+                                {!messagesLoading && (
+                                    <p className="text-center">Nincsen egyetlen megjeleníthető üzenet sem.</p>
+                                )}
+                            </div>
+                        )}
                         {messages.length > 0 && loadMoreMessagesButtonVisible && (
                             <div className="flex justify-center">
                                 <Button
@@ -141,26 +167,6 @@ const ConversationScreenComponent = ({
                                 </Button>
                             </div>
                         )}
-                        {messages.map((message) => (
-                            <Message
-                                key={message.id}
-                                message={message}
-                                showUserName={true}
-                                onReactionCountButtonClick={onMessageReactionCountButtonClick}
-                                onDeleteButtonClick={onMessageDeleteButtonClick}
-                            />
-                        ))}
-                        {messages.length === 0 && (
-                            <div className="flex flex-grow items-center justify-center">
-                                {messagesLoading && <ColorModeSpinner size="lg" />}
-                                {!messagesLoading && (
-                                    <p className="text-center">Nincsen egyetlen megjeleníthető üzenet sem.</p>
-                                )}
-                            </div>
-                        )}
-                        <div className="!m-0" ref={messagesBottomPlaceholderRef}>
-                            &nbsp;
-                        </div>
                     </div>
                     <CreateMessage onSubmit={onMessageSubmit} />
                 </div>
@@ -169,6 +175,7 @@ const ConversationScreenComponent = ({
                 visible={deleteMessageAlertDialogVisible}
                 onClose={onDeleteMessageAlertDialogClose}
                 onConfirmButtonClick={onDeleteMessageAlertDialogConfirmButtonClick}
+                confirmButtonLoading={deleteMessageAlertDialogConfirmButtonLoading}
             />
             <ReactionListModal
                 visible={reactionListModalVisible}

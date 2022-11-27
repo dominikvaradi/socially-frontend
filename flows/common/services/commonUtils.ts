@@ -1,6 +1,7 @@
-import { TReaction } from "./commonTypes";
+import { TConversationType, TReaction } from "./commonTypes";
 import { IConversationMember } from "../../conversation/services/conversationTypes";
 import moment from "moment";
+import tokenStorage from "../tokenStorage";
 
 export const getUnicodeStringByReaction = (reaction: TReaction): string => {
     switch (reaction) {
@@ -15,7 +16,17 @@ export const getUnicodeStringByReaction = (reaction: TReaction): string => {
     }
 };
 
-export const getConversationTitle = (members: IConversationMember[], maxChars?: number): string => {
+export const getConversationTitle = (
+    conversationType: TConversationType,
+    members: IConversationMember[],
+    maxChars?: number
+): string => {
+    if (conversationType === "DIRECT") {
+        return members
+            .filter((member) => member.userId !== tokenStorage.getUserId())
+            .map((member) => member.userName)[0];
+    }
+
     const titleFull = members.map((member) => member.userName).join(", ");
 
     return maxChars && titleFull.length > maxChars ? titleFull.substring(0, maxChars).concat("...") : titleFull;

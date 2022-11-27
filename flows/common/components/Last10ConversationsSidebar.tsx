@@ -35,7 +35,7 @@ const Last10ConversationsSidebar = ({
                         {conversation.type === "DIRECT" && (
                             <UserNameAvatar
                                 className="select-none"
-                                userName={getConversationTitle(conversation.members, 100)}
+                                userName={getConversationTitle(conversation.type, conversation.members, 100)}
                                 clickable
                                 onClick={() => onLastConversationClick(conversation.id)}
                             />

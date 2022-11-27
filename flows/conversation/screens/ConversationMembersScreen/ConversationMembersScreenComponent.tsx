@@ -3,8 +3,8 @@ import React from "react";
 import MainLayout from "../../../common/components/MainLayout";
 import UserNameAvatar from "../../../common/components/UserNameAvatar";
 import { IConversationMember, TConversationRole } from "../../services/conversationTypes";
-import { FiEdit, FiArrowLeft } from "react-icons/fi";
-import ChangeConversationRoleAlertDialog from "../components/ChangeConversationRoleAlertDialog";
+import { FiArrowLeft, FiEdit } from "react-icons/fi";
+import ChangeConversationRoleAlertDialog from "../../components/ChangeConversationRoleAlertDialog";
 
 type TProps = {
     members: IConversationMember[];
