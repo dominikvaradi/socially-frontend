@@ -7,6 +7,7 @@ import ColorModeSpinner from "../../../common/components/ColorModeSpinner";
 import { ISearchItemUser } from "../../../common/services/commonTypes";
 
 type TProps = {
+    searchFired: boolean;
     searchInputValue: string;
     onSearchInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     searchItems: ISearchItemUser[];
@@ -14,9 +15,11 @@ type TProps = {
     searchItemsLoading: boolean;
     loadMoreSearchItemsButtonVisible: boolean;
     onLoadMoreSearchItemsButtonClick: () => void;
+    onSearchSubmitButtonClick: () => void;
 };
 
 const SearchScreenComponent = ({
+    searchFired,
     searchInputValue,
     onSearchInputChange,
     searchItems,
@@ -24,6 +27,7 @@ const SearchScreenComponent = ({
     searchItemsLoading,
     loadMoreSearchItemsButtonVisible,
     onLoadMoreSearchItemsButtonClick,
+    onSearchSubmitButtonClick,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
@@ -55,7 +59,9 @@ const SearchScreenComponent = ({
                                 className="!h-14 !bg-[var(--chakra-colors-chakra-body-bg)]"
                             />
                         </InputGroup>
-                        <Button colorScheme="brand">Keresés</Button>
+                        <Button onClick={onSearchSubmitButtonClick} colorScheme="brand">
+                            Keresés
+                        </Button>
                     </div>
                     <div className="flex flex-col gap-2">
                         {searchItems.map((si) => (
@@ -73,7 +79,7 @@ const SearchScreenComponent = ({
                                 <ColorModeSpinner size="xl" />
                             </div>
                         )}
-                        {searchItems.length === 0 && !searchItemsLoading && (
+                        {searchItems.length === 0 && !searchItemsLoading && searchFired && (
                             <p className="text-center">Nincsen egyetlen megjeleníthető találat sem.</p>
                         )}
                         {searchItems.length > 0 && loadMoreSearchItemsButtonVisible && (

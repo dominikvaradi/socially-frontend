@@ -1,43 +1,88 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import IncomingFriendRequestsScreenComponent from "./IncomingFriendRequestsScreenComponent";
-import { IFriendRequestItem } from "../../services/friendRequestTypes";
+import { useCommonContext } from "../../../common/services/commonContext";
+import { useFriendRequestContext } from "../../services/friendRequestContext";
 
 const IncomingFriendRequestsScreenContainer = () => {
+    const { controller: commonController } = useCommonContext();
+    const { store, controller } = useFriendRequestContext();
+
+    const [loadingAcceptFriendRequestButtonList, setLoadingAcceptFriendRequestButtonList] = useState<string[]>([]);
+    const [loadingDeclineFriendRequestButtonList, setLoadingDeclineFriendRequestButtonList] = useState<string[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            await commonController.initMainLayout();
+            await controller.initIncomingFriendRequestsScreen();
+        })();
+    }, [commonController, controller]);
+
     const handleUserProfileClick = (userId: string) => {
-        console.log("handleUserProfileClick: " + userId);
+        controller.navigateToUserTimelinePage(userId);
     };
 
-    const handleAcceptFriendRequestButtonClick = (friendRequestId: string) => {
-        console.log("handleAcceptFriendRequestButtonClick: " + friendRequestId);
+    const handleAcceptFriendRequestButtonClick = async (friendRequestId: string) => {
+        setLoadingAcceptFriendRequestButtonList((currentList) => [...currentList, friendRequestId]);
+
+        await controller.acceptIncomingFriendRequest(friendRequestId);
+
+        setTimeout(() => {
+            setLoadingAcceptFriendRequestButtonList((currentList) =>
+                currentList.filter((value) => value !== friendRequestId)
+            );
+        }, 1500);
     };
 
-    const handleDeclineFriendRequestButtonClick = (friendRequestId: string) => {
-        console.log("handleDeclineFriendRequestButtonClick: " + friendRequestId);
+    const handleDeclineFriendRequestButtonClick = async (friendRequestId: string) => {
+        setLoadingDeclineFriendRequestButtonList((currentList) => [...currentList, friendRequestId]);
+
+        await controller.declineIncomingFriendRequest(friendRequestId);
+
+        setTimeout(() => {
+            setLoadingDeclineFriendRequestButtonList((currentList) =>
+                currentList.filter((value) => value !== friendRequestId)
+            );
+        }, 1500);
     };
 
     const handleLoadMoreFriendRequestItemsButtonClick = () => {
-        console.log("handleLoadMoreFriendRequestItemsButtonClick");
+        controller.loadMoreIncomingFriendRequests();
+    };
+
+    const handleIncomingFriendRequestsButtonClick = () => {
+        controller.navigateToIncomingFriendRequestsPage();
+    };
+
+    const handleOutgoingFriendRequestsButtonClick = () => {
+        controller.navigateToOutgoingFriendRequestsPage();
+    };
+
+    const isAcceptFriendRequestButtonLoading = (friendRequestId: string): boolean => {
+        return !!loadingAcceptFriendRequestButtonList.find((value) => value === friendRequestId);
+    };
+
+    const isDeclineFriendRequestButtonLoading = (friendRequestId: string): boolean => {
+        return !!loadingDeclineFriendRequestButtonList.find((value) => value === friendRequestId);
     };
 
     return (
         <IncomingFriendRequestsScreenComponent
-            friendRequestItems={mockFriendRequestItems}
+            friendRequestItems={store.incomingFriendRequestsScreenStore.friendRequestItems}
             onUserProfileClick={handleUserProfileClick}
             onAcceptFriendRequestButtonClick={handleAcceptFriendRequestButtonClick}
             onDeclineFriendRequestButtonClick={handleDeclineFriendRequestButtonClick}
-            friendRequestItemsLoading={false}
-            loadMoreFriendRequestItemsButtonVisible={true}
+            friendRequestItemsLoading={store.incomingFriendRequestsScreenStore.friendRequestItemsLoading}
+            loadMoreFriendRequestItemsButtonVisible={
+                store.incomingFriendRequestsScreenStore.friendRequestItems.length <
+                store.incomingFriendRequestsScreenStore.friendRequestItemsTotalElementCount
+            }
             onLoadMoreFriendRequestItemsButtonClick={handleLoadMoreFriendRequestItemsButtonClick}
+            onIncomingFriendRequestsButtonClick={handleIncomingFriendRequestsButtonClick}
+            onOutgoingFriendRequestsButtonClick={handleOutgoingFriendRequestsButtonClick}
+            isAcceptFriendRequestButtonLoading={isAcceptFriendRequestButtonLoading}
+            isDeclineFriendRequestButtonLoading={isDeclineFriendRequestButtonLoading}
         />
     );
 };
 
 export default IncomingFriendRequestsScreenContainer;
-
-const mockFriendRequestItems: IFriendRequestItem[] = [
-    { id: "0", userId: "0", userName: "Naruto Uzumaki" },
-    { id: "1", userId: "1", userName: "Sasuke Uchiha" },
-    { id: "2", userId: "2", userName: "Tanjiro Kamado" },
-    { id: "3", userId: "3", userName: "Takumi Fujiwara" },
-    { id: "4", userId: "4", userName: "Hinata Hyuga" },
-];

@@ -4,9 +4,16 @@ import { TFriendRequestLayoutTab } from "../../services/friendRequestTypes";
 
 type TProps = {
     activeTab: TFriendRequestLayoutTab;
+    onIncomingFriendRequestsButtonClick: () => void;
+    onOutgoingFriendRequestsButtonClick: () => void;
 };
 
-const FriendRequestLayoutComponent = ({ activeTab, children }: React.PropsWithChildren<TProps>) => {
+const FriendRequestLayoutComponent = ({
+    activeTab,
+    onIncomingFriendRequestsButtonClick,
+    onOutgoingFriendRequestsButtonClick,
+    children,
+}: React.PropsWithChildren<TProps>) => {
     const { colorMode } = useColorMode();
 
     return (
@@ -21,10 +28,18 @@ const FriendRequestLayoutComponent = ({ activeTab, children }: React.PropsWithCh
                         {activeTab === "incoming" ? "Bejövő barát-kérelmek" : "Kimenő barát-kérelmek"}
                     </p>
                     <div className="flex gap-2">
-                        <Button colorScheme="brand" variant={activeTab === "incoming" ? "solid" : "ghost"}>
+                        <Button
+                            onClick={onIncomingFriendRequestsButtonClick}
+                            colorScheme="brand"
+                            variant={activeTab === "incoming" ? "solid" : "ghost"}
+                        >
                             Bejövő
                         </Button>
-                        <Button colorScheme="brand" variant={activeTab === "outgoing" ? "solid" : "ghost"}>
+                        <Button
+                            onClick={onOutgoingFriendRequestsButtonClick}
+                            colorScheme="brand"
+                            variant={activeTab === "outgoing" ? "solid" : "ghost"}
+                        >
                             Kimenő
                         </Button>
                     </div>

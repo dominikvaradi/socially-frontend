@@ -1,52 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OutgoingFriendRequestsScreenComponent from "./OutgoingFriendRequestsScreenComponent";
-import { IFriendRequestItem } from "../../services/friendRequestTypes";
+import { useCommonContext } from "../../../common/services/commonContext";
+import { useFriendRequestContext } from "../../services/friendRequestContext";
 
 const OutgoingFriendRequestsScreenContainer = () => {
+    const { controller: commonController } = useCommonContext();
+    const { store, controller } = useFriendRequestContext();
+
     const [loadingRevokeFriendRequestButtonList, setLoadingRevokeFriendRequestButtonList] = useState<string[]>([]);
 
+    useEffect(() => {
+        (async () => {
+            await commonController.initMainLayout();
+            await controller.initOutgoingFriendRequestsScreen();
+        })();
+    }, [commonController, controller]);
+
     const handleUserProfileClick = (userId: string) => {
-        console.log("handleUserProfileClick: " + userId);
+        controller.navigateToUserTimelinePage(userId);
     };
 
-    const handleRevokeFriendRequestButtonClick = (friendRequestId: string) => {
+    const handleRevokeFriendRequestButtonClick = async (friendRequestId: string) => {
         setLoadingRevokeFriendRequestButtonList((currentList) => [...currentList, friendRequestId]);
 
-        setTimeout(() => {
-            setLoadingRevokeFriendRequestButtonList((currentList) =>
-                currentList.filter((value) => value !== friendRequestId)
-            );
-            console.log("handleRevokeFriendRequestButtonClick: " + friendRequestId);
-        }, 1500);
+        await controller.revokeOutgoingFriendRequest(friendRequestId);
+
+        setLoadingRevokeFriendRequestButtonList((currentList) =>
+            currentList.filter((value) => value !== friendRequestId)
+        );
     };
 
     const handleLoadMoreFriendRequestItemsButtonClick = () => {
-        console.log("handleLoadMoreFriendRequestItemsButtonClick");
+        controller.loadMoreOutgoingFriendRequests();
     };
 
     const isRevokeFriendRequestButtonLoading = (friendRequestId: string): boolean => {
         return !!loadingRevokeFriendRequestButtonList.find((value) => value === friendRequestId);
     };
 
+    const handleIncomingFriendRequestsButtonClick = () => {
+        controller.navigateToIncomingFriendRequestsPage();
+    };
+
+    const handleOutgoingFriendRequestsButtonClick = () => {
+        controller.navigateToOutgoingFriendRequestsPage();
+    };
+
     return (
         <OutgoingFriendRequestsScreenComponent
-            friendRequestItems={mockFriendRequestItems}
+            friendRequestItems={store.outgoingFriendRequestsScreenStore.friendRequestItems}
             onUserProfileClick={handleUserProfileClick}
             onRevokeFriendRequestButtonClick={handleRevokeFriendRequestButtonClick}
-            friendRequestItemsLoading={false}
-            loadMoreFriendRequestItemsButtonVisible={true}
+            friendRequestItemsLoading={store.outgoingFriendRequestsScreenStore.friendRequestItemsLoading}
+            loadMoreFriendRequestItemsButtonVisible={
+                store.outgoingFriendRequestsScreenStore.friendRequestItems.length <
+                store.outgoingFriendRequestsScreenStore.friendRequestItemsTotalElementCount
+            }
             onLoadMoreFriendRequestItemsButtonClick={handleLoadMoreFriendRequestItemsButtonClick}
             isRevokeFriendRequestButtonLoading={isRevokeFriendRequestButtonLoading}
+            onIncomingFriendRequestsButtonClick={handleIncomingFriendRequestsButtonClick}
+            onOutgoingFriendRequestsButtonClick={handleOutgoingFriendRequestsButtonClick}
         />
     );
 };
 
 export default OutgoingFriendRequestsScreenContainer;
-
-const mockFriendRequestItems: IFriendRequestItem[] = [
-    { id: "0", userId: "0", userName: "Naruto Uzumaki" },
-    { id: "1", userId: "1", userName: "Sasuke Uchiha" },
-    { id: "2", userId: "2", userName: "Tanjiro Kamado" },
-    { id: "3", userId: "3", userName: "Takumi Fujiwara" },
-    { id: "4", userId: "4", userName: "Hinata Hyuga" },
-];
