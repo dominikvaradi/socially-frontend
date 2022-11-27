@@ -6,6 +6,8 @@ import { OnboardingContextProvider } from "../flows/onboarding/services/onboardi
 import { HomeContextProvider } from "../flows/home/services/homeContext";
 import { CommonContextProvider } from "../flows/common/services/commonContext";
 import { UserContextProvider } from "../flows/user/services/userContext";
+import { FriendRequestContextProvider } from "../flows/friend-request/services/friendRequestContext";
+import { SearchContextProvider } from "../flows/search/services/searchContext";
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
@@ -14,7 +16,11 @@ export default function App({ Component, pageProps }: AppProps) {
                 <OnboardingContextProvider>
                     <HomeContextProvider>
                         <UserContextProvider>
-                            <Component {...pageProps} />
+                            <FriendRequestContextProvider>
+                                <SearchContextProvider>
+                                    <Component {...pageProps} />
+                                </SearchContextProvider>
+                            </FriendRequestContextProvider>
                         </UserContextProvider>
                     </HomeContextProvider>
                 </OnboardingContextProvider>

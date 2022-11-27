@@ -15,6 +15,10 @@ type TProps = {
     friendRequestItemsLoading: boolean;
     loadMoreFriendRequestItemsButtonVisible: boolean;
     onLoadMoreFriendRequestItemsButtonClick: () => void;
+    onIncomingFriendRequestsButtonClick: () => void;
+    onOutgoingFriendRequestsButtonClick: () => void;
+    isAcceptFriendRequestButtonLoading: (friendRequestId: string) => boolean;
+    isDeclineFriendRequestButtonLoading: (friendRequestId: string) => boolean;
 };
 
 const IncomingFriendRequestsScreenComponent = ({
@@ -25,6 +29,10 @@ const IncomingFriendRequestsScreenComponent = ({
     friendRequestItemsLoading,
     loadMoreFriendRequestItemsButtonVisible,
     onLoadMoreFriendRequestItemsButtonClick,
+    onIncomingFriendRequestsButtonClick,
+    onOutgoingFriendRequestsButtonClick,
+    isAcceptFriendRequestButtonLoading,
+    isDeclineFriendRequestButtonLoading,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
@@ -35,7 +43,11 @@ const IncomingFriendRequestsScreenComponent = ({
 
     return (
         <MainLayout>
-            <FriendRequestLayout activeTab="incoming">
+            <FriendRequestLayout
+                activeTab="incoming"
+                onIncomingFriendRequestsButtonClick={onIncomingFriendRequestsButtonClick}
+                onOutgoingFriendRequestsButtonClick={onOutgoingFriendRequestsButtonClick}
+            >
                 <div className="mt-2 flex flex-col gap-2 pt-2 sm:px-2">
                     {friendRequestItems.map((fri) => (
                         <div key={fri.id} className="flex items-center justify-between gap-1">
@@ -53,12 +65,22 @@ const IncomingFriendRequestsScreenComponent = ({
                                     icon={<Icon as={FiCheck} />}
                                     type="submit"
                                     aria-label={"Accept incoming friend-request"}
+                                    isLoading={isAcceptFriendRequestButtonLoading(fri.id)}
+                                    disabled={
+                                        isAcceptFriendRequestButtonLoading(fri.id) ||
+                                        isDeclineFriendRequestButtonLoading(fri.id)
+                                    }
                                 />
                                 <IconButton
                                     onClick={() => onDeclineFriendRequestButtonClick(fri.id)}
                                     colorScheme="red"
                                     icon={<Icon as={FiX} />}
                                     aria-label={"Decline incoming friend-request"}
+                                    isLoading={isDeclineFriendRequestButtonLoading(fri.id)}
+                                    disabled={
+                                        isAcceptFriendRequestButtonLoading(fri.id) ||
+                                        isDeclineFriendRequestButtonLoading(fri.id)
+                                    }
                                 />
                             </div>
                         </div>

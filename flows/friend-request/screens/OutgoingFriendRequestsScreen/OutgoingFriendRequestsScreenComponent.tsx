@@ -15,6 +15,8 @@ type TProps = {
     loadMoreFriendRequestItemsButtonVisible: boolean;
     onLoadMoreFriendRequestItemsButtonClick: () => void;
     isRevokeFriendRequestButtonLoading: (friendRequestId: string) => boolean;
+    onIncomingFriendRequestsButtonClick: () => void;
+    onOutgoingFriendRequestsButtonClick: () => void;
 };
 
 const OutgoingFriendRequestsScreenComponent = ({
@@ -25,6 +27,8 @@ const OutgoingFriendRequestsScreenComponent = ({
     loadMoreFriendRequestItemsButtonVisible,
     onLoadMoreFriendRequestItemsButtonClick,
     isRevokeFriendRequestButtonLoading,
+    onIncomingFriendRequestsButtonClick,
+    onOutgoingFriendRequestsButtonClick,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
@@ -35,7 +39,11 @@ const OutgoingFriendRequestsScreenComponent = ({
 
     return (
         <MainLayout>
-            <FriendRequestLayout activeTab="outgoing">
+            <FriendRequestLayout
+                activeTab="outgoing"
+                onIncomingFriendRequestsButtonClick={onIncomingFriendRequestsButtonClick}
+                onOutgoingFriendRequestsButtonClick={onOutgoingFriendRequestsButtonClick}
+            >
                 <div className="mt-2 flex flex-col gap-2 pt-2 sm:px-2">
                     {friendRequestItems.map((fri) => (
                         <div key={fri.id} className="flex items-center justify-between gap-1">

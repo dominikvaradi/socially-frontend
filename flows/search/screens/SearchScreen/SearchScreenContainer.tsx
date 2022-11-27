@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import SearchScreenComponent from "./SearchScreenComponent";
-import { ISearchItemUser } from "../../../common/services/commonTypes";
 import { useRouter } from "next/router";
+import { useSearchContext } from "../../services/searchContext";
+import { useCommonContext } from "../../../common/services/commonContext";
 
 const SearchScreenContainer = () => {
     const router = useRouter();
+    const { controller: commonController } = useCommonContext();
+    const { store, controller } = useSearchContext();
 
     const [searchInputValue, setSearchInputValue] = useState<string>("");
+    const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);
+    const [searchFired, setSearchFired] = useState<boolean>(false);
 
     useEffect(() => {
         if (!router.isReady) {
@@ -14,103 +19,57 @@ const SearchScreenContainer = () => {
         }
 
         const searchTerm = router.query.searchTerm as string | undefined;
-        if (!searchTerm) {
-            return;
+
+        setSearchInputValue(searchTerm ?? "");
+        setSearchTerm(searchTerm);
+        if (searchTerm) {
+            setSearchFired(true);
         }
 
-        setSearchInputValue(searchTerm);
-    }, [router]);
+        (async () => {
+            await commonController.initMainLayout();
+            await controller.initSearchScreen(searchTerm || undefined);
+        })();
+    }, [commonController, controller, router]);
 
     const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInputValue(event.target.value);
     };
 
     const handleSearchItemUserClick = (userId: string) => {
-        console.log("handleSearchItemUserClick: " + userId);
+        controller.navigateToUserTimelineScreen(userId);
     };
 
     const handleLoadMoreSearchItemsButtonClick = () => {
-        console.log("handleLoadMoreSearchItemsButtonClick");
+        if (!searchTerm) return;
+
+        controller.loadMoreSearchItemUsers(searchTerm);
+    };
+
+    const handleSearchSubmitButtonClick = () => {
+        if (searchInputValue.length == 0) return;
+
+        setSearchTerm(searchInputValue);
+        setSearchFired(true);
+        controller.fetchSearchItemUsers(searchInputValue);
     };
 
     return (
         <SearchScreenComponent
+            searchFired={searchFired}
             searchInputValue={searchInputValue}
             onSearchInputChange={handleSearchInputChange}
-            searchItems={mockSearchItems}
+            searchItems={store.searchScreenStore.searchItemUsers}
             onSearchItemUserClick={handleSearchItemUserClick}
-            searchItemsLoading={false}
-            loadMoreSearchItemsButtonVisible={true}
+            searchItemsLoading={store.searchScreenStore.searchItemUsersLoading}
+            loadMoreSearchItemsButtonVisible={
+                store.searchScreenStore.searchItemUsers.length <
+                store.searchScreenStore.searchItemUsersTotalElementCount
+            }
             onLoadMoreSearchItemsButtonClick={handleLoadMoreSearchItemsButtonClick}
+            onSearchSubmitButtonClick={handleSearchSubmitButtonClick}
         />
     );
 };
 
 export default SearchScreenContainer;
-
-const mockSearchItems: ISearchItemUser[] = [
-    {
-        userId: "0",
-        userName: "Naruto Uzumaki",
-    },
-    {
-        userId: "1",
-        userName: "Sasuke Uchiha",
-    },
-    {
-        userId: "2",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "3",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "4",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "5",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "6",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "7",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "8",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "9",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "10",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "11",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "12",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "13",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "14",
-        userName: "Hinata Hyuga",
-    },
-    {
-        userId: "15",
-        userName: "Hinata Hyuga",
-    },
-];
