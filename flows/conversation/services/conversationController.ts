@@ -6,11 +6,12 @@ import { transformConversationResponseDto2IConversation } from "../../common/ser
 import tokenStorage from "../../common/tokenStorage";
 import { transformUserSearchResponseDto2ISearchItemUser } from "../../common/services/api/transformers/transformUserSearchResponseDto2ISearchItemUser";
 import { transformMessageResponseDto2IMessage } from "./api/transformers/transformMessageResponseDto2IMessage";
-import { CreateMessageFormValues, IMessage } from "./conversationTypes";
+import { CreateMessageFormValues, IConversationMember, IMessage, TConversationRole } from "./conversationTypes";
 import { FormikHelpers } from "formik";
 import { transformCreateMessageFormValues2MessageCreateRequestDto } from "./api/transformers/transformCreateMessageFormValues2MessageCreateRequestDto";
 import { TReaction } from "../../common/services/commonTypes";
 import { transformMessageReactionResponseDto2IReactionListItem } from "./api/transformers/transformMessageReactionResponseDto2IReactionListItem";
+import { transformConversationUserResponseDto2IConversationMember } from "../../common/services/api/transformers/transformConversationUserResponseDto2IConversationMember";
 
 const CONVERSATIONS_FETCH_SIZE = 10;
 const USER_FRIENDS_FETCH_SIZE = 10;
@@ -85,7 +86,7 @@ export class ConversationController extends BaseController<TConversationStore, C
         this.storeService.resetStore();
     };
 
-    searchFriendsOfCurrentUser = async (searchTerm: string) => {
+    newConversationScreenSearchFriendsOfCurrentUser = async (searchTerm: string) => {
         this.storeService.setNewConversationScreenSearchItemUsersAndLoading([], true);
 
         const loggedInUserId = tokenStorage.getUserId();
@@ -368,6 +369,198 @@ export class ConversationController extends BaseController<TConversationStore, C
         );
     };
 
+    initConversationMembersScreen = async (conversationId: string) => {
+        this.storeService.resetStore();
+
+        const response = await conversationApi.fetchConversation(conversationId);
+        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+            this.showToast({
+                title: "Váratlan hiba történt a beszélgetés betöltése közben, kérjük próbálja meg később.",
+                status: "error",
+            });
+
+            this.storeService.setConversationMembersScreenConversationLoading(false);
+
+            return;
+        }
+
+        const userRoleAdmin =
+            response.data.data.members.find((m) => m.userId === tokenStorage.getUserId())?.userConversationRole ===
+            "ADMIN";
+
+        this.storeService.setConversationMembersScreenConversationAndUserRoleAdminAndLoadingFalse(
+            userRoleAdmin,
+            transformConversationResponseDto2IConversation(response.data.data)
+        );
+    };
+
+    changeConversationRoleOfMember = async (member: IConversationMember, role: TConversationRole) => {
+        if (!this.store.conversationMembersScreenStore.conversation) return;
+
+        const response = await conversationApi.changeRoleOfUserInConversation(
+            this.store.conversationMembersScreenStore.conversation.id,
+            member.userId,
+            role
+        );
+        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+            if (response?.data.messages.includes("CONVERSATIONS_MUST_HAVE_AN_ADMIN")) {
+                this.showToast({
+                    title: "A beszélgetés utolsó adminisztrátor felhasználója nem változtathatja meg a saját szerepkörét.",
+                    status: "error",
+                });
+
+                return;
+            }
+
+            this.showToast({
+                title: "Váratlan hiba történt a felhasználó szerepkörének módosítása közben, kérjük próbálja meg később.",
+                status: "error",
+            });
+
+            return;
+        }
+
+        const newConversationMembers = [...this.store.conversationMembersScreenStore.conversation.members];
+
+        const memberIndex = newConversationMembers.findIndex((m) => m.userId === member.userId);
+        if (memberIndex === -1) return;
+
+        newConversationMembers[memberIndex] = transformConversationUserResponseDto2IConversationMember(
+            response.data.data
+        );
+
+        const userRoleAdmin =
+            response.data.data.userId === tokenStorage.getUserId()
+                ? response.data.data.userConversationRole === "ADMIN"
+                : true;
+
+        this.storeService.setConversationMembersScreenConversationAndUserRoleAdmin(userRoleAdmin, {
+            ...this.store.conversationMembersScreenStore.conversation,
+            members: newConversationMembers,
+        });
+    };
+
+    removeMemberOfConversation = async (member: IConversationMember) => {
+        if (!this.store.conversationMembersScreenStore.conversation) return;
+
+        const response = await conversationApi.removeUserOfConversation(
+            this.store.conversationMembersScreenStore.conversation.id,
+            member.userId
+        );
+        if (response?.status !== 200 || response?.statusText !== "OK") {
+            if (response?.data.messages.includes("CONVERSATIONS_MUST_HAVE_AN_ADMIN")) {
+                this.showToast({
+                    title: "A beszélgetés utolsó adminisztrátor felhasználója nem távolíthatja el magát a beszélgetésből.",
+                    status: "error",
+                });
+
+                return;
+            }
+
+            this.showToast({
+                title: "Váratlan hiba történt a felhasználó csoportból eltávolítása közben, kérjük próbálja meg később.",
+                status: "error",
+            });
+
+            return;
+        }
+
+        if (member.userId === tokenStorage.getUserId()) {
+            this.navigateToConversationsListPage();
+            return;
+        }
+
+        const newConversationMembers = [...this.store.conversationMembersScreenStore.conversation.members];
+
+        const memberIndex = newConversationMembers.findIndex((m) => m.userId === member.userId);
+        if (memberIndex === -1) return;
+
+        newConversationMembers.splice(memberIndex, 1);
+
+        this.storeService.setConversationMembersScreenConversation({
+            ...this.store.conversationMembersScreenStore.conversation,
+            members: newConversationMembers,
+        });
+    };
+
+    initAddUsersToConversationScreen = async (conversationId: string) => {
+        this.storeService.resetStore();
+
+        const response = await conversationApi.fetchConversation(conversationId);
+        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+            this.showToast({
+                title: "Váratlan hiba történt a beszélgetés betöltése közben, kérjük próbálja meg később.",
+                status: "error",
+            });
+
+            this.storeService.setAddUsersToConversationScreenConversationLoading(false);
+
+            return;
+        }
+
+        this.storeService.setAddUsersToConversationScreenConversationAndLoadingFalse(
+            transformConversationResponseDto2IConversation(response.data.data)
+        );
+    };
+
+    addUsersToConversationScreenSearchFriendsOfCurrentUser = async (searchTerm: string) => {
+        if (!this.store.addUsersToConversationScreenStore.conversation) return;
+
+        this.storeService.setAddUsersToConversationScreenSearchItemUsersAndLoading([], true);
+
+        const loggedInUserId = tokenStorage.getUserId();
+        if (!loggedInUserId) return;
+
+        const response = await conversationApi.fetchFriendsOfUser(
+            loggedInUserId,
+            searchTerm,
+            0,
+            USER_FRIENDS_FETCH_SIZE
+        );
+        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+            this.showToast({
+                title: "Váratlan hiba történt a barátok keresése közben, kérjük próbálja meg később.",
+                status: "error",
+            });
+
+            this.storeService.setAddUsersToConversationScreenSearchItemUsersLoading(false);
+
+            return;
+        }
+
+        const conversationMembers = this.store.addUsersToConversationScreenStore.conversation.members;
+
+        const searchItemUsers = response.data.data.elements
+            .filter((userSearchResponseDto) => !conversationMembers.find((m) => m.userId === userSearchResponseDto.id))
+            .map(transformUserSearchResponseDto2ISearchItemUser);
+
+        this.storeService.setAddUsersToConversationScreenSearchItemUsersAndLoading(searchItemUsers, false);
+    };
+
+    addUsersToConversation = async (memberUserIds: string[]) => {
+        const conversationId = this.store.addUsersToConversationScreenStore.conversation?.id;
+
+        if (!conversationId) return;
+
+        this.storeService.setAddUsersToConversationScreenSubmitting(true);
+
+        const response = await conversationApi.addUsersToConversation(conversationId, memberUserIds);
+        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+            this.showToast({
+                title: "Váratlan hiba történt a felhasználók beszélgetéshez hozzáadása közben, kérjük próbálja meg később.",
+                status: "error",
+            });
+
+            this.storeService.setAddUsersToConversationScreenSubmitting(false);
+
+            return;
+        }
+
+        this.router?.push(`/conversation/${conversationId}/members`);
+
+        this.storeService.setAddUsersToConversationScreenSubmitting(false);
+    };
+
     navigateToConversationPage = (conversationId: string) => {
         this.router?.push(`/conversation/${conversationId}`);
     };
@@ -386,6 +579,10 @@ export class ConversationController extends BaseController<TConversationStore, C
 
     navigateToConversationMembersPage = (conversationId: string) => {
         this.router?.push(`/conversation/${conversationId}/members`);
+    };
+
+    navigateToAddUsersToConversationPage = (conversationId: string) => {
+        this.router?.push(`/conversation/${conversationId}/add-users`);
     };
 }
 

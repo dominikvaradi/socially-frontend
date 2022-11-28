@@ -41,6 +41,7 @@ type TProps = {
         values: EditCommentFormValues,
         actions: FormikHelpers<EditCommentFormValues>
     ) => Promise<void>;
+    showAddressee?: boolean;
 };
 
 const PostList = ({
@@ -59,6 +60,7 @@ const PostList = ({
     onCreateCommentForPostSubmit,
     onToggleCommentReaction,
     onEditCommentSubmit,
+    showAddressee,
 }: TProps) => {
     return (
         <div className="my-10 flex w-full flex-col space-y-10">
@@ -77,6 +79,7 @@ const PostList = ({
                     onCreateCommentSubmit={onCreateCommentForPostSubmit}
                     onToggleCommentReaction={onToggleCommentReaction}
                     onEditCommentSubmit={onEditCommentSubmit}
+                    showAddressee={showAddressee}
                 />
             ))}
             {posts.length === 0 && postsLoading && (

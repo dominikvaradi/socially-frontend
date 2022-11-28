@@ -107,6 +107,74 @@ export class ConversationStoreService extends BaseStoreService<TConversationStor
             draftStore.conversationScreenStore.reactionListReactionItemsLoading = reactionItemsLoading;
         });
     };
+
+    setConversationMembersScreenConversationLoading = (conversationLoading: boolean) => {
+        this.setStore((draftStore) => {
+            draftStore.conversationMembersScreenStore.conversationLoading = conversationLoading;
+        });
+    };
+
+    setConversationMembersScreenConversationAndUserRoleAdminAndLoadingFalse = (
+        userRoleAdmin: boolean,
+        conversation?: IConversation
+    ) => {
+        this.setStore((draftStore) => {
+            draftStore.conversationMembersScreenStore.conversation = conversation;
+            draftStore.conversationMembersScreenStore.conversationLoading = false;
+            draftStore.conversationMembersScreenStore.userRoleAdmin = userRoleAdmin;
+        });
+    };
+
+    setConversationMembersScreenConversationAndUserRoleAdmin = (
+        userRoleAdmin: boolean,
+        conversation?: IConversation
+    ) => {
+        this.setStore((draftStore) => {
+            draftStore.conversationMembersScreenStore.conversation = conversation;
+            draftStore.conversationMembersScreenStore.userRoleAdmin = userRoleAdmin;
+        });
+    };
+
+    setConversationMembersScreenConversation = (conversation?: IConversation) => {
+        this.setStore((draftStore) => {
+            draftStore.conversationMembersScreenStore.conversation = conversation;
+        });
+    };
+
+    setAddUsersToConversationScreenConversationLoading = (conversationLoading: boolean) => {
+        this.setStore((draftStore) => {
+            draftStore.addUsersToConversationScreenStore.conversationLoading = conversationLoading;
+        });
+    };
+
+    setAddUsersToConversationScreenConversationAndLoadingFalse = (conversation?: IConversation) => {
+        this.setStore((draftStore) => {
+            draftStore.addUsersToConversationScreenStore.conversation = conversation;
+            draftStore.addUsersToConversationScreenStore.conversationLoading = false;
+        });
+    };
+
+    setAddUsersToConversationScreenSearchItemUsersAndLoading = (
+        searchItemUsers: ISearchItemUser[],
+        searchItemUsersLoading: boolean
+    ) => {
+        this.setStore((draftStore) => {
+            draftStore.addUsersToConversationScreenStore.searchItemUsers = searchItemUsers;
+            draftStore.addUsersToConversationScreenStore.searchItemUsersLoading = searchItemUsersLoading;
+        });
+    };
+
+    setAddUsersToConversationScreenSearchItemUsersLoading = (searchItemUsersLoading: boolean) => {
+        this.setStore((draftStore) => {
+            draftStore.addUsersToConversationScreenStore.searchItemUsersLoading = searchItemUsersLoading;
+        });
+    };
+
+    setAddUsersToConversationScreenSubmitting = (submitting: boolean) => {
+        this.setStore((draftStore) => {
+            draftStore.addUsersToConversationScreenStore.submitting = submitting;
+        });
+    };
 }
 
 export default new ConversationStoreService(defaultConversationStore, () => {

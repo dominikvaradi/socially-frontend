@@ -1,93 +1,133 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ConversationMembersScreenComponent from "./ConversationMembersScreenComponent";
-import {
-    ChangeConversationRoleAlertDialogSubject,
-    IConversationMember,
-    TConversationRole,
-} from "../../services/conversationTypes";
+import { IConversationMember, TConversationRole } from "../../services/conversationTypes";
+import { useConversationContext } from "../../services/conversationContext";
+import { useCommonContext } from "../../../common/services/commonContext";
+import { useRouter } from "next/router";
 
 const ConversationMembersScreenContainer = () => {
-    const [changeConversationRoleAlertDialogSubject, setChangeConversationRoleAlertDialogSubject] = useState<
-        ChangeConversationRoleAlertDialogSubject | undefined
+    const router = useRouter();
+    const { store, controller } = useConversationContext();
+    const { controller: commonController } = useCommonContext();
+
+    useEffect(() => {
+        if (!router.isReady) return;
+
+        (async () => {
+            await commonController.initMainLayout();
+            await controller.initConversationMembersScreen(router.query.conversationId as string);
+        })();
+    }, [controller, commonController, router]);
+
+    const [changeConversationRoleAlertDialogMember, setChangeConversationRoleAlertDialogMember] = useState<
+        IConversationMember | undefined
     >(undefined);
+    const [changeConversationRoleAlertDialogRole, setChangeConversationRoleAlertDialogRole] = useState<
+        TConversationRole | undefined
+    >(undefined);
+    const [
+        changeConversationRoleAlertDialogConfirmButtonLoading,
+        setChangeConversationRoleAlertDialogConfirmButtonLoading,
+    ] = useState<boolean>(false);
+
+    const [removeMemberFromConversationAlertDialogMember, setRemoveMemberFromConversationAlertDialogMember] = useState<
+        IConversationMember | undefined
+    >(undefined);
+    const [
+        removeMemberFromConversationAlertDialogConfirmButtonLoading,
+        setRemoveMemberFromConversationAlertDialogConfirmButtonLoading,
+    ] = useState<boolean>(false);
 
     const handleUserProfileClick = (userId: string) => {
-        console.log("handleUserProfileClick: " + userId);
+        controller.navigateToUserTimelinePage(userId);
     };
 
-    const handleChangeMemberMenuItemButtonClick = (userId: string, role: TConversationRole) => {
-        setChangeConversationRoleAlertDialogSubject({
-            userId,
-            role,
-        });
+    const handleChangeMemberMenuItemButtonClick = (member: IConversationMember, role: TConversationRole) => {
+        setChangeConversationRoleAlertDialogMember(member);
+        setChangeConversationRoleAlertDialogRole(role);
     };
 
     const handleChangeConversationRoleAlertDialogClose = () => {
-        setChangeConversationRoleAlertDialogSubject(undefined);
+        setChangeConversationRoleAlertDialogMember(undefined);
+        setChangeConversationRoleAlertDialogRole(undefined);
     };
 
-    const handleChangeConversationRoleAlertDialogConfirmButtonClick = () => {
-        console.log("handleChangeConversationRoleAlertDialogConfirmButtonClick");
-        setChangeConversationRoleAlertDialogSubject(undefined);
+    const handleChangeConversationRoleAlertDialogConfirmButtonClick = async () => {
+        if (!changeConversationRoleAlertDialogMember || !changeConversationRoleAlertDialogRole) return;
+
+        setChangeConversationRoleAlertDialogConfirmButtonLoading(true);
+
+        await controller.changeConversationRoleOfMember(
+            changeConversationRoleAlertDialogMember,
+            changeConversationRoleAlertDialogRole
+        );
+
+        setChangeConversationRoleAlertDialogMember(undefined);
+        setChangeConversationRoleAlertDialogRole(undefined);
+        setChangeConversationRoleAlertDialogConfirmButtonLoading(false);
     };
 
     const handleBackButtonClick = () => {
-        console.log("handleBackButtonClick");
+        if (!store.conversationMembersScreenStore.conversation) return;
+
+        controller.navigateToConversationPage(store.conversationMembersScreenStore.conversation.id);
+    };
+
+    const handleRemoveUserFromConversationButtonClick = (member: IConversationMember) => {
+        setRemoveMemberFromConversationAlertDialogMember(member);
+    };
+
+    const handleRemoveMemberFromConversationAlertDialogClose = () => {
+        setRemoveMemberFromConversationAlertDialogMember(undefined);
+    };
+
+    const handleRemoveMemberFromConversationAlertDialogConfirmButtonClick = async () => {
+        if (!removeMemberFromConversationAlertDialogMember) return;
+
+        setRemoveMemberFromConversationAlertDialogConfirmButtonLoading(true);
+
+        await controller.removeMemberOfConversation(removeMemberFromConversationAlertDialogMember);
+
+        setRemoveMemberFromConversationAlertDialogMember(undefined);
+        setRemoveMemberFromConversationAlertDialogConfirmButtonLoading(false);
+    };
+
+    const handleAddUsersToConversationButtonClick = () => {
+        if (!store.conversationMembersScreenStore.conversation) return;
+
+        controller.navigateToAddUsersToConversationPage(store.conversationMembersScreenStore.conversation.id);
     };
 
     return (
         <ConversationMembersScreenComponent
-            members={mockMembers}
+            members={store.conversationMembersScreenStore.conversation?.members ?? []}
             onUserProfileClick={handleUserProfileClick}
-            groupConversation={true}
-            userRoleAdmin={true}
+            groupConversation={store.conversationMembersScreenStore.conversation?.type === "GROUP"}
+            userRoleAdmin={store.conversationMembersScreenStore.userRoleAdmin}
             onChangeMemberMenuItemButtonClick={handleChangeMemberMenuItemButtonClick}
-            changeConversationRoleAlertDialogVisible={!!changeConversationRoleAlertDialogSubject}
+            changeConversationRoleAlertDialogVisible={
+                !!changeConversationRoleAlertDialogMember && !!changeConversationRoleAlertDialogRole
+            }
             onChangeConversationRoleAlertDialogClose={handleChangeConversationRoleAlertDialogClose}
             onChangeConversationRoleAlertDialogConfirmButtonClick={
                 handleChangeConversationRoleAlertDialogConfirmButtonClick
             }
+            changeConversationRoleAlertDialogConfirmButtonLoading={
+                changeConversationRoleAlertDialogConfirmButtonLoading
+            }
             onBackButtonClick={handleBackButtonClick}
+            onRemoveUserFromConversationButtonClick={handleRemoveUserFromConversationButtonClick}
+            removeMemberFromConversationAlertDialogVisible={!!removeMemberFromConversationAlertDialogMember}
+            onRemoveMemberFromConversationAlertDialogClose={handleRemoveMemberFromConversationAlertDialogClose}
+            onRemoveMemberFromConversationAlertDialogConfirmButtonClick={
+                handleRemoveMemberFromConversationAlertDialogConfirmButtonClick
+            }
+            removeMemberFromConversationAlertDialogConfirmButtonLoading={
+                removeMemberFromConversationAlertDialogConfirmButtonLoading
+            }
+            onAddUsersToConversationButtonClick={handleAddUsersToConversationButtonClick}
         />
     );
 };
 
 export default ConversationMembersScreenContainer;
-
-const mockMembers: IConversationMember[] = [
-    {
-        userId: "0",
-        userName: "Naruto Uzumaki",
-        role: "ADMIN",
-    },
-    {
-        userId: "1",
-        userName: "Sasuke Uchiha",
-        role: "ADMIN",
-    },
-    {
-        userId: "2",
-        userName: "Hinata Hyuga",
-        role: "NORMAL",
-    },
-    {
-        userId: "3",
-        userName: "Teszt Elek",
-        role: "NORMAL",
-    },
-    {
-        userId: "4",
-        userName: "Uchiha Sasuke",
-        role: "NORMAL",
-    },
-    {
-        userId: "5",
-        userName: "Himawari Uzumaki",
-        role: "NORMAL",
-    },
-    {
-        userId: "6",
-        userName: "Boruto Uzumaki",
-        role: "NORMAL",
-    },
-];

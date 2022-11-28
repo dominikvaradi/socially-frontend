@@ -47,7 +47,7 @@ const MessageComponent = ({
     return (
         <div className={`flex ${writtenBySelf ? "justify-end" : ""} ${className || ""}`}>
             <div
-                className={`flex gap-2 ${
+                className={`mb-4 flex gap-2 ${
                     writtenBySelf ? "flex-row-reverse" : ""
                 } max-w-[85%] sm:max-w-[80%] md:max-w-[70%]`}
             >

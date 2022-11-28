@@ -4,12 +4,15 @@ import {
     EmptyRestApiResponseDto,
     MessageCreateRequestDto,
     RestApiResponseDtoConversationResponseDto,
+    RestApiResponseDtoConversationUserResponseDto,
     RestApiResponseDtoMessageResponseDto,
     RestApiResponseDtoPageResponseDtoConversationResponseDto,
     RestApiResponseDtoPageResponseDtoMessageResponseDto,
     RestApiResponseDtoPageResponseDtoUserSearchResponseDto,
+    RestApiResponseDtoSetConversationUserResponseDto,
 } from "../../../../generated/api";
 import { TReaction } from "../../../common/services/commonTypes";
+import { TConversationRole } from "../conversationTypes";
 
 export const api = {
     fetchConversations: (
@@ -55,4 +58,20 @@ export const api = {
 
     fetchMessageReactions: (messageId: string, page: number, size: number, reaction?: TReaction) =>
         messageApi().findAllReactionsByMessage(messageId, reaction, page, size),
+
+    changeRoleOfUserInConversation: (
+        conversationId: string,
+        userId: string,
+        role: TConversationRole
+    ): AxiosPromise<RestApiResponseDtoConversationUserResponseDto> =>
+        conversationApi().updateUsersRoleInConversation(conversationId, userId, { role: role }),
+
+    removeUserOfConversation: (conversationId: string, userId: string): AxiosPromise<EmptyRestApiResponseDto> =>
+        conversationApi().removeUserFromConversation(conversationId, userId),
+
+    addUsersToConversation: (
+        conversationId: string,
+        memberUserIds: string[]
+    ): AxiosPromise<RestApiResponseDtoSetConversationUserResponseDto> =>
+        conversationApi().addUsersToConversation(conversationId, { memberUserIds: memberUserIds }),
 };

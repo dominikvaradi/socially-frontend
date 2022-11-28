@@ -124,6 +124,7 @@ const HomeFeedScreenComponent = ({
                         onCreateCommentForPostSubmit={onCreateCommentForPostSubmit}
                         onToggleCommentReaction={onToggleCommentReaction}
                         onEditCommentSubmit={onEditCommentSubmit}
+                        showAddressee
                     />
                 </div>
             </div>

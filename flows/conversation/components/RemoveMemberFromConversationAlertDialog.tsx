@@ -16,7 +16,7 @@ type TProps = {
     confirmButtonLoading: boolean;
 };
 
-const ChangeConversationRoleAlertDialog = ({
+const RemoveMemberFromConversationAlertDialog = ({
     visible,
     onClose,
     onConfirmButtonClick,
@@ -28,10 +28,10 @@ const ChangeConversationRoleAlertDialog = ({
         <AlertDialog isOpen={visible} leastDestructiveRef={cancelButtonRef} onClose={onClose} isCentered>
             <AlertDialogOverlay>
                 <AlertDialogContent>
-                    <AlertDialogHeader>Beszélgetés-szerepkör szerkesztése</AlertDialogHeader>
+                    <AlertDialogHeader>Felhasználó eltávolítása a beszélgetésből</AlertDialogHeader>
 
                     <AlertDialogBody>
-                        Biztosan meg szeretnéd változtatni a kiválasztott személy szerepkörét?
+                        Biztosan el szeretnéd távolítani a kiválasztott felhasználót a beszélgetésből?
                     </AlertDialogBody>
 
                     <AlertDialogFooter>
@@ -39,11 +39,7 @@ const ChangeConversationRoleAlertDialog = ({
                             <Button ref={cancelButtonRef} onClick={onClose}>
                                 Nem
                             </Button>
-                            <Button
-                                colorScheme="yellow"
-                                onClick={onConfirmButtonClick}
-                                isLoading={confirmButtonLoading}
-                            >
+                            <Button colorScheme="red" onClick={onConfirmButtonClick} isLoading={confirmButtonLoading}>
                                 Igen
                             </Button>
                         </div>
@@ -54,4 +50,4 @@ const ChangeConversationRoleAlertDialog = ({
     );
 };
 
-export default ChangeConversationRoleAlertDialog;
+export default RemoveMemberFromConversationAlertDialog;

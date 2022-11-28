@@ -29,6 +29,20 @@ export interface IConversationConversationScreenStore {
     reactionListReactionItemsTotalElementCount: number;
 }
 
+export interface IConversationConversationMembersScreenStore {
+    conversation?: IConversation;
+    conversationLoading: boolean;
+    userRoleAdmin: boolean;
+}
+
+export interface IConversationAddUsersToConversationScreenStore {
+    conversation?: IConversation;
+    conversationLoading: boolean;
+    searchItemUsers: ISearchItemUser[];
+    searchItemUsersLoading: boolean;
+    submitting: boolean;
+}
+
 export interface IConversationMember {
     userId: string;
     userName: string;
@@ -50,9 +64,4 @@ export interface IMessage {
 
 export interface CreateMessageFormValues {
     content: string;
-}
-
-export interface ChangeConversationRoleAlertDialogSubject {
-    userId: string;
-    role: TConversationRole;
 }
