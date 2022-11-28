@@ -17,7 +17,7 @@ type TProp = {
     onCreateNewConversationButtonClick: () => void;
 };
 
-const ConversationsScreenComponent = ({
+const ConversationsListScreenComponent = ({
     conversations,
     onConversationClick,
     conversationsLoading,
@@ -67,10 +67,14 @@ const ConversationsScreenComponent = ({
                                 className={`flex cursor-pointer select-none items-center gap-2 rounded-lg p-1 ${itemHoverStyle} ${itemActiveStyle}`}
                             >
                                 {conversation.type === "DIRECT" && (
-                                    <UserNameAvatar userName={getConversationTitle(conversation.members, 100)} />
+                                    <UserNameAvatar
+                                        userName={getConversationTitle(conversation.type, conversation.members, 100)}
+                                    />
                                 )}
                                 {conversation.type === "GROUP" && <GroupAvatar />}
-                                <span className="leading-none">{getConversationTitle(conversation.members, 100)}</span>
+                                <span className="leading-none">
+                                    {getConversationTitle(conversation.type, conversation.members, 100)}
+                                </span>
                             </div>
                         ))}
                         {conversations.length === 0 && !conversationsLoading && (
@@ -101,4 +105,4 @@ const ConversationsScreenComponent = ({
     );
 };
 
-export default ConversationsScreenComponent;
+export default ConversationsListScreenComponent;

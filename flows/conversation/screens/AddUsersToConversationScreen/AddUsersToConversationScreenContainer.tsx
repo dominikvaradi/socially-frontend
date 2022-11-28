@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import NewConversationScreenComponent from "./NewConversationScreenComponent";
+import AddUsersToConversationScreen from "./AddUsersToConversationScreenComponent";
 import { ISearchItemUser } from "../../../common/services/commonTypes";
 import { useConversationContext } from "../../services/conversationContext";
 import { useCommonContext } from "../../../common/services/commonContext";
+import { useRouter } from "next/router";
 
-const NewConversationScreenContainer = () => {
+const AddUsersToConversationScreenContainer = () => {
+    const router = useRouter();
     const { store, controller } = useConversationContext();
     const { controller: commonController } = useCommonContext();
 
@@ -13,11 +15,13 @@ const NewConversationScreenContainer = () => {
     const [searchFired, setSearchFired] = useState<boolean>(false);
 
     useEffect(() => {
+        if (!router.isReady) return;
+
         (async () => {
             await commonController.initMainLayout();
-            await controller.initNewConversationScreen();
+            await controller.initAddUsersToConversationScreen(router.query.conversationId as string);
         })();
-    }, [commonController, controller]);
+    }, [controller, commonController, router]);
 
     const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInputValue(event.target.value);
@@ -29,7 +33,9 @@ const NewConversationScreenContainer = () => {
 
     const handleAddUserToConversationButtonClick = (userId: string) => {
         setMembers((value) => {
-            const searchItemToAdd = store.newConversationScreenStore.searchItemUsers.find((si) => si.userId === userId);
+            const searchItemToAdd = store.addUsersToConversationScreenStore.searchItemUsers.find(
+                (si) => si.userId === userId
+            );
             if (!searchItemToAdd || value.find((m) => m.userId === userId)) return value;
 
             const newArray = [...value];
@@ -40,13 +46,15 @@ const NewConversationScreenContainer = () => {
     };
 
     const handleBackButtonClick = () => {
-        controller.navigateToConversationsListPage();
+        if (!store.addUsersToConversationScreenStore.conversation) return;
+
+        controller.navigateToConversationMembersPage(store.addUsersToConversationScreenStore.conversation.id);
     };
 
     const handleCreateConversationButtonClick = () => {
         if (members.length === 0) return;
 
-        controller.createConversation(members.map((m) => m.userId));
+        controller.addUsersToConversation(members.map((m) => m.userId));
     };
 
     const handleSearchSubmitButtonClick = () => {
@@ -54,25 +62,25 @@ const NewConversationScreenContainer = () => {
 
         setSearchFired(true);
 
-        controller.newConversationScreenSearchFriendsOfCurrentUser(searchInputValue);
+        controller.addUsersToConversationScreenSearchFriendsOfCurrentUser(searchInputValue);
     };
 
     return (
-        <NewConversationScreenComponent
+        <AddUsersToConversationScreen
             searchInputValue={searchInputValue}
             onSearchInputChange={handleSearchInputChange}
             members={members}
-            searchItems={store.newConversationScreenStore.searchItemUsers}
+            searchItems={store.addUsersToConversationScreenStore.searchItemUsers}
             onRemoveUserFromConversationButtonClick={handleRemoveUserFromConversationButtonClick}
             onAddUserToConversationButtonClick={handleAddUserToConversationButtonClick}
-            searchItemsLoading={store.newConversationScreenStore.searchItemUsersLoading}
+            searchItemsLoading={store.addUsersToConversationScreenStore.searchItemUsersLoading}
             onBackButtonClick={handleBackButtonClick}
-            onCreateConversationButtonClick={handleCreateConversationButtonClick}
-            createConversationButtonLoading={store.newConversationScreenStore.submitting}
+            onAddUsersToConversationButtonClick={handleCreateConversationButtonClick}
+            addUsersToConversationConversationButtonLoading={store.addUsersToConversationScreenStore.submitting}
             onSearchSubmitButtonClick={handleSearchSubmitButtonClick}
             searchFired={searchFired}
         />
     );
 };
 
-export default NewConversationScreenContainer;
+export default AddUsersToConversationScreenContainer;

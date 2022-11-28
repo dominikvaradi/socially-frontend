@@ -12,73 +12,77 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { Reaction } from './reaction';
+import { Reaction } from "./reaction";
 // May contain unused imports in some cases
 // @ts-ignore
-import { ReactionCountResponseDto } from './reaction-count-response-dto';
+import { ReactionCountResponseDto } from "./reaction-count-response-dto";
 
 /**
- * 
+ *
  * @export
  * @interface MessageResponseDto
  */
 export interface MessageResponseDto {
     /**
-     * 
+     *
      * @type {string}
      * @memberof MessageResponseDto
      */
-    'id': string;
+    id: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof MessageResponseDto
      */
-    'userId': string;
+    userId: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof MessageResponseDto
      */
-    'userFirstName': string;
+    userFirstName: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof MessageResponseDto
      */
-    'userLastName': string;
+    userLastName: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof MessageResponseDto
      */
-    'conversationId': string;
+    conversationId: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof MessageResponseDto
      */
-    'content': string;
+    content: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof MessageResponseDto
      */
-    'created': string;
+    created: string;
     /**
-     * 
+     *
      * @type {Array<ReactionCountResponseDto>}
      * @memberof MessageResponseDto
      */
-    'reactionsCount': Array<ReactionCountResponseDto>;
+    reactionsCount: Array<ReactionCountResponseDto>;
     /**
-     * 
+     *
      * @type {Reaction}
      * @memberof MessageResponseDto
      */
-    'currentUsersReaction'?: Reaction;
+    currentUsersReaction?: Reaction;
+    /**
+     *
+     * @type {boolean}
+     * @memberof MessageResponseDto
+     */
+    createdByCurrentUser: boolean;
 }
-

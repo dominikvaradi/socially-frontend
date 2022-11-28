@@ -197,7 +197,7 @@ const UserTimelineScreenComponent = ({
                             <div className="flex-grow">
                                 <div className="flex w-full flex-col">
                                     <CreatePost
-                                        placeholder="Írj valamit Naruto idővonalára"
+                                        placeholder={`Írj valamit ${userName} idővonalára`}
                                         onSubmit={onCreatePostSubmit}
                                     />
                                     <PostList

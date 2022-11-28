@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { ConversationType } from './conversation-type';
 
 /**
  * 
@@ -25,15 +22,9 @@ import { ConversationType } from './conversation-type';
 export interface ConversationCreateRequestDto {
     /**
      * 
-     * @type {ConversationType}
+     * @type {Array<string>}
      * @memberof ConversationCreateRequestDto
      */
-    'type': ConversationType;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof ConversationCreateRequestDto
-     */
-    'memberUserIds': Set<string>;
+    'memberUserIds': Array<string>;
 }
 

@@ -9,9 +9,9 @@ import {
     TReaction,
 } from "../../services/commonTypes";
 import UserNameAvatar from "../UserNameAvatar";
-import { FiEdit, FiTrash2, FiChevronDown } from "react-icons/fi";
-import { SlBubbles, SlBubble } from "react-icons/sl";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { FiChevronDown, FiEdit, FiTrash2 } from "react-icons/fi";
+import { SlBubble, SlBubbles } from "react-icons/sl";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import Comment from "../Comment";
 import { getUnicodeStringByReaction } from "../../services/commonUtils";
 import ReactionPopover from "../ReactionPopover";
@@ -63,6 +63,9 @@ type TProps = {
         values: EditCommentFormValues,
         actions: FormikHelpers<EditCommentFormValues>
     ) => Promise<void>;
+    showAddressee: boolean;
+    addresseeName: string;
+    onAddresseeProfileClick: () => void;
 };
 
 const PostComponent = ({
@@ -104,6 +107,9 @@ const PostComponent = ({
     onEditPostCancelButtonClick,
     onToggleCommentReaction,
     onEditCommentSubmit,
+    showAddressee,
+    addresseeName,
+    onAddresseeProfileClick,
 }: TProps) => {
     const { colorMode } = useColorMode();
 
@@ -114,6 +120,27 @@ const PostComponent = ({
 
     return (
         <div className="flex w-full flex-col items-center justify-center">
+            {showAddressee && (
+                <div className="flex w-full px-4">
+                    <p
+                        className={`rounded-t-md border-b py-1 px-2 ${
+                            colorMode === "dark" ? "bg-slate-700" : "bg-gray-50"
+                        }`}
+                    >
+                        <span
+                            className={`cursor-pointer select-none ${
+                                colorMode === "dark"
+                                    ? "active:text-brand-300 lg:hover:text-brand-200 lg:hover:active:text-brand-300"
+                                    : "active:text-brand-600 lg:hover:text-brand-500 lg:hover:active:text-brand-600"
+                            }`}
+                            onClick={onAddresseeProfileClick}
+                        >
+                            {addresseeName}
+                        </span>{" "}
+                        idővonalán
+                    </p>
+                </div>
+            )}
             <div className={`w-full rounded-md shadow-md ${colorMode === "dark" ? "bg-slate-600" : "bg-white"}`}>
                 <div className="flex w-full items-center justify-between space-x-2 border-b p-3">
                     <div
@@ -152,7 +179,7 @@ const PostComponent = ({
                         <p className="text-lg font-semibold">{header}</p>
                         <p
                             ref={contentRef}
-                            className={`max-h-[200px] overflow-hidden whitespace-pre-line text-justify ${
+                            className={`max-h-[200px] overflow-hidden whitespace-pre-line break-all text-justify ${
                                 contentNeedExpand ? "hidden" : "block"
                             }`}
                         >
@@ -163,7 +190,7 @@ const PostComponent = ({
                                 <Collapse
                                     in={contentExpanded}
                                     startingHeight="200px"
-                                    className="whitespace-pre-line text-justify"
+                                    className="whitespace-pre-line break-all text-justify"
                                 >
                                     {content}
                                 </Collapse>

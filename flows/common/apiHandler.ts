@@ -6,6 +6,7 @@ import {
     ConfigurationParameters,
     ConversationControllerApi,
     FriendshipControllerApi,
+    MessageControllerApi,
     PostControllerApi,
     UserControllerApi,
 } from "../../generated/api";
@@ -81,3 +82,4 @@ export const conversationApi = () =>
 export const postApi = () => new PostControllerApi(createConfiguration(), undefined, createAxiosInstance());
 export const commentApi = () => new CommentControllerApi(createConfiguration(), undefined, createAxiosInstance());
 export const friendshipApi = () => new FriendshipControllerApi(createConfiguration(), undefined, createAxiosInstance());
+export const messageApi = () => new MessageControllerApi(createConfiguration(), undefined, createAxiosInstance());

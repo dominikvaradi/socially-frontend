@@ -4,13 +4,22 @@ import { IMessage } from "../../services/conversationTypes";
 import { TReaction } from "../../../common/services/commonTypes";
 
 type TProps = {
+    className?: string;
     message: IMessage;
     showUserName: boolean;
-    onReactionCountButtonClick: (messageId: string) => void;
-    onDeleteButtonClick: (messageId: string) => void;
+    onReactionCountButtonClick: (message: IMessage) => void;
+    onDeleteButtonClick: (message: IMessage) => void;
+    onToggleMessageReaction: (message: IMessage, reaction: TReaction) => Promise<void>;
 };
 
-const MessageContainer = ({ message, showUserName, onReactionCountButtonClick, onDeleteButtonClick }: TProps) => {
+const MessageContainer = ({
+    className,
+    message,
+    showUserName,
+    onReactionCountButtonClick,
+    onDeleteButtonClick,
+    onToggleMessageReaction,
+}: TProps) => {
     const [reactionPopoverVisible, setReactionPopoverVisible] = useState<boolean>(false);
 
     const reactionCountSum: number = Object.values(message.reactionCount).reduce(
@@ -19,7 +28,7 @@ const MessageContainer = ({ message, showUserName, onReactionCountButtonClick, o
     );
 
     const handleReactionCountButtonClick = () => {
-        onReactionCountButtonClick(message.id);
+        onReactionCountButtonClick(message);
     };
 
     const handleReactionButtonClick = () => {
@@ -30,17 +39,19 @@ const MessageContainer = ({ message, showUserName, onReactionCountButtonClick, o
         setReactionPopoverVisible(false);
     };
 
-    const handleReactionPopoverToggleButtonClick = (reaction: TReaction) => {
+    const handleReactionPopoverToggleButtonClick = async (reaction: TReaction) => {
+        await onToggleMessageReaction(message, reaction);
+
         setReactionPopoverVisible(false);
-        console.log("handleReactionPopoverToggleButtonClick: " + reaction);
     };
 
     const handleDeleteButtonClick = () => {
-        onDeleteButtonClick(message.id);
+        onDeleteButtonClick(message);
     };
 
     return (
         <MessageComponent
+            className={className}
             userName={message.userName}
             content={message.content}
             writtenBySelf={message.writtenBySelf}

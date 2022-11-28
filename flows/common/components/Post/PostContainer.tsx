@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import PostComponent from "./PostComponent";
 import {
-    TReaction,
     CreateCommentFormValues,
-    IPost,
-    EditPostFormValues,
     EditCommentFormValues,
+    EditPostFormValues,
     IComment,
+    IPost,
+    TReaction,
 } from "../../services/commonTypes";
 import { FormikHelpers } from "formik";
 import { useCommonContext } from "../../services/commonContext";
@@ -37,6 +37,7 @@ type TProps = {
         values: EditCommentFormValues,
         actions: FormikHelpers<EditCommentFormValues>
     ) => Promise<void>;
+    showAddressee?: boolean;
 };
 
 const PostContainer = ({
@@ -52,6 +53,7 @@ const PostContainer = ({
     onCreateCommentSubmit,
     onToggleCommentReaction,
     onEditCommentSubmit,
+    showAddressee,
 }: TProps) => {
     const { controller } = useCommonContext();
 
@@ -173,6 +175,10 @@ const PostContainer = ({
         await onEditCommentSubmit(post, comment, values, actions);
     };
 
+    const handleAddresseeProfileClick = () => {
+        controller.navigateToUserTimelinePage(post.addresseeId);
+    };
+
     return (
         <PostComponent
             header={post.header}
@@ -213,6 +219,9 @@ const PostContainer = ({
             onEditPostCancelButtonClick={handleEditPostCancelButtonClick}
             onToggleCommentReaction={handleToggleCommentReaction}
             onEditCommentSubmit={handleEditCommentSubmit}
+            showAddressee={!!showAddressee && post.addresseeId !== post.authorId}
+            addresseeName={post.addresseeName}
+            onAddresseeProfileClick={handleAddresseeProfileClick}
         />
     );
 };

@@ -70,7 +70,6 @@ models/rest-api-response-dto-page-response-dto-post-response-dto.ts
 models/rest-api-response-dto-page-response-dto-user-search-response-dto.ts
 models/rest-api-response-dto-post-response-dto.ts
 models/rest-api-response-dto-refresh-token-response-dto.ts
-models/rest-api-response-dto-set-conversation-user-response-dto.ts
 models/rest-api-response-dto-user-create-response-dto.ts
 models/rest-api-response-dto-user-login-response-dto.ts
 models/rest-api-response-dto-user-profile-response-dto.ts

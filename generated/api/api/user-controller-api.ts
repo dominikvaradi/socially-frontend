@@ -12,26 +12,39 @@
  * Do not edit the class manually.
  */
 
-
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import globalAxios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from "axios";
+import { Configuration } from "../configuration";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import {
+    assertParamExists,
+    createRequestFunction,
+    DUMMY_BASE_URL,
+    serializeDataIfNeeded,
+    setApiKeyToObject,
+    setBasicAuthToObject,
+    setBearerAuthToObject,
+    setOAuthToObject,
+    setSearchParams,
+    toPathString,
+} from "../common";
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from "../base";
 // @ts-ignore
-import { PostCreateRequestDto } from '../models';
 // @ts-ignore
-import { RestApiResponseDtoPageResponseDtoPostResponseDto } from '../models';
 // @ts-ignore
-import { RestApiResponseDtoPageResponseDtoUserSearchResponseDto } from '../models';
 // @ts-ignore
-import { RestApiResponseDtoPostResponseDto } from '../models';
 // @ts-ignore
-import { RestApiResponseDtoUserProfileResponseDto } from '../models';
 // @ts-ignore
-import { UserUpdateRequestDto } from '../models';
+import {
+    PostCreateRequestDto,
+    RestApiResponseDtoPageResponseDtoPostResponseDto,
+    RestApiResponseDtoPageResponseDtoUserSearchResponseDto,
+    RestApiResponseDtoPostResponseDto,
+    RestApiResponseDtoUserProfileResponseDto,
+    UserUpdateRequestDto,
+} from "../models";
+
 /**
  * UserControllerApi - axios parameter creator
  * @export
@@ -39,19 +52,22 @@ import { UserUpdateRequestDto } from '../models';
 export const UserControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @param {string} userId 
-         * @param {PostCreateRequestDto} postCreateRequestDto 
+         *
+         * @param {string} userId
+         * @param {PostCreateRequestDto} postCreateRequestDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPostOnUser: async (userId: string, postCreateRequestDto: PostCreateRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createPostOnUser: async (
+            userId: string,
+            postCreateRequestDto: PostCreateRequestDto,
+            options: AxiosRequestConfig = {}
+        ): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
-            assertParamExists('createPostOnUser', 'userId', userId)
+            assertParamExists("createPostOnUser", "userId", userId);
             // verify required parameter 'postCreateRequestDto' is not null or undefined
-            assertParamExists('createPostOnUser', 'postCreateRequestDto', postCreateRequestDto)
-            const localVarPath = `/users/{userId}/posts`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            assertParamExists("createPostOnUser", "postCreateRequestDto", postCreateRequestDto);
+            const localVarPath = `/users/{userId}/posts`.replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -59,22 +75,28 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
             // authentication BearerToken required
             // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter["Content-Type"] = "application/json";
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(postCreateRequestDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            localVarRequestOptions.data = serializeDataIfNeeded(
+                postCreateRequestDto,
+                localVarRequestOptions,
+                configuration
+            );
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -82,18 +104,24 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
+         * @param {string} [name]
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllFriendsOfUser: async (userId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findAllFriendsOfUser: async (
+            userId: string,
+            name?: string,
+            page?: number,
+            size?: number,
+            options: AxiosRequestConfig = {}
+        ): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
-            assertParamExists('findAllFriendsOfUser', 'userId', userId)
-            const localVarPath = `/users/{userId}/friends`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            assertParamExists("findAllFriendsOfUser", "userId", userId);
+            const localVarPath = `/users/{userId}/friends`.replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -101,27 +129,33 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
             // authentication BearerToken required
             // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+            if (name !== undefined) {
+                localVarQueryParameter["name"] = name;
+            }
 
             if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                localVarQueryParameter['size'] = size;
+                localVarQueryParameter["size"] = size;
             }
 
-
-    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -129,18 +163,22 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllPostsOfUser: async (userId: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findAllPostsOfUser: async (
+            userId: string,
+            page?: number,
+            size?: number,
+            options: AxiosRequestConfig = {}
+        ): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
-            assertParamExists('findAllPostsOfUser', 'userId', userId)
-            const localVarPath = `/users/{userId}/posts`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            assertParamExists("findAllPostsOfUser", "userId", userId);
+            const localVarPath = `/users/{userId}/posts`.replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -148,27 +186,29 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
             // authentication BearerToken required
             // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
             if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                localVarQueryParameter['size'] = size;
+                localVarQueryParameter["size"] = size;
             }
 
-
-    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -176,14 +216,19 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * 
-         * @param {string} [name] 
+         *
+         * @param {string} [name]
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllUsersByName: async (name?: string, page?: number, size?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findAllUsersByName: async (
+            name?: string,
+            page?: number,
+            size?: number,
+            options: AxiosRequestConfig = {}
+        ): Promise<RequestArgs> => {
             const localVarPath = `/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -192,31 +237,33 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
             // authentication BearerToken required
             // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
             if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
+                localVarQueryParameter["name"] = name;
             }
 
             if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                localVarQueryParameter['size'] = size;
+                localVarQueryParameter["size"] = size;
             }
 
-
-    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -224,16 +271,15 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         findUserByPublicId: async (userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
-            assertParamExists('findUserByPublicId', 'userId', userId)
-            const localVarPath = `/users/{userId}`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            assertParamExists("findUserByPublicId", "userId", userId);
+            const localVarPath = `/users/{userId}`.replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -241,19 +287,21 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
             // authentication BearerToken required
             // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
-
-    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -261,19 +309,22 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * 
-         * @param {string} userId 
-         * @param {UserUpdateRequestDto} userUpdateRequestDto 
+         *
+         * @param {string} userId
+         * @param {UserUpdateRequestDto} userUpdateRequestDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser: async (userId: string, userUpdateRequestDto: UserUpdateRequestDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateUser: async (
+            userId: string,
+            userUpdateRequestDto: UserUpdateRequestDto,
+            options: AxiosRequestConfig = {}
+        ): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
-            assertParamExists('updateUser', 'userId', userId)
+            assertParamExists("updateUser", "userId", userId);
             // verify required parameter 'userUpdateRequestDto' is not null or undefined
-            assertParamExists('updateUser', 'userUpdateRequestDto', userUpdateRequestDto)
-            const localVarPath = `/users/{userId}`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            assertParamExists("updateUser", "userUpdateRequestDto", userUpdateRequestDto);
+            const localVarPath = `/users/{userId}`.replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -281,162 +332,253 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
             // authentication BearerToken required
             // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            await setBearerAuthToObject(localVarHeaderParameter, configuration);
 
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter["Content-Type"] = "application/json";
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userUpdateRequestDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            localVarRequestOptions.data = serializeDataIfNeeded(
+                userUpdateRequestDto,
+                localVarRequestOptions,
+                configuration
+            );
 
             return {
                 url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
-    }
+    };
 };
 
 /**
  * UserControllerApi - functional programming interface
  * @export
  */
-export const UserControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = UserControllerApiAxiosParamCreator(configuration)
+export const UserControllerApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = UserControllerApiAxiosParamCreator(configuration);
     return {
         /**
-         * 
-         * @param {string} userId 
-         * @param {PostCreateRequestDto} postCreateRequestDto 
+         *
+         * @param {string} userId
+         * @param {PostCreateRequestDto} postCreateRequestDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createPostOnUser(userId: string, postCreateRequestDto: PostCreateRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPostResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createPostOnUser(userId, postCreateRequestDto, options);
+        async createPostOnUser(
+            userId: string,
+            postCreateRequestDto: PostCreateRequestDto,
+            options?: AxiosRequestConfig
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPostResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPostOnUser(
+                userId,
+                postCreateRequestDto,
+                options
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
+         * @param {string} [name]
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findAllFriendsOfUser(userId: string, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllFriendsOfUser(userId, page, size, options);
+        async findAllFriendsOfUser(
+            userId: string,
+            name?: string,
+            page?: number,
+            size?: number,
+            options?: AxiosRequestConfig
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string
+            ) => AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findAllFriendsOfUser(
+                userId,
+                name,
+                page,
+                size,
+                options
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findAllPostsOfUser(userId: string, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoPostResponseDto>> {
+        async findAllPostsOfUser(
+            userId: string,
+            page?: number,
+            size?: number,
+            options?: AxiosRequestConfig
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoPostResponseDto>
+        > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.findAllPostsOfUser(userId, page, size, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @param {string} [name] 
+         *
+         * @param {string} [name]
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findAllUsersByName(name?: string, page?: number, size?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto>> {
+        async findAllUsersByName(
+            name?: string,
+            page?: number,
+            size?: number,
+            options?: AxiosRequestConfig
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string
+            ) => AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto>
+        > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.findAllUsersByName(name, page, size, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findUserByPublicId(userId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoUserProfileResponseDto>> {
+        async findUserByPublicId(
+            userId: string,
+            options?: AxiosRequestConfig
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoUserProfileResponseDto>
+        > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.findUserByPublicId(userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @param {string} userId 
-         * @param {UserUpdateRequestDto} userUpdateRequestDto 
+         *
+         * @param {string} userId
+         * @param {UserUpdateRequestDto} userUpdateRequestDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUser(userId: string, userUpdateRequestDto: UserUpdateRequestDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoUserProfileResponseDto>> {
+        async updateUser(
+            userId: string,
+            userUpdateRequestDto: UserUpdateRequestDto,
+            options?: AxiosRequestConfig
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestApiResponseDtoUserProfileResponseDto>
+        > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(userId, userUpdateRequestDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-    }
+    };
 };
 
 /**
  * UserControllerApi - factory interface
  * @export
  */
-export const UserControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = UserControllerApiFp(configuration)
+export const UserControllerApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance
+) {
+    const localVarFp = UserControllerApiFp(configuration);
     return {
         /**
-         * 
-         * @param {string} userId 
-         * @param {PostCreateRequestDto} postCreateRequestDto 
+         *
+         * @param {string} userId
+         * @param {PostCreateRequestDto} postCreateRequestDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPostOnUser(userId: string, postCreateRequestDto: PostCreateRequestDto, options?: any): AxiosPromise<RestApiResponseDtoPostResponseDto> {
-            return localVarFp.createPostOnUser(userId, postCreateRequestDto, options).then((request) => request(axios, basePath));
+        createPostOnUser(
+            userId: string,
+            postCreateRequestDto: PostCreateRequestDto,
+            options?: any
+        ): AxiosPromise<RestApiResponseDtoPostResponseDto> {
+            return localVarFp
+                .createPostOnUser(userId, postCreateRequestDto, options)
+                .then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
+         * @param {string} [name]
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllFriendsOfUser(userId: string, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto> {
-            return localVarFp.findAllFriendsOfUser(userId, page, size, options).then((request) => request(axios, basePath));
+        findAllFriendsOfUser(
+            userId: string,
+            name?: string,
+            page?: number,
+            size?: number,
+            options?: any
+        ): AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto> {
+            return localVarFp
+                .findAllFriendsOfUser(userId, name, page, size, options)
+                .then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllPostsOfUser(userId: string, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoPostResponseDto> {
-            return localVarFp.findAllPostsOfUser(userId, page, size, options).then((request) => request(axios, basePath));
+        findAllPostsOfUser(
+            userId: string,
+            page?: number,
+            size?: number,
+            options?: any
+        ): AxiosPromise<RestApiResponseDtoPageResponseDtoPostResponseDto> {
+            return localVarFp
+                .findAllPostsOfUser(userId, page, size, options)
+                .then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {string} [name] 
+         *
+         * @param {string} [name]
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findAllUsersByName(name?: string, page?: number, size?: number, options?: any): AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto> {
+        findAllUsersByName(
+            name?: string,
+            page?: number,
+            size?: number,
+            options?: any
+        ): AxiosPromise<RestApiResponseDtoPageResponseDtoUserSearchResponseDto> {
             return localVarFp.findAllUsersByName(name, page, size, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {string} userId 
+         *
+         * @param {string} userId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -444,14 +586,20 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
             return localVarFp.findUserByPublicId(userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {string} userId 
-         * @param {UserUpdateRequestDto} userUpdateRequestDto 
+         *
+         * @param {string} userId
+         * @param {UserUpdateRequestDto} userUpdateRequestDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser(userId: string, userUpdateRequestDto: UserUpdateRequestDto, options?: any): AxiosPromise<RestApiResponseDtoUserProfileResponseDto> {
-            return localVarFp.updateUser(userId, userUpdateRequestDto, options).then((request) => request(axios, basePath));
+        updateUser(
+            userId: string,
+            userUpdateRequestDto: UserUpdateRequestDto,
+            options?: any
+        ): AxiosPromise<RestApiResponseDtoUserProfileResponseDto> {
+            return localVarFp
+                .updateUser(userId, userUpdateRequestDto, options)
+                .then((request) => request(axios, basePath));
         },
     };
 };
@@ -464,33 +612,44 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
  */
 export class UserControllerApi extends BaseAPI {
     /**
-     * 
-     * @param {string} userId 
-     * @param {PostCreateRequestDto} postCreateRequestDto 
+     *
+     * @param {string} userId
+     * @param {PostCreateRequestDto} postCreateRequestDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
     public createPostOnUser(userId: string, postCreateRequestDto: PostCreateRequestDto, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).createPostOnUser(userId, postCreateRequestDto, options).then((request) => request(this.axios, this.basePath));
+        return UserControllerApiFp(this.configuration)
+            .createPostOnUser(userId, postCreateRequestDto, options)
+            .then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {string} userId 
+     *
+     * @param {string} userId
+     * @param {string} [name]
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
-    public findAllFriendsOfUser(userId: string, page?: number, size?: number, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).findAllFriendsOfUser(userId, page, size, options).then((request) => request(this.axios, this.basePath));
+    public findAllFriendsOfUser(
+        userId: string,
+        name?: string,
+        page?: number,
+        size?: number,
+        options?: AxiosRequestConfig
+    ) {
+        return UserControllerApiFp(this.configuration)
+            .findAllFriendsOfUser(userId, name, page, size, options)
+            .then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {string} userId 
+     *
+     * @param {string} userId
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {*} [options] Override http request option.
@@ -498,12 +657,14 @@ export class UserControllerApi extends BaseAPI {
      * @memberof UserControllerApi
      */
     public findAllPostsOfUser(userId: string, page?: number, size?: number, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).findAllPostsOfUser(userId, page, size, options).then((request) => request(this.axios, this.basePath));
+        return UserControllerApiFp(this.configuration)
+            .findAllPostsOfUser(userId, page, size, options)
+            .then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {string} [name] 
+     *
+     * @param {string} [name]
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {*} [options] Override http request option.
@@ -511,29 +672,35 @@ export class UserControllerApi extends BaseAPI {
      * @memberof UserControllerApi
      */
     public findAllUsersByName(name?: string, page?: number, size?: number, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).findAllUsersByName(name, page, size, options).then((request) => request(this.axios, this.basePath));
+        return UserControllerApiFp(this.configuration)
+            .findAllUsersByName(name, page, size, options)
+            .then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {string} userId 
+     *
+     * @param {string} userId
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
     public findUserByPublicId(userId: string, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).findUserByPublicId(userId, options).then((request) => request(this.axios, this.basePath));
+        return UserControllerApiFp(this.configuration)
+            .findUserByPublicId(userId, options)
+            .then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {string} userId 
-     * @param {UserUpdateRequestDto} userUpdateRequestDto 
+     *
+     * @param {string} userId
+     * @param {UserUpdateRequestDto} userUpdateRequestDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
     public updateUser(userId: string, userUpdateRequestDto: UserUpdateRequestDto, options?: AxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).updateUser(userId, userUpdateRequestDto, options).then((request) => request(this.axios, this.basePath));
+        return UserControllerApiFp(this.configuration)
+            .updateUser(userId, userUpdateRequestDto, options)
+            .then((request) => request(this.axios, this.basePath));
     }
 }

@@ -1,9 +1,8 @@
 import { Button, Icon, IconButton, Menu, MenuButton, MenuItem, MenuList, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import UserNameAvatar from "../UserNameAvatar";
-import { FiMoreVertical } from "react-icons/fi";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { FiEdit, FiMoreVertical, FiTrash2 } from "react-icons/fi";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { getUnicodeStringByReaction } from "../../services/commonUtils";
 import { EditCommentFormValues, IReactionCount, TReaction } from "../../services/commonTypes";
 import ReactionPopover from "../ReactionPopover";
@@ -58,24 +57,20 @@ const CommentComponent = ({
     return (
         <>
             {!editing && (
-                <div className="flex w-full items-start space-x-5">
+                <div className="flex w-full items-start gap-2">
                     <UserNameAvatar
                         onClick={onAuthorProfileClick}
                         userName={authorName}
                         clickable
                         className="!h-10 !w-10 lg:!h-12 lg:!w-12 [&>div]:!text-base lg:[&>div]:!text-xl"
                     />
-                    <div className="w-full">
+                    <div className="flex-grow">
                         <div
-                            className={
-                                `relative z-[1] w-full rounded-md p-2 drop-shadow-md before:absolute before:right-full ` +
-                                `before:top-2.5 before:h-0 before:w-0 before:border-r-[18px] before:border-t-[8px] before:border-b-[8px] ` +
-                                `before:border-b-transparent before:border-t-transparent before:content-[''] lg:before:top-4 ${
-                                    colorMode === "dark"
-                                        ? "bg-gray-500 before:border-r-gray-500"
-                                        : "bg-brand-100 before:border-r-brand-100"
-                                }`
-                            }
+                            className={`relative rounded-3xl px-4 py-3 ${
+                                colorMode === "dark"
+                                    ? "bg-gray-500 before:border-r-gray-500"
+                                    : "bg-brand-100 before:border-r-brand-100"
+                            }`}
                         >
                             <div className="mb-1 flex items-center justify-between">
                                 <Button
@@ -120,12 +115,12 @@ const CommentComponent = ({
                                     </Menu>
                                 )}
                             </div>
-                            <p className="whitespace-pre-line p-1 text-justify">{content}</p>
+                            <p className="whitespace-pre-line break-all p-1 text-justify leading-tight">{content}</p>
                             {reactionCountSum > 0 && (
                                 <Button
                                     onClick={onReactionCountButtonClick}
                                     colorScheme="brand"
-                                    className="!absolute -bottom-3.5 right-2 flex !h-min cursor-pointer select-none items-center space-x-1 !rounded-full !px-2 !py-1 drop-shadow-md"
+                                    className="!absolute -bottom-3.5 right-6 flex !h-min cursor-pointer select-none items-center space-x-1 !rounded-full !px-2 !py-1 drop-shadow-md"
                                 >
                                     <div className="flex flex-row-reverse items-center -space-x-1 space-x-reverse">
                                         {reactionCount.angryCount > 0 && (

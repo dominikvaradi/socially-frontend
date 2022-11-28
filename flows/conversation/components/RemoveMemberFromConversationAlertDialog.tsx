@@ -13,19 +13,25 @@ type TProps = {
     visible: boolean;
     onClose: () => void;
     onConfirmButtonClick: () => void;
+    confirmButtonLoading: boolean;
 };
 
-const ChangeConversationRoleAlertDialog = ({ visible, onClose, onConfirmButtonClick }: TProps) => {
+const RemoveMemberFromConversationAlertDialog = ({
+    visible,
+    onClose,
+    onConfirmButtonClick,
+    confirmButtonLoading,
+}: TProps) => {
     const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
 
     return (
         <AlertDialog isOpen={visible} leastDestructiveRef={cancelButtonRef} onClose={onClose} isCentered>
             <AlertDialogOverlay>
                 <AlertDialogContent>
-                    <AlertDialogHeader>Beszélgetés-szerepkör szerkesztése</AlertDialogHeader>
+                    <AlertDialogHeader>Felhasználó eltávolítása a beszélgetésből</AlertDialogHeader>
 
                     <AlertDialogBody>
-                        Biztosan meg szeretnéd változtatni a kiválasztott személy szerepkörét?
+                        Biztosan el szeretnéd távolítani a kiválasztott felhasználót a beszélgetésből?
                     </AlertDialogBody>
 
                     <AlertDialogFooter>
@@ -33,7 +39,7 @@ const ChangeConversationRoleAlertDialog = ({ visible, onClose, onConfirmButtonCl
                             <Button ref={cancelButtonRef} onClick={onClose}>
                                 Nem
                             </Button>
-                            <Button colorScheme="yellow" onClick={onConfirmButtonClick}>
+                            <Button colorScheme="red" onClick={onConfirmButtonClick} isLoading={confirmButtonLoading}>
                                 Igen
                             </Button>
                         </div>
@@ -44,4 +50,4 @@ const ChangeConversationRoleAlertDialog = ({ visible, onClose, onConfirmButtonCl
     );
 };
 
-export default ChangeConversationRoleAlertDialog;
+export default RemoveMemberFromConversationAlertDialog;

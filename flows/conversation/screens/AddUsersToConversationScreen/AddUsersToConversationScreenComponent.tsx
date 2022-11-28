@@ -16,13 +16,13 @@ type TProps = {
     onAddUserToConversationButtonClick: (userId: string) => void;
     searchItemsLoading: boolean;
     onBackButtonClick: () => void;
-    onCreateConversationButtonClick: () => void;
-    createConversationButtonLoading: boolean;
+    onAddUsersToConversationButtonClick: () => void;
+    addUsersToConversationConversationButtonLoading: boolean;
     onSearchSubmitButtonClick: () => void;
     searchFired: boolean;
 };
 
-const NewConversationScreenComponent = ({
+const AddUsersToConversationScreen = ({
     searchInputValue,
     onSearchInputChange,
     members,
@@ -31,8 +31,8 @@ const NewConversationScreenComponent = ({
     onAddUserToConversationButtonClick,
     searchItemsLoading,
     onBackButtonClick,
-    onCreateConversationButtonClick,
-    createConversationButtonLoading,
+    onAddUsersToConversationButtonClick,
+    addUsersToConversationConversationButtonLoading,
     onSearchSubmitButtonClick,
     searchFired,
 }: TProps) => {
@@ -57,7 +57,7 @@ const NewConversationScreenComponent = ({
                                 aria-label="Go back"
                                 variant="ghost"
                             />
-                            <span className="text-xl">Új beszélgetés</span>
+                            <span className="text-xl">Felhasználók hozzáadása a beszélgetéshez</span>
                         </div>
                     </div>
                     <div className="flex flex-col gap-6 md:flex-row">
@@ -139,12 +139,13 @@ const NewConversationScreenComponent = ({
                     </div>
                     <div className="flex justify-center">
                         <Button
-                            onClick={onCreateConversationButtonClick}
+                            className="!whitespace-normal"
+                            onClick={onAddUsersToConversationButtonClick}
                             colorScheme="brand"
-                            disabled={members.length === 0 || createConversationButtonLoading}
-                            isLoading={createConversationButtonLoading}
+                            disabled={members.length === 0 || addUsersToConversationConversationButtonLoading}
+                            isLoading={addUsersToConversationConversationButtonLoading}
                         >
-                            Beszélgetés létrehozása
+                            Felhasználók hozzáadása a beszélgetéshez
                         </Button>
                     </div>
                 </div>
@@ -153,4 +154,4 @@ const NewConversationScreenComponent = ({
     );
 };
 
-export default NewConversationScreenComponent;
+export default AddUsersToConversationScreen;

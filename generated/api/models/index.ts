@@ -53,7 +53,6 @@ export * from './rest-api-response-dto-page-response-dto-post-response-dto';
 export * from './rest-api-response-dto-page-response-dto-user-search-response-dto';
 export * from './rest-api-response-dto-post-response-dto';
 export * from './rest-api-response-dto-refresh-token-response-dto';
-export * from './rest-api-response-dto-set-conversation-user-response-dto';
 export * from './rest-api-response-dto-user-create-response-dto';
 export * from './rest-api-response-dto-user-login-response-dto';
 export * from './rest-api-response-dto-user-profile-response-dto';

@@ -22,9 +22,9 @@
 export interface ConversationAddUsersRequestDto {
     /**
      * 
-     * @type {Set<string>}
+     * @type {Array<string>}
      * @memberof ConversationAddUsersRequestDto
      */
-    'memberUserIds': Set<string>;
+    'memberUserIds': Array<string>;
 }
 

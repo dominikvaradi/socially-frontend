@@ -16,24 +16,35 @@ type TProps = {
     confirmButtonLoading: boolean;
 };
 
-const DeleteMessageAlertDialog = ({ visible, onClose, onConfirmButtonClick, confirmButtonLoading }: TProps) => {
+const ChangeConversationRoleAlertDialog = ({
+    visible,
+    onClose,
+    onConfirmButtonClick,
+    confirmButtonLoading,
+}: TProps) => {
     const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
 
     return (
         <AlertDialog isOpen={visible} leastDestructiveRef={cancelButtonRef} onClose={onClose} isCentered>
             <AlertDialogOverlay>
                 <AlertDialogContent>
-                    <AlertDialogHeader>Üzenet törlése</AlertDialogHeader>
+                    <AlertDialogHeader>Beszélgetés-szerepkör szerkesztése</AlertDialogHeader>
 
-                    <AlertDialogBody>Biztosan törölni szeretnéd a kiválasztott üzenetet?</AlertDialogBody>
+                    <AlertDialogBody>
+                        Biztosan meg szeretnéd változtatni a kiválasztott személy szerepkörét?
+                    </AlertDialogBody>
 
                     <AlertDialogFooter>
                         <div className="flex w-full items-center justify-end space-x-2">
                             <Button ref={cancelButtonRef} onClick={onClose}>
-                                Mégsem
+                                Nem
                             </Button>
-                            <Button colorScheme="red" onClick={onConfirmButtonClick} isLoading={confirmButtonLoading}>
-                                Törlés
+                            <Button
+                                colorScheme="yellow"
+                                onClick={onConfirmButtonClick}
+                                isLoading={confirmButtonLoading}
+                            >
+                                Igen
                             </Button>
                         </div>
                     </AlertDialogFooter>
@@ -43,4 +54,4 @@ const DeleteMessageAlertDialog = ({ visible, onClose, onConfirmButtonClick, conf
     );
 };
 
-export default DeleteMessageAlertDialog;
+export default ChangeConversationRoleAlertDialog;
