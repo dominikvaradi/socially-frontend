@@ -9,7 +9,6 @@ import {
     RestApiResponseDtoPageResponseDtoConversationResponseDto,
     RestApiResponseDtoPageResponseDtoMessageResponseDto,
     RestApiResponseDtoPageResponseDtoUserSearchResponseDto,
-    RestApiResponseDtoSetConversationUserResponseDto,
 } from "../../../../generated/api";
 import { TReaction } from "../../../common/services/commonTypes";
 import { TConversationRole } from "../conversationTypes";
@@ -69,9 +68,6 @@ export const api = {
     removeUserOfConversation: (conversationId: string, userId: string): AxiosPromise<EmptyRestApiResponseDto> =>
         conversationApi().removeUserFromConversation(conversationId, userId),
 
-    addUsersToConversation: (
-        conversationId: string,
-        memberUserIds: string[]
-    ): AxiosPromise<RestApiResponseDtoSetConversationUserResponseDto> =>
+    addUsersToConversation: (conversationId: string, memberUserIds: string[]) =>
         conversationApi().addUsersToConversation(conversationId, { memberUserIds: memberUserIds }),
 };
