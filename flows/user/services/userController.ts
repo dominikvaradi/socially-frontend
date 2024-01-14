@@ -38,11 +38,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         this.storeService.resetStore();
 
         const userProfileResponse = await userApi.fetchUser(userId);
-        if (
-            userProfileResponse?.status !== 200 ||
-            userProfileResponse?.statusText !== "OK" ||
-            !userProfileResponse?.data?.data
-        ) {
+        if (userProfileResponse?.status !== 200 || !userProfileResponse?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a felhasználó adatlapjának betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -61,11 +57,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         }
 
         const userTimelinePostsResponse = await userApi.fetchPostsForUser(userId, 0, POSTS_FETCH_SIZE);
-        if (
-            userTimelinePostsResponse?.status !== 200 ||
-            userTimelinePostsResponse?.statusText !== "OK" ||
-            !userTimelinePostsResponse?.data?.data
-        ) {
+        if (userTimelinePostsResponse?.status !== 200 || !userTimelinePostsResponse?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a posztok betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -97,7 +89,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
             Math.floor(this.store.timelineScreenStore.posts.length / POSTS_FETCH_SIZE),
             POSTS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a posztok betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -130,7 +122,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
 
     toggleReactionOnPost = async (post: IPost, reaction: TReaction) => {
         const response = await userApi.toggleReactionOnPost(post.id, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakció módosítása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -147,7 +139,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!user) return;
 
         const response = await userApi.createPost(user.id, transformCreatePostFormValues2PostCreateRequestDto(values));
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a poszt létrehozása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -168,7 +160,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
 
     editPost = async (post: IPost, values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => {
         const response = await userApi.editPost(post.id, transformEditPostFormValues2PostUpdateRequestDto(values));
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a poszt szerkesztése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -191,7 +183,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
 
     deletePost = async (post: IPost) => {
         const response = await userApi.deletePost(post.id);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a poszt törlése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -218,7 +210,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         this.updatePostCommentsInStore(post.id, []);
 
         const response = await userApi.fetchCommentsForPost(post.id, 0, COMMENTS_FETCH_SIZE);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data.data) {
+        if (response?.status !== 200 ||!response?.data.data) {
             this.showToast({
                 title: "Váratlan hiba történt a kommentek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -246,7 +238,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
             Math.floor(post.comments.length / COMMENTS_FETCH_SIZE),
             COMMENTS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data.data) {
+        if (response?.status !== 200 ||!response?.data.data) {
             this.showToast({
                 title: "Váratlan hiba történt a kommentek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -276,7 +268,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
             post.id,
             transformCreateCommentFormValues2CommentCreateRequestDto(values)
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a komment létrehozása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -299,7 +291,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
 
     toggleReactionOnComment = async (post: IPost, comment: IComment, reaction: TReaction) => {
         const response = await userApi.toggleReactionOnComment(comment.id, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakció módosítása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -327,7 +319,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
             comment.id,
             transformEditCommentFormValues2CommentUpdateRequestDto(values)
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a komment szerkesztése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -359,7 +351,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!post) return;
 
         const response = await userApi.deleteComment(comment.id);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a komment törlése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -386,7 +378,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         this.storeService.setTimelineScreenReactionListReactionItemsAndLoading([], 0, true);
 
         const response = await userApi.fetchPostReactions(post.id, 0, REACTIONS_FETCH_SIZE, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -413,7 +405,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
             REACTIONS_FETCH_SIZE,
             reaction
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -447,7 +439,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         this.storeService.setTimelineScreenReactionListReactionItemsAndLoading([], 0, true);
 
         const response = await userApi.fetchCommentReactions(comment.id, 0, REACTIONS_FETCH_SIZE, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -474,7 +466,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
             REACTIONS_FETCH_SIZE,
             reaction
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -509,7 +501,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!friendshipId) return;
 
         const response = await userApi.revokeOutgoingFriendRequest(friendshipId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem visszavonása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -534,7 +526,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!userId) return;
 
         const response = await userApi.sendFriendRequest(userId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem küldése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -559,7 +551,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!friendshipId) return;
 
         const response = await userApi.acceptIncomingFriendRequest(friendshipId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem elfogadása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -582,11 +574,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         this.storeService.setTimelineScreenPostsLoading(true);
 
         const userTimelinePostsResponse = await userApi.fetchPostsForUser(user.id, 0, POSTS_FETCH_SIZE);
-        if (
-            userTimelinePostsResponse?.status !== 200 ||
-            userTimelinePostsResponse?.statusText !== "OK" ||
-            !userTimelinePostsResponse?.data?.data
-        ) {
+        if (userTimelinePostsResponse?.status !== 200 || !userTimelinePostsResponse?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a posztok betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -608,7 +596,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!friendshipId) return;
 
         const response = await userApi.declineIncomingFriendRequest(friendshipId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem elutasítása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -634,7 +622,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!friendshipId) return;
 
         const response = await userApi.deleteFriend(friendshipId);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a barát törlése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -660,11 +648,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         this.storeService.resetStore();
 
         const userProfileResponse = await userApi.fetchUser(userId);
-        if (
-            userProfileResponse?.status !== 200 ||
-            userProfileResponse?.statusText !== "OK" ||
-            !userProfileResponse?.data?.data
-        ) {
+        if (userProfileResponse?.status !== 200 || !userProfileResponse?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a felhasználó adatlapjának betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -683,11 +667,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         }
 
         const userFriendsResponse = await userApi.fetchFriendsOfUser(userId, 0, FRIENDS_FETCH_SIZE);
-        if (
-            userFriendsResponse?.status !== 200 ||
-            userFriendsResponse?.statusText !== "OK" ||
-            !userFriendsResponse?.data?.data
-        ) {
+        if (userFriendsResponse?.status !== 200 || !userFriendsResponse?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a felhasználó barátai betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -719,7 +699,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
             Math.floor(this.store.friendsScreenStore.friends.length / FRIENDS_FETCH_SIZE),
             FRIENDS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a felhasználó barátai betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -748,7 +728,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!friendshipId) return;
 
         const response = await userApi.revokeOutgoingFriendRequest(friendshipId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem visszavonása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -773,7 +753,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!userId) return;
 
         const response = await userApi.sendFriendRequest(userId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem küldése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -798,7 +778,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!friendshipId) return;
 
         const response = await userApi.acceptIncomingFriendRequest(friendshipId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem elfogadása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -821,11 +801,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         this.storeService.setFriendsScreenFriendsLoading(true);
 
         const userFriendsResponse = await userApi.fetchFriendsOfUser(user.id, 0, FRIENDS_FETCH_SIZE);
-        if (
-            userFriendsResponse?.status !== 200 ||
-            userFriendsResponse?.statusText !== "OK" ||
-            !userFriendsResponse?.data?.data
-        ) {
+        if (userFriendsResponse?.status !== 200 || !userFriendsResponse?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a felhasználó barátai betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -847,7 +823,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!friendshipId) return;
 
         const response = await userApi.declineIncomingFriendRequest(friendshipId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem elutasítása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -873,7 +849,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         if (!friendshipId) return;
 
         const response = await userApi.deleteFriend(friendshipId);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a barát törlése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -902,7 +878,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
         this.storeService.resetStore();
 
         const response = await userApi.fetchUser(loggedInUserId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a felhasználó betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -924,7 +900,7 @@ export class UserController extends BaseController<TUserStore, UserStoreService>
             loggedInUserId,
             transformUserEditFormValues2UserUpdateRequestDto(values)
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 ||!response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a felhasználó szerkesztése közben, kérjük próbálja meg később.",
                 status: "error",

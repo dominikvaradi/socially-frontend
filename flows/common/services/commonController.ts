@@ -9,7 +9,7 @@ import { commonApi } from "./api/commonApi";
 export class CommonController extends BaseController<ICommonStore, CommonStoreService> {
     initMainLayout = async () => {
         const response = await commonApi.fetchLast10ConversationsOfUser();
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt az utolsó 10 beszélgetés betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -32,7 +32,7 @@ export class CommonController extends BaseController<ICommonStore, CommonStoreSe
         this.storeService.setHeaderBarSearchPopoverSearchItemsLoading(true);
 
         const response = await commonApi.fetchHeaderBarSearchPopoverSearchItems(value, 0, 3);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt keresés közben, kérjük próbálja meg később.",
                 status: "error",

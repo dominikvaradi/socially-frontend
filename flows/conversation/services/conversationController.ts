@@ -23,7 +23,7 @@ export class ConversationController extends BaseController<TConversationStore, C
         this.storeService.resetStore();
 
         const response = await conversationApi.fetchConversations(0, CONVERSATIONS_FETCH_SIZE);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a beszélgetések betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -53,7 +53,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             Math.floor(this.store.conversationsListScreenStore.conversations.length / CONVERSATIONS_FETCH_SIZE),
             CONVERSATIONS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a beszélgetések betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -98,7 +98,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             0,
             USER_FRIENDS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barátok keresése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -119,7 +119,7 @@ export class ConversationController extends BaseController<TConversationStore, C
         this.storeService.setNewConversationScreenSubmitting(true);
 
         const response = await conversationApi.createConversation(memberUserIds);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a beszélgetés létrehozása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -140,11 +140,7 @@ export class ConversationController extends BaseController<TConversationStore, C
         this.storeService.resetStore();
 
         const conversationResponse = await conversationApi.fetchConversation(conversationId);
-        if (
-            conversationResponse?.status !== 200 ||
-            conversationResponse?.statusText !== "OK" ||
-            !conversationResponse?.data?.data
-        ) {
+        if (conversationResponse?.status !== 200 || !conversationResponse?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a beszélgetés betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -166,11 +162,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             0,
             MESSAGES_FETCH_SIZE
         );
-        if (
-            messagesResponse?.status !== 200 ||
-            messagesResponse?.statusText !== "OK" ||
-            !messagesResponse?.data?.data
-        ) {
+        if (messagesResponse?.status !== 200 || !messagesResponse?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt az üzenetek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -198,7 +190,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             Math.floor(this.store.conversationScreenStore.messages.length / MESSAGES_FETCH_SIZE),
             MESSAGES_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt az üzenetek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -233,7 +225,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             conversationId,
             transformCreateMessageFormValues2MessageCreateRequestDto(values)
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt az üzenet létrehozása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -261,7 +253,7 @@ export class ConversationController extends BaseController<TConversationStore, C
 
     deleteMessage = async (message: IMessage) => {
         const response = await conversationApi.deleteMessage(message.id);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt az üzenet törlése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -284,7 +276,7 @@ export class ConversationController extends BaseController<TConversationStore, C
 
     toggleReactionOnMessage = async (message: IMessage, reaction: TReaction) => {
         const response = await conversationApi.toggleReactionOnMessage(message.id, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakció módosítása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -310,7 +302,7 @@ export class ConversationController extends BaseController<TConversationStore, C
         this.storeService.setConversationScreenReactionListReactionItemsAndLoading([], 0, true);
 
         const response = await conversationApi.fetchMessageReactions(message.id, 0, REACTIONS_FETCH_SIZE, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -339,7 +331,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             REACTIONS_FETCH_SIZE,
             reaction
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -373,7 +365,7 @@ export class ConversationController extends BaseController<TConversationStore, C
         this.storeService.resetStore();
 
         const response = await conversationApi.fetchConversation(conversationId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a beszélgetés betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -402,7 +394,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             member.userId,
             role
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             if (response?.data.messages.includes("CONVERSATIONS_MUST_HAVE_AN_ADMIN")) {
                 this.showToast({
                     title: "A beszélgetés utolsó adminisztrátor felhasználója nem változtathatja meg a saját szerepkörét.",
@@ -447,7 +439,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             this.store.conversationMembersScreenStore.conversation.id,
             member.userId
         );
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             if (response?.data.messages.includes("CONVERSATIONS_MUST_HAVE_AN_ADMIN")) {
                 this.showToast({
                     title: "A beszélgetés utolsó adminisztrátor felhasználója nem távolíthatja el magát a beszélgetésből.",
@@ -487,7 +479,7 @@ export class ConversationController extends BaseController<TConversationStore, C
         this.storeService.resetStore();
 
         const response = await conversationApi.fetchConversation(conversationId);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a beszélgetés betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -517,7 +509,7 @@ export class ConversationController extends BaseController<TConversationStore, C
             0,
             USER_FRIENDS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a barátok keresése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -545,7 +537,7 @@ export class ConversationController extends BaseController<TConversationStore, C
         this.storeService.setAddUsersToConversationScreenSubmitting(true);
 
         const response = await conversationApi.addUsersToConversation(conversationId, memberUserIds);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a felhasználók beszélgetéshez hozzáadása közben, kérjük próbálja meg később.",
                 status: "error",

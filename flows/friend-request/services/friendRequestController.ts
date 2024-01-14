@@ -12,7 +12,7 @@ export class FriendRequestController extends BaseController<TFriendRequestStore,
         this.storeService.resetStore();
 
         const response = await friendRequestApi.fetchIncomingFriendRequests(0, FRIEND_REQUESTS_FETCH_SIZE);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a bejövő barát-kérelmek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -38,7 +38,7 @@ export class FriendRequestController extends BaseController<TFriendRequestStore,
             ),
             FRIEND_REQUESTS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a bejövő barát-kérelmek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -71,7 +71,7 @@ export class FriendRequestController extends BaseController<TFriendRequestStore,
         this.storeService.resetStore();
 
         const response = await friendRequestApi.fetchOutgoingFriendRequests(0, FRIEND_REQUESTS_FETCH_SIZE);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a kimenő barát-kérelmek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -97,7 +97,7 @@ export class FriendRequestController extends BaseController<TFriendRequestStore,
             ),
             FRIEND_REQUESTS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a kimenő barát-kérelmek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -128,7 +128,7 @@ export class FriendRequestController extends BaseController<TFriendRequestStore,
 
     acceptIncomingFriendRequest = async (friendRequestId: string) => {
         const response = await friendRequestApi.acceptIncomingFriendRequest(friendRequestId);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem elfogadása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -149,7 +149,7 @@ export class FriendRequestController extends BaseController<TFriendRequestStore,
 
     declineIncomingFriendRequest = async (friendRequestId: string) => {
         const response = await friendRequestApi.declineIncomingFriendRequest(friendRequestId);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem elutasítása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -170,7 +170,7 @@ export class FriendRequestController extends BaseController<TFriendRequestStore,
 
     revokeOutgoingFriendRequest = async (friendRequestId: string) => {
         const response = await friendRequestApi.revokeOutgoingFriendRequest(friendRequestId);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a barát-kérelem visszautasítása közben, kérjük próbálja meg később.",
                 status: "error",

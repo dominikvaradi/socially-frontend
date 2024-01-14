@@ -21,7 +21,7 @@ export class SearchController extends BaseController<TSearchStore, SearchStoreSe
         this.storeService.resetStore();
 
         const response = await searchApi.fetchSearchItemUsers(searchTerm, 0, SEARCH_ITEM_USERS_FETCH_SIZE);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt keresés közben, kérjük próbálja meg később.",
                 status: "error",
@@ -46,7 +46,7 @@ export class SearchController extends BaseController<TSearchStore, SearchStoreSe
             Math.floor(Math.floor(this.store.searchScreenStore.searchItemUsers.length / SEARCH_ITEM_USERS_FETCH_SIZE)),
             SEARCH_ITEM_USERS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt keresés közben, kérjük próbálja meg később.",
                 status: "error",

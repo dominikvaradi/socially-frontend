@@ -11,7 +11,7 @@ import { onboardingApi } from "./api/onboardingApi";
 export class OnboardingController extends BaseController<IOnboardingStore, OnboardingStoreService> {
     submitLogin = async (values: LoginFormValues, actions: FormikHelpers<LoginFormValues>) => {
         const response = await onboardingApi.loginUser(transformLoginFormValues2UserLoginRequestDto(values));
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data.data) {
+        if (response?.status !== 200 || !response?.data.data) {
             let errorToastDescription: string =
                 "Váratlan hiba történt bejelentkezés közben, kérjük próbálja meg később.";
 

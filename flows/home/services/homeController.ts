@@ -31,7 +31,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
         this.storeService.resetStore();
 
         const response = await homeApi.fetchPosts(0, POSTS_FETCH_SIZE);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt az posztok betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -58,7 +58,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
             Math.floor(this.store.feedScreenStore.posts.length / POSTS_FETCH_SIZE),
             POSTS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt az posztok betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -85,7 +85,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
 
     toggleReactionOnPost = async (post: IPost, reaction: TReaction) => {
         const response = await homeApi.toggleReactionOnPost(post.id, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakció módosítása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -105,7 +105,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
             loggedInUserId,
             transformCreatePostFormValues2PostCreateRequestDto(values)
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a poszt létrehozása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -126,7 +126,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
 
     editPost = async (post: IPost, values: EditPostFormValues, actions: FormikHelpers<EditPostFormValues>) => {
         const response = await homeApi.editPost(post.id, transformEditPostFormValues2PostUpdateRequestDto(values));
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a poszt szerkesztése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -149,7 +149,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
 
     deletePost = async (post: IPost) => {
         const response = await homeApi.deletePost(post.id);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a poszt törlése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -176,7 +176,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
         this.updatePostCommentsInStore(post.id, []);
 
         const response = await homeApi.fetchCommentsForPost(post.id, 0, COMMENTS_FETCH_SIZE);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data.data) {
+        if (response?.status !== 200 || !response?.data.data) {
             this.showToast({
                 title: "Váratlan hiba történt a kommentek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -204,7 +204,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
             Math.floor(post.comments.length / COMMENTS_FETCH_SIZE),
             COMMENTS_FETCH_SIZE
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data.data) {
+        if (response?.status !== 200 || !response?.data.data) {
             this.showToast({
                 title: "Váratlan hiba történt a kommentek betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -234,7 +234,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
             post.id,
             transformCreateCommentFormValues2CommentCreateRequestDto(values)
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a komment létrehozása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -257,7 +257,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
 
     toggleReactionOnComment = async (post: IPost, comment: IComment, reaction: TReaction) => {
         const response = await homeApi.toggleReactionOnComment(comment.id, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakció módosítása közben, kérjük próbálja meg később.",
                 status: "error",
@@ -285,7 +285,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
             comment.id,
             transformEditCommentFormValues2CommentUpdateRequestDto(values)
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a komment szerkesztése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -317,7 +317,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
         if (!post) return;
 
         const response = await homeApi.deleteComment(comment.id);
-        if (response?.status !== 200 || response?.statusText !== "OK") {
+        if (response?.status !== 200) {
             this.showToast({
                 title: "Váratlan hiba történt a komment törlése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -344,7 +344,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
         this.storeService.setFeedScreenReactionListReactionItemsAndLoading([], 0, true);
 
         const response = await homeApi.fetchPostReactions(post.id, 0, REACTIONS_FETCH_SIZE, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -373,7 +373,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
             REACTIONS_FETCH_SIZE,
             reaction
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -409,7 +409,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
         this.storeService.setFeedScreenReactionListReactionItemsAndLoading([], 0, true);
 
         const response = await homeApi.fetchCommentReactions(comment.id, 0, REACTIONS_FETCH_SIZE, reaction);
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
@@ -436,7 +436,7 @@ export class HomeController extends BaseController<THomeStore, HomeStoreService>
             REACTIONS_FETCH_SIZE,
             reaction
         );
-        if (response?.status !== 200 || response?.statusText !== "OK" || !response?.data?.data) {
+        if (response?.status !== 200 || !response?.data?.data) {
             this.showToast({
                 title: "Váratlan hiba történt a reakciók betöltése közben, kérjük próbálja meg később.",
                 status: "error",
